@@ -124,6 +124,7 @@ def get_positions(total_duration: float, chart: Chart):
 			'show_stats': True,
 			'result_name': chart.chart_date.strftime("%Y-%m-%d") + ' ' + str(position.position),
 			'need_render': True,
+			'is_lcs': position.is_lcs,
 		}
 		process = multiprocessing.Process(target=create_position_clip, kwargs=clip_params)
 		processes.append(process)

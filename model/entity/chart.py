@@ -44,16 +44,16 @@ class Chart:
 	def fill_lcs(self):
 		max_weeks = 0
 		song_repo = SongRepository()
-		lcs_position = 0
+		lcs_positions = []
 		for position in self.positions:
 			song = song_repo.get_song_by_id(position.song_id)
 			weeks = song.get_weeks()
-			if weeks > max_weeks:
+			if weeks >= max_weeks:
 				max_weeks = weeks
-				lcs_position = position.position
+				lcs_positions.append(position.position)
 
 		for position in self.positions:
-			if position.position == lcs_position:
+			if position.position in lcs_positions:
 				position.is_lcs = True
 
 	def get_lcs(self):
