@@ -58,4 +58,15 @@ clip_params = {
 	'is_lcs': True,
 }
 from clips.position import create_position_clip
-create_position_clip(**clip_params)
+# create_position_clip(**clip_params)
+
+
+city_video_path = 'package/city.mp4'
+from skimage.filters import gaussian
+import moviepy.editor as mp
+
+def blur(image):
+	return gaussian(image.astype(float), sigma=10, channel_axis=-1)
+
+bg_video = mp.VideoFileClip(city_video_path, target_resolution=(1080, 1920)).subclip(10, 20*60).fl_image(blur)
+bg_video.write_videofile('video_parts/city_blur1.mp4', fps=24, codec='mpeg4', bitrate='3000k', threads=16)
