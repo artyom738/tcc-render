@@ -3,7 +3,7 @@ from datetime import datetime
 from model.repository.position_repository import PositionRepository
 from model.repository.song_repository import SongRepository
 
-chart_date = datetime(2024, 2, 10)
+chart_date = datetime(2024, 2, 17)
 position_repo = PositionRepository()
 song_repo = SongRepository()
 positions = position_repo.get_positions_by_date(chart_date)

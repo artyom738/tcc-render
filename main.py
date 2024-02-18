@@ -211,8 +211,8 @@ def __main__(chart: Chart):
 
 # Chart date format YYYY-MM-DD
 chart = Chart(data={
-	'chart_number': 452,
-	'chart_date': datetime(2024, 2, 10)
+	'chart_number': 453,
+	'chart_date': datetime(2024, 2, 17)
 })
 
 if __name__ == '__main__':
