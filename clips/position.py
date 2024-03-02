@@ -73,15 +73,17 @@ def create_position_clip(
 		align='West',
 	).set_duration(duration).set_position((260, h - 280))
 
-	clip_position = mp.TextClip(
-		txt=str(position),
-		font=number_font,
-		color='#781fdb',
-		fontsize=220,
-		stroke_color='white',
-		stroke_width=2,
-		align='center',
-	).set_duration(duration).set_position((100, 70))
+	clip_position = None
+	if position:
+		clip_position = mp.TextClip(
+			txt=str(position),
+			font=number_font,
+			color='#781fdb',
+			fontsize=220,
+			stroke_color='white',
+			stroke_width=2,
+			align='center',
+		).set_duration(duration).set_position((100, 70))
 
 	clip_stats = None
 	clip_lcs = None
@@ -136,7 +138,6 @@ def create_position_clip(
 	clip_list = [
 		music_clip,
 		clip_name.crossfadein(0.4).crossfadeout(0.4),
-		clip_position.crossfadein(0.4).crossfadeout(0.4),
 		tcc_logo,
 	]
 	if background_video:
@@ -147,6 +148,8 @@ def create_position_clip(
 		clip_list.append(clip_stats.set_start(duration - 3).crossfadein(0.4).crossfadeout(0.4))
 	if show_stats and is_lcs and clip_lcs:
 		clip_list.append(clip_lcs.set_start(duration - 3).crossfadein(0.4).crossfadeout(0.4))
+	if position and clip_position:
+		clip_list.append(clip_position.crossfadein(0.4).crossfadeout(0.4))
 
 	final = mp.CompositeVideoClip(clip_list)
 

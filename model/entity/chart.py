@@ -1,6 +1,8 @@
+from __future__ import annotations
 from datetime import datetime
-from model.repository.position_repository import PositionRepository
 
+from model.repository.chart_rubrics_repository import ChartRubricsRepository
+from model.repository.position_repository import PositionRepository
 from model.repository.song_repository import SongRepository
 
 
@@ -10,6 +12,9 @@ class Chart:
 		self.chart_date: datetime = data.get('chart_date')
 		self.positions: list = []
 		self.outs: list = []
+		self.all_time_song_id: int | None = None
+		self.residance_song_id: int | None = None
+		self.perspective_song_id: int | None = None
 		self.fill()
 
 	def fill(self):
@@ -18,6 +23,7 @@ class Chart:
 		self.outs = repo.get_outs_by_date(self.chart_date)
 		self.fill_max_up_down()
 		self.fill_lcs()
+		self.fill_rubrics()
 
 	def fill_max_up_down(self):
 		max_up = 0
@@ -65,3 +71,13 @@ class Chart:
 		for position in self.positions:
 			if position.is_lcs:
 				return position
+
+	def fill_rubrics(self):
+		rubrics = ChartRubricsRepository().get_rubrics_by_chart_id(self.chart_number)
+		for rubric in rubrics:
+			if rubric.rubric_type == ChartRubricsRepository.RUBRIC_ALL_TIME:
+				self.all_time_song_id = rubric.song_id
+			elif rubric.rubric_type == ChartRubricsRepository.RUBRIC_RESIDANCE:
+				self.residance_song_id = rubric.song_id
+			elif rubric.rubric_type == ChartRubricsRepository.RUBRIC_PERSPECTIVE:
+				self.perspective_song_id = rubric.song_id

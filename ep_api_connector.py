@@ -2,7 +2,9 @@ import requests
 
 from datetime import datetime, timedelta
 from model.entity.position import Position
+from model.entity.rubric import Rubric
 from model.entity.song import Song
+from model.repository.chart_rubrics_repository import ChartRubricsRepository
 from model.repository.position_repository import PositionRepository
 from model.repository.song_repository import SongRepository
 
@@ -41,7 +43,61 @@ def fill_db_chart(date: datetime):
 				position = position.save()
 
 
-date_to_start = datetime(2024, 2, 24)
-while date_to_start < datetime.now():
-	fill_db_chart(date_to_start)
-	date_to_start += timedelta(days=7)
+def fill_rubrics(chart_number: int, rubric_songs: dict):
+	if not chart_number:
+		return
+
+	if rubric_songs['alltime_name'] and rubric_songs['alltime_author']:
+		alltime_song = Song({
+			'name': rubric_songs['alltime_name'],
+			'authors': rubric_songs['alltime_author'],
+			'ep_id': None,
+		}).save()
+		Rubric({
+			'chart_id': chart_number,
+			'song_id': alltime_song.id,
+			'rubric_type': ChartRubricsRepository.RUBRIC_ALL_TIME,
+		}).save()
+
+	if rubric_songs['residance_name'] and rubric_songs['residance_author']:
+		alltime_song = Song({
+			'name': rubric_songs['residance_name'],
+			'authors': rubric_songs['residance_author'],
+			'ep_id': None,
+		}).save()
+		Rubric({
+			'chart_id': chart_number,
+			'song_id': alltime_song.id,
+			'rubric_type': ChartRubricsRepository.RUBRIC_RESIDANCE,
+		}).save()
+
+	if rubric_songs['perspective_name'] and rubric_songs['perspective_author']:
+		alltime_song = Song({
+			'name': rubric_songs['perspective_name'],
+			'authors': rubric_songs['perspective_author'],
+			'ep_id': None,
+		}).save()
+		Rubric({
+			'chart_id': chart_number,
+			'song_id': alltime_song.id,
+			'rubric_type': ChartRubricsRepository.RUBRIC_PERSPECTIVE,
+		}).save()
+
+
+if __name__ == '__main__':
+	date_to_start = datetime(2024, 3, 1)
+	while date_to_start < datetime.now():
+		# fill_db_chart(date_to_start)
+		date_to_start += timedelta(days=7)
+		need_fill_rubrics = True
+		if need_fill_rubrics:
+			chart_number = 454
+			fill_rubrics(chart_number, {
+				'alltime_author': 'Dancin (Krono Remix)',
+				'alltime_name': 'Aaron Smith',
+				'residance_author': 'Weekend',
+				'residance_name': 'Rezone',
+				'perspective_author': 'Prada',
+				'perspective_name': 'Casso & Raye',
+			})
+
