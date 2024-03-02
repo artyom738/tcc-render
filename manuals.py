@@ -24,21 +24,10 @@ def save_path(song_id, path, start_sec, end_sec):
 	song.save()
 
 
-
-# clip_folder = 'D:\\Artyom\\Проекты\\Top Club Chart\\клипы чарта\\regulars\\'
-# clip_name = 'Zerb & Sofiya Nzau - Mwaki (Tiësto Extended VIP Mix) [CYfw7CzqltM].mp4'
-# path = clip_folder + clip_name
-# song_id = 293
-# start_sec = 2 * 60 + 35.5
-# c_end_sec = 2 * 60 + 40.5
-# save_path(song_id, path, start_sec, c_end_sec)
-# print('Done!')
-
 chart = Chart(data={
 	'chart_number': 451,
 	'chart_date': datetime(2024, 2, 3)
 })
-# print(chart.get_lcs().position)
 
 song = SongRepository().get_song_by_id(291)
 clip_params = {

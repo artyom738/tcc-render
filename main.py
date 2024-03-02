@@ -38,7 +38,7 @@ def get_after_intro_animation(total_duration: float):
 		after_intro_animation_path,
 		target_resolution=(1080, 1920)
 	) \
-		.fx(vfx.mask_color, color=[0, 255, 0], s=5, thr=100) \
+		.fx(vfx.mask_color, color=[0, 255, 0], s=5, thr=150) \
 		.set_start(total_duration - 25 / 30)
 
 
@@ -49,10 +49,11 @@ def get_outs(total_duration: float, chart: Chart):
 	processes = []
 	for index, out in enumerate(outs):
 		song = song_repo.get_song_by_id(out.song_id)
+		clip_times = song.get_clip_times()
 		clip_params = {
 			'clip_path': song.clip_path,
-			'clip_start_time': song.clip_start_sec,
-			'clip_end_time': song.clip_end_sec,
+			'clip_start_time': clip_times['start_time'],
+			'clip_end_time': clip_times['end_time'],
 			'author': song.authors,
 			'name': song.name,
 			'position': 'OUT',
@@ -61,7 +62,7 @@ def get_outs(total_duration: float, chart: Chart):
 			'weeks': song.get_weeks(),
 			'moving': None,
 			'show_stats': True,
-			'result_name': chart.chart_date.strftime("%Y-%m-%d") + ' out ' + str(index),
+			'result_name': f'{chart.chart_number} out {str(index)}',
 			'need_render': True,
 		}
 		if index == len(outs) - 1:
@@ -77,7 +78,7 @@ def get_outs(total_duration: float, chart: Chart):
 
 	for index, out in enumerate(outs):
 		song_clip = mp.VideoFileClip(
-			filename='video_parts/' + chart.chart_date.strftime("%Y-%m-%d") + ' out ' + str(index) + '.mp4'
+			filename=f'video_parts/{chart.chart_number} out {str(index)}.mp4'
 		)
 		out_clip_list.append(song_clip)
 		print('Added out ' + str(index))
@@ -94,7 +95,7 @@ def get_after_outs_animation(total_duration: float):
 		after_past_animation_path,
 		target_resolution=(1080, 1920)
 	) \
-		.fx(vfx.mask_color, color=[0, 255, 0], s=5, thr=100) \
+		.fx(vfx.mask_color, color=[0, 255, 0], s=5, thr=150) \
 		.set_start(total_duration - 25 / 30)
 
 	return after_outs_animation
@@ -110,10 +111,11 @@ def get_positions(total_duration: float, chart: Chart):
 	for index, position in enumerate(positions):
 		song_id = position.song_id
 		song = song_repo.get_song_by_id(song_id)
+		clip_times = song.get_clip_times()
 		clip_params = {
 			'clip_path': song.clip_path,
-			'clip_start_time': song.clip_start_sec,
-			'clip_end_time': song.clip_end_sec,
+			'clip_start_time': clip_times['start_time'],
+			'clip_end_time': clip_times['end_time'],
 			'author': song.authors,
 			'name': song.name,
 			'position': position.position,
@@ -122,7 +124,7 @@ def get_positions(total_duration: float, chart: Chart):
 			'weeks': song.get_weeks(),
 			'moving': position.get_moving(),
 			'show_stats': True,
-			'result_name': chart.chart_date.strftime("%Y-%m-%d") + ' ' + str(position.position),
+			'result_name': f'{chart.chart_number} ({str(position.position)})',
 			'need_render': True,
 			'is_lcs': position.is_lcs,
 		}
@@ -134,7 +136,7 @@ def get_positions(total_duration: float, chart: Chart):
 
 	for index, position in enumerate(positions):
 		song_clip = mp.VideoFileClip(
-			filename='video_parts/' + chart.chart_date.strftime("%Y-%m-%d") + ' ' + str(position.position) + '.mp4'
+			filename=f'video_parts/{chart.chart_number} ({str(position.position)}).mp4'
 		)
 		song_clip_list.append(song_clip)
 		print('Added position ' + str(position.position))
@@ -168,7 +170,7 @@ def get_before_outro_animation(total_duration: float):
 		before_outro_animation_path,
 		target_resolution=(1080, 1920)
 	) \
-		.fx(vfx.mask_color, color=[0, 255, 0], s=5, thr=100) \
+		.fx(vfx.mask_color, color=[0, 255, 0], s=5, thr=150) \
 		.set_start(total_duration - 19 / 30)
 
 
@@ -201,7 +203,7 @@ def __main__(chart: Chart):
 	]) \
 		# .subclip(47, 47.2)
 
-	final.write_videofile('video_parts/tcc ' + chart.chart_date.strftime('%Y-%m-%d') + '.mp4', fps=30, codec='mpeg4', bitrate='8000k', threads=8)
+	final.write_videofile(f'production/tcc {chart.chart_date.strftime("%Y-%m-%d")}.mp4', fps=30, codec='mpeg4', bitrate='8000k', threads=8)
 	# final.write_videofile('video_parts/tcc ' + chart.chart_date.strftime('%Y-%m-%d') + '.mp4', fps=10, codec='mpeg4', bitrate='200k', threads=8)
 
 	print('Finished at', current_time.strftime('%Y-%m-%d %H:%M:%S'))
@@ -209,11 +211,10 @@ def __main__(chart: Chart):
 	print('Rendered by ', str(int(seconds // 60)), ' min ', str(int(seconds % 60)), ' sec')
 
 
-# Chart date format YYYY-MM-DD
-chart = Chart(data={
-	'chart_number': 453,
-	'chart_date': datetime(2024, 2, 17)
-})
-
 if __name__ == '__main__':
+	# Chart date format YYYY-MM-DD
+	chart = Chart(data={
+		'chart_number': 454,
+		'chart_date': datetime(2024, 2, 24)
+	})
 	__main__(chart)

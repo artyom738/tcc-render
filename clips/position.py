@@ -44,7 +44,7 @@ def create_position_clip(
 
 	background_video = None
 	if clip_width == clip_height:
-		print('render 1:1 video with bg')
+		print('Render 1:1 video with bg')
 		bg_video = mp.VideoFileClip(city_video_path, target_resolution=(1080, 1920))
 		bg_start_time = random.random() * bg_video.duration * 0.9
 		bg_end_time = bg_start_time + duration
@@ -56,10 +56,10 @@ def create_position_clip(
 			.resize(start_size) \
 			.resize(lambda t: 1 + (end_size - start_size) / (start_size * duration) * t)
 	elif clip_height != 1080 and clip_width != 1920:
-		print('render standart Full HD video')
-		music_clip.resize((1080, 1920))
+		print('Render standart Full HD video')
+		music_clip = music_clip.resize((1920, 1080))
 	else:
-		print('source clip is FHD already')
+		print('Source clip is FHD already')
 
 	w, h = 1920, 1080
 

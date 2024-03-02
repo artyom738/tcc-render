@@ -41,7 +41,7 @@ def fill_db_chart(date: datetime):
 				position = position.save()
 
 
-date_to_start = datetime(2024, 2, 17)
+date_to_start = datetime(2024, 2, 24)
 while date_to_start < datetime.now():
 	fill_db_chart(date_to_start)
 	date_to_start += timedelta(days=7)

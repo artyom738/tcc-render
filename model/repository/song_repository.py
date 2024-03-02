@@ -25,14 +25,25 @@ class SongRepository:
 		else:
 			return None
 
+	def get_songs_with_no_clips(self, min_id_filter=300) -> list[Song]:
+		query = f'select * from songs where ID > {str(int(min_id_filter))} and (CLIP_PATH is null or CLIP_PATH = \'\')'
+		song_list = database.get_list(query)
+
+		return [self.fetch_object(item) for item in song_list]
+
 	def fetch_object(self, data) -> Song:
+		default_clip_path = 'D:/Artyom/Проекты/Top Club Chart/клипы чарта/regulars/'
+		clip_path = ''
+		if data['CLIP_PATH']:
+			clip_path = default_clip_path + data['CLIP_PATH']
+
 		return Song({
 			'id': data['ID'],
 			'name': data['NAME'],
 			'authors': data['AUTHORS'],
 			'ep_id': data['EP_ID'],
 			'original_id': data['ORIGINAL_ID'],
-			'clip_path': data['CLIP_PATH'],
+			'clip_path': clip_path,
 			'clip_start_sec': data['CLIP_START_SEC'],
 			'clip_end_sec': data['CLIP_END_SEC'],
 		})
