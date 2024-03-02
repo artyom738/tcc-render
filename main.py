@@ -74,7 +74,12 @@ def get_all_time(song_id: int):
 		all_time_label_path,
 		target_resolution=(1080, 1920),
 	) \
-		.fx(vfx.mask_color, color=[0, 255, 0], s=5, thr=130)
+		.fx(vfx.mask_color, color=[0, 255, 0], s=5, thr=130) \
+		.set_start(0.5)
+
+	label_duration = label.duration
+	label = label.set_fps(label.fps * label_duration / (clip.duration - 1))
+	label = label.fx(vfx.speedx, label_duration / (clip.duration - 1))
 
 	return mp.CompositeVideoClip([clip, label])
 
@@ -174,7 +179,11 @@ def get_residance(song_id: int):
 		residance_label_path,
 		target_resolution=(1080, 1920),
 	) \
-		.fx(vfx.mask_color, color=[0, 255, 0], s=5, thr=130)
+		.fx(vfx.mask_color, color=[0, 255, 0], s=5, thr=130) \
+		.set_start(0.5)
+	label_duration = label.duration
+	label = label.set_fps(label.fps * label_duration / (clip.duration - 1))
+	label = label.fx(vfx.speedx, label_duration / (clip.duration - 1))
 
 	return mp.CompositeVideoClip([clip, label])
 
@@ -260,7 +269,11 @@ def get_perspective(song_id: int):
 		perspective_label_path,
 		target_resolution=(1080, 1920),
 	) \
-		.fx(vfx.mask_color, color=[0, 255, 0], s=5, thr=130)
+		.fx(vfx.mask_color, color=[0, 255, 0], s=5, thr=130) \
+		.set_start(0.5)
+	label_duration = label.duration
+	label = label.set_fps(label.fps * label_duration / (clip.duration - 1))
+	label = label.fx(vfx.speedx, label_duration / (clip.duration - 1))
 
 	return mp.CompositeVideoClip([clip, label])
 
