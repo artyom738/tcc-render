@@ -50,7 +50,7 @@ class Chart:
 	# Longest Chart Sitter
 	def fill_lcs(self):
 		max_weeks = 0
-		song_repo = SongRepository(self.chart_type)
+		song_repo = SongRepository()
 		lcs_positions = []
 		for position in self.positions:
 			song = song_repo.get_song_by_id(position.song_id)

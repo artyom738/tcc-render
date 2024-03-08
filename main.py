@@ -12,6 +12,7 @@ if __name__ == '__main__':
 	# Chart date format YYYY-MM-DD
 	chart = Chart(data={
 		'chart_number': 455,
-		'chart_date': datetime(2024, 3, 2)
+		'chart_date': datetime(2024, 3, 2),
+		'chart_type': 'tcc'
 	})
 	__main__(chart)

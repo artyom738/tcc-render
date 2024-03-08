@@ -5,8 +5,8 @@ from model.entity.song import Song
 
 
 class SongRepository:
-	def __init__(self, chart_type: str):
-		self.chart_type: str = chart_type
+	def __init__(self):
+		pass
 
 	def get_song_by_id(self, song_id) -> Song | None:
 		query = f'select * from songs where ID = {str(int(song_id))}'
@@ -18,7 +18,7 @@ class SongRepository:
 			return None
 
 	def get_song_by_ep_id(self, ep_id) -> Song | None:
-		query = f'select * from songs where EP_ID = {str(int(ep_id))} and CHART_TYPE = \'{self.chart_type}\''
+		query = f'select * from songs where EP_ID = {str(int(ep_id))}'
 		result = database.get_list(query)
 		if len(result) > 0:
 			return self.fetch_object(result[0])

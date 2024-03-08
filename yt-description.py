@@ -8,7 +8,7 @@ def __main__():
 	chart_date = datetime(2024, 3, 2)
 	chart_type = 'tcc'
 	position_repo = PositionRepository(chart_type)
-	song_repo = SongRepository(chart_type)
+	song_repo = SongRepository()
 	positions = position_repo.get_positions_by_date(chart_date)
 	for position in positions:
 		song = song_repo.get_song_by_id(position.song_id)

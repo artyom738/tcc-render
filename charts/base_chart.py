@@ -13,7 +13,7 @@ from model.entity.chart import Chart
 class BaseChart:
 	def __init__(self, chart: Chart):
 		self.chart = chart
-		self.song_repo: SongRepository = SongRepository(self.get_chart_type())
+		self.song_repo: SongRepository = SongRepository()
 
 	def get_chart_type(self) -> str:
 		raise NotImplementedError

@@ -19,7 +19,7 @@ def fill_db_chart(date: datetime):
 		for song in data:
 			ep_id = song['id']
 			position = song['hit_data']['place']
-			song_object = SongRepository(chart_type).get_song_by_ep_id(ep_id)
+			song_object = SongRepository().get_song_by_ep_id(ep_id)
 			if not song_object:
 				artists = song['artists']
 				db_authors = ''
