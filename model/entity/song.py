@@ -20,7 +20,6 @@ class Song:
 		self.clip_path: str = data.get('clip_path')
 		self.clip_start_sec: list[float] = clip_start_sec
 		self.clip_end_sec: list[float] = clip_end_sec
-		self.chart_type: str = data.get('chart_type')
 
 	# region Setters
 	def set_id(self, song_id):
@@ -69,7 +68,7 @@ class Song:
 	# endregion
 
 	def get_peak(self):
-		query = f'select MIN(POSITION) as peak from charts where SONG_ID = {str(self.id)} and CHART_TYPE = {self.chart_type}'
+		query = f'select MIN(POSITION) as peak from charts where SONG_ID = {str(self.id)}'
 		result = database.get_list(query)
 		min_position = result[0]['peak']
 
@@ -83,15 +82,15 @@ class Song:
 			return str(min_position)
 
 	def get_weeks(self):
-		query = f'select count(*) as weeks from charts where SONG_ID = {str(self.id)} and CHART_TYPE = {self.chart_type}'
+		query = f'select count(*) as weeks from charts where SONG_ID = {str(self.id)}'
 		result = database.get_list(query)
 
 		return result[0]['weeks']
 
 	def save(self):
 		if self.id is None:
-			query = "insert into songs (EP_ID, AUTHORS, NAME, CLIP_PATH, CLIP_START_SEC, CLIP_END_SEC, CHART_TYPE) " \
-				"values (%s, %s, %s, %s, %s, %s, %s)"
+			query = "insert into songs (EP_ID, AUTHORS, NAME, CLIP_PATH, CLIP_START_SEC, CLIP_END_SEC) " \
+				"values (%s, %s, %s, %s, %s, %s)"
 			clip_start_sec = list(self.clip_start_sec or [])
 			clip_end_sec = list(self.clip_end_sec or [])
 			result = database.add(query, (
@@ -101,11 +100,10 @@ class Song:
 				self.clip_path or '',
 				','.join(str(v) for v in clip_start_sec),
 				','.join(str(v) for v in clip_end_sec),
-				self.chart_type or '',
 			))
 			self.set_id(result)
 		else:
-			query = "update songs set EP_ID = %s, AUTHORS = %s, NAME = %s, CLIP_PATH = %s, CLIP_START_SEC = %s, CLIP_END_SEC = %s, CHART_TYPE = %s where songs.ID = %s"
+			query = "update songs set EP_ID = %s, AUTHORS = %s, NAME = %s, CLIP_PATH = %s, CLIP_START_SEC = %s, CLIP_END_SEC = %s where songs.ID = %s"
 			clip_start_sec = list(self.clip_start_sec or [])
 			clip_end_sec = list(self.clip_end_sec or [])
 			result = database.add(query, (
@@ -115,7 +113,6 @@ class Song:
 				self.clip_path or '',
 				','.join(str(v) for v in clip_start_sec),
 				','.join(str(v) for v in clip_end_sec),
-				self.chart_type or '',
 				self.id
 			))
 
