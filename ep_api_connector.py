@@ -85,19 +85,19 @@ def fill_rubrics(chart_number: int, rubric_songs: dict):
 
 
 if __name__ == '__main__':
-	date_to_start = datetime(2024, 3, 1)
+	date_to_start = datetime(2024, 3, 2)
 	while date_to_start < datetime.now():
-		# fill_db_chart(date_to_start)
+		fill_db_chart(date_to_start)
 		date_to_start += timedelta(days=7)
 		need_fill_rubrics = True
 		if need_fill_rubrics:
-			chart_number = 454
+			chart_number = 455
 			fill_rubrics(chart_number, {
-				'alltime_author': 'Dancin (Krono Remix)',
-				'alltime_name': 'Aaron Smith',
-				'residance_author': 'Weekend',
-				'residance_name': 'Rezone',
-				'perspective_author': 'Prada',
-				'perspective_name': 'Casso & Raye',
+				'alltime_author': 'Alex Adair',
+				'alltime_name': 'Make Me Feel Better',
+				'residance_author': 'Rezone',
+				'residance_name': 'Alone',
+				'perspective_author': 'Martin Garrix & Mesto',
+				'perspective_name': 'Breakaway',
 			})
 

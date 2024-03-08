@@ -372,7 +372,7 @@ def __main__(chart: Chart):
 	]) \
 		# .subclip(47, 47.2)
 
-	final.write_videofile(f'production/tcc {chart.chart_date.strftime("%Y-%m-%d")}1.mp4', fps=30, codec='mpeg4', bitrate='8000k', threads=8)
+	final.write_videofile(f'production/tcc {chart.chart_date.strftime("%Y-%m-%d")}.mp4', fps=30, codec='mpeg4', bitrate='8000k', threads=8)
 	# final.write_videofile('video_parts/tcc ' + chart.chart_date.strftime('%Y-%m-%d') + '.mp4', fps=10, codec='mpeg4', bitrate='200k', threads=8)
 
 	print('Finished at', current_time.strftime('%Y-%m-%d %H:%M:%S'))
@@ -383,7 +383,7 @@ def __main__(chart: Chart):
 if __name__ == '__main__':
 	# Chart date format YYYY-MM-DD
 	chart = Chart(data={
-		'chart_number': 454,
-		'chart_date': datetime(2024, 2, 24)
+		'chart_number': 455,
+		'chart_date': datetime(2024, 3, 2)
 	})
 	__main__(chart)

@@ -67,6 +67,7 @@ def fill_songs_with_no_clip():
 		print(f'{Colors.OKBLUE}Downloading clip for {song.id} {song.authors} - {song.name}{Colors.ENDC}')
 		search_query = f'{song.authors} - {song.name} -selected'  # For not to use boring clips from Selected channel
 		yt_clip_id = find_clip(search_query)
+		# yt_clip_id = 'ig9TBmz03Dg'
 		yt_clip_url = f'https://www.youtube.com/watch?v={yt_clip_id}'
 		fill_file(song.id, yt_clip_url)
 
