@@ -38,7 +38,7 @@ def create_position_clip(
 
 	print('Start creating position ' + str(position) + ', name: ' + result_name)
 	clip1 = mp.VideoFileClip(clip_path)
-	music_clip = clip1.subclip(clip_start_time, clip_end_time)
+	music_clip = clip1.subclip(clip_start_time, clip_end_time).resize(height=1080)
 	duration = music_clip.duration
 	clip_width, clip_height = music_clip.size
 
@@ -55,9 +55,10 @@ def create_position_clip(
 			.set_position(('center', 'center')) \
 			.resize(start_size) \
 			.resize(lambda t: 1 + (end_size - start_size) / (start_size * duration) * t)
-	elif clip_height != 1080 and clip_width != 1920:
+	elif clip_width != 1920:
 		print('Render standart Full HD video')
-		music_clip = music_clip.resize((1920, 1080))
+		background_video = mp.ColorClip(size=(1920, 1080), color=[0, 0, 0], duration=duration)
+		music_clip = music_clip.set_position(('center', 'center'))
 	else:
 		print('Source clip is FHD already')
 
