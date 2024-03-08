@@ -13,6 +13,7 @@ from model.entity.chart import Chart
 class BaseChart:
 	def __init__(self, chart: Chart):
 		self.chart = chart
+		self.song_repo: SongRepository = SongRepository(self.get_chart_type())
 
 	def get_chart_type(self) -> str:
 		raise NotImplementedError
@@ -40,12 +41,11 @@ class BaseChart:
 			.set_start(total_duration - 25 / 30)
 
 	def get_outs(self, total_duration: float, chart: Chart):
-		song_repo = SongRepository()
 		out_clip_list = []
 		outs = chart.outs
 		processes = []
 		for index, out in enumerate(outs):
-			song = song_repo.get_song_by_id(out.song_id)
+			song = self.song_repo.get_song_by_id(out.song_id)
 			clip_times = song.get_clip_times()
 			clip_params = {
 				'clip_path': song.clip_path,
@@ -97,7 +97,6 @@ class BaseChart:
 		return animation
 
 	def get_positions(self, total_duration: float, chart: Chart):
-		song_repo = SongRepository()
 		song_clip_list = []
 		positions = chart.positions
 		print('Chart date: ', chart.chart_date.strftime("%Y-%m-%d"))
@@ -105,7 +104,7 @@ class BaseChart:
 		processes = []
 		for index, position in enumerate(positions):
 			song_id = position.song_id
-			song = song_repo.get_song_by_id(song_id)
+			song = self.song_repo.get_song_by_id(song_id)
 			clip_times = song.get_clip_times()
 			clip_params = {
 				'clip_path': song.clip_path,

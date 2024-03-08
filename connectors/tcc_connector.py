@@ -14,13 +14,14 @@ def fill_db_chart(date: datetime):
 	api_url = "https://europaplus.ru/api/programs/top-club-chart?date=" + str_date
 	response = requests.get(api_url)
 	res = response.json()
+	chart_type = 'tcc'
 
 	data = res['data']
 	if data:
 		for song in data:
 			ep_id = song['id']
 			position = song['hit_data']['place']
-			song_object = SongRepository().get_song_by_ep_id(ep_id)
+			song_object = SongRepository(chart_type).get_song_by_ep_id(ep_id)
 			if not song_object:
 				artists = song['artists']
 				db_authors = ''
@@ -33,7 +34,7 @@ def fill_db_chart(date: datetime):
 					'ep_id': ep_id,
 				})
 				song_object = song_object.save()
-			position_object = PositionRepository().get_position_by_song_and_date(song_object.id, date)
+			position_object = PositionRepository(chart_type).get_position_by_song_and_date(song_object.id, date)
 			if position_object is None:
 				position = Position({
 					'position': position,
@@ -100,4 +101,3 @@ if __name__ == '__main__':
 				'perspective_author': 'Martin Garrix & Mesto',
 				'perspective_name': 'Breakaway',
 			})
-

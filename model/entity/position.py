@@ -8,15 +8,17 @@ class Position:
 		self.position = data.get('position')
 		self.song_id = data.get('song_id')
 		self.chart_date = data.get('chart_date')
+		self.chart_type = data.get('chart_type')
 		self.moving = None
 		self.is_lcs = False
 
 	def save(self):
-		query = "insert into charts (CHART_DATE, SONG_ID, POSITION) values (%s, %s, %s)"
+		query = "insert into charts (CHART_DATE, SONG_ID, POSITION, CHART_TYPE) values (%s, %s, %s, %s)"
 		result = database.add(query, (
 			self.chart_date or '',
 			self.song_id or '',
-			self.position or 0
+			self.position or 0,
+			self.chart_type or '',
 		))
 
 		return self
@@ -25,8 +27,8 @@ class Position:
 		prev_date = self.chart_date - timedelta(days=7)
 		str_prev_date = datetime.strftime(prev_date, '%Y-%m-%d')
 		# str_prev_date = '2023-12-23'
-		query = 'select POSITION from charts where SONG_ID = %s AND CHART_DATE = %s'
-		result = database.get_list(query, (self.song_id, str_prev_date))
+		query = f'select POSITION from charts where SONG_ID = {self.song_id} AND CHART_DATE = {str_prev_date} AND CHART_TYPE = {self.chart_type}'
+		result = database.get_list(query)
 		if len(result) < 1:
 			return '--'
 		else:

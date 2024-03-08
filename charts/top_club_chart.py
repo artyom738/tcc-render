@@ -2,7 +2,6 @@ import moviepy.editor as mp
 import moviepy.video.fx.all as vfx
 from charts.base_chart import BaseChart
 from clips.position import create_position_clip
-from model.repository.song_repository import SongRepository
 
 
 class TopClubChart(BaseChart):
@@ -14,7 +13,7 @@ class TopClubChart(BaseChart):
 		return 'tcc'
 
 	def get_all_time(self, song_id: int):
-		song = SongRepository().get_song_by_id(song_id)
+		song = self.song_repo.get_song_by_id(song_id)
 		clip_times = song.get_clip_times()
 		clip_params = {
 			'clip_path': song.clip_path,
@@ -58,7 +57,7 @@ class TopClubChart(BaseChart):
 		return animation
 
 	def get_residance(self, song_id: int):
-		song = SongRepository().get_song_by_id(song_id)
+		song = self.song_repo.get_song_by_id(song_id)
 		clip_times = song.get_clip_times()
 		clip_params = {
 			'clip_path': song.clip_path,
@@ -101,7 +100,7 @@ class TopClubChart(BaseChart):
 		return animation
 
 	def get_perspective(self, song_id: int):
-		song = SongRepository().get_song_by_id(song_id)
+		song = self.song_repo.get_song_by_id(song_id)
 		clip_times = song.get_clip_times()
 		clip_params = {
 			'clip_path': song.clip_path,

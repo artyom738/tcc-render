@@ -10,6 +10,7 @@ class Chart:
 	def __init__(self, data):
 		self.chart_number: int = data.get('chart_number')
 		self.chart_date: datetime = data.get('chart_date')
+		self.chart_type: str = data.get('chart_type')
 		self.positions: list = []
 		self.outs: list = []
 		self.all_time_song_id: int | None = None
@@ -18,7 +19,7 @@ class Chart:
 		self.fill()
 
 	def fill(self):
-		repo = PositionRepository()
+		repo = PositionRepository(self.chart_type)
 		self.positions = repo.get_positions_by_date(self.chart_date)
 		self.outs = repo.get_outs_by_date(self.chart_date)
 		self.fill_max_up_down()
@@ -49,7 +50,7 @@ class Chart:
 	# Longest Chart Sitter
 	def fill_lcs(self):
 		max_weeks = 0
-		song_repo = SongRepository()
+		song_repo = SongRepository(self.chart_type)
 		lcs_positions = []
 		for position in self.positions:
 			song = song_repo.get_song_by_id(position.song_id)
@@ -73,7 +74,7 @@ class Chart:
 				return position
 
 	def fill_rubrics(self):
-		rubrics = ChartRubricsRepository().get_rubrics_by_chart_id(self.chart_number)
+		rubrics = ChartRubricsRepository(self.chart_type).get_rubrics_by_chart_id(self.chart_number)
 		for rubric in rubrics:
 			if rubric.rubric_type == ChartRubricsRepository.RUBRIC_ALL_TIME:
 				self.all_time_song_id = rubric.song_id

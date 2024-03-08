@@ -7,11 +7,11 @@ class ChartRubricsRepository:
 	RUBRIC_RESIDANCE = 'R'
 	RUBRIC_PERSPECTIVE = 'P'
 
-	def __init__(self):
-		pass
+	def __init__(self, chart_type: str):
+		self.chart_type: str = chart_type
 
-	def get_rubrics_by_chart_id(self, chart_id) -> list[Rubric]:
-		query = 'select * from chart_rubrics where CHART_ID = ' + str(int(chart_id))
+	def get_rubrics_by_chart_id(self, chart_id: int) -> list[Rubric]:
+		query = f'select * from chart_rubrics where CHART_ID = {str(chart_id)} and CHART_TYPE = \'{self.chart_type}\''
 		db_result = database.get_list(query)
 		result = []
 		if len(db_result) > 0:
@@ -26,4 +26,5 @@ class ChartRubricsRepository:
 			'chart_id': data['CHART_ID'],
 			'song_id': data['SONG_ID'],
 			'rubric_type': data['RUBRIC_TYPE'],
+			'chart_type': data['CHART_TYPE'],
 		})

@@ -52,7 +52,7 @@ def fill_file(songId: int, ytUrl: str):
 	os.remove(result['video_path'])
 	os.remove(result['audio_path'])
 
-	song = SongRepository().get_song_by_id(songId)
+	song = SongRepository('').get_song_by_id(songId)
 	song \
 		.set_clip_path(result['filename']) \
 		.set_clip_start_sec(analyze_result['start_times']) \
@@ -61,7 +61,7 @@ def fill_file(songId: int, ytUrl: str):
 
 
 def fill_songs_with_no_clip():
-	songs = SongRepository().get_songs_with_no_clips()
+	songs = SongRepository('').get_songs_with_no_clips()
 	print(f'{Colors.OKCYAN}Found {len(songs)} songs without clips{Colors.ENDC}')
 	for song in songs:
 		print(f'{Colors.OKBLUE}Downloading clip for {song.id} {song.authors} - {song.name}{Colors.ENDC}')
