@@ -27,7 +27,7 @@ class Position:
 		prev_date = self.chart_date - timedelta(days=7)
 		str_prev_date = datetime.strftime(prev_date, '%Y-%m-%d')
 		# str_prev_date = '2023-12-23'
-		query = f'select POSITION from charts where SONG_ID = {self.song_id} AND CHART_DATE = {str_prev_date} AND CHART_TYPE = {self.chart_type}'
+		query = f'select POSITION from charts where SONG_ID = {self.song_id} AND CHART_DATE = \'{str_prev_date}\' AND CHART_TYPE = \'{self.chart_type}\''
 		result = database.get_list(query)
 		if len(result) < 1:
 			return '--'

@@ -8,7 +8,7 @@ class PositionRepository:
 		self.chart_type: str = chart_type
 
 	def get_position_by_song_and_date(self, song_id: int, date: datetime):
-		query = f'select * from charts c where SONG_ID = {str(song_id)} and CHART_DATE = {date.strftime("%Y-%m-%d")} and CHART_TYPE = \'{self.chart_type}\''
+		query = f'select * from charts c where SONG_ID = {str(song_id)} and CHART_DATE = \'{date.strftime("%Y-%m-%d")}\' and CHART_TYPE = \'{self.chart_type}\''
 		result = database.get_list(query)
 
 		if len(result) > 0:
@@ -17,7 +17,7 @@ class PositionRepository:
 			return None
 
 	def get_positions_by_date(self, date: datetime):
-		query = f'select * from charts c where CHART_DATE = {date.strftime("%Y-%m-%d")} and POSITION < 300 and POSITION > 0 and CHART_TYPE = \'{self.chart_type}\' order by POSITION desc'
+		query = f'select * from charts c where CHART_DATE = \'{date.strftime("%Y-%m-%d")}\' and POSITION < 300 and POSITION > 0 and CHART_TYPE = \'{self.chart_type}\' order by POSITION desc'
 		db_result = database.get_list(query)
 		result = []
 		if len(db_result) > 0:
@@ -31,7 +31,7 @@ class PositionRepository:
 		prev_date = date - timedelta(days=7)
 		prev_date = prev_date.strftime('%Y-%m-%d')
 		# prev_date = '2023-12-23'
-		query = f'select SONG_ID from charts c where CHART_DATE = {prev_date} and CHART_TYPE = \'{self.chart_type}\' order by POSITION desc'
+		query = f'select SONG_ID from charts c where CHART_DATE = \'{prev_date}\' and CHART_TYPE = \'{self.chart_type}\' order by POSITION desc'
 		prev_songs = []
 		db_result = database.get_list(query)
 		if len(db_result) > 0:
@@ -39,7 +39,7 @@ class PositionRepository:
 				prev_songs.append(position['SONG_ID'])
 
 		current_songs = []
-		query = f'select SONG_ID from charts c where CHART_DATE = {date.strftime("%Y-%m-%d")} and CHART_TYPE = \'{self.chart_type}\' order by POSITION desc'
+		query = f'select SONG_ID from charts c where CHART_DATE = \'{date.strftime("%Y-%m-%d")}\' and CHART_TYPE = \'{self.chart_type}\' order by POSITION desc'
 		db_result = database.get_list(query)
 		if len(db_result) > 0:
 			for position in db_result:
