@@ -38,6 +38,7 @@ def fill_db_chart(date: datetime):
 					'position': position,
 					'song_id': song_object.id,
 					'chart_date': date,
+					'chart_type': chart_type,
 				})
 				position = position.save()
 
