@@ -67,12 +67,12 @@ class Song:
 		}
 	# endregion
 
-	def get_peak(self):
-		query = f'select MIN(POSITION) as peak from charts where SONG_ID = {str(self.id)}'
+	def get_peak(self, chart_type: str):
+		query = f'select MIN(POSITION) as peak from charts where SONG_ID = {str(self.id)} and CHART_TYPE = \'{chart_type}\''
 		result = database.get_list(query)
 		min_position = result[0]['peak']
 
-		query = f'select COUNT(*) as peak_times from charts where SONG_ID = {self.id} AND POSITION = {min_position}'
+		query = f'select COUNT(*) as peak_times from charts where SONG_ID = {self.id} AND POSITION = {min_position} and CHART_TYPE = \'{chart_type}\''
 		result = database.get_list(query)
 		peak_times = result[0]['peak_times']
 
@@ -81,8 +81,8 @@ class Song:
 		else:
 			return str(min_position)
 
-	def get_weeks(self):
-		query = f'select count(*) as weeks from charts where SONG_ID = {str(self.id)}'
+	def get_weeks(self, chart_type: str):
+		query = f'select count(*) as weeks from charts where SONG_ID = {str(self.id)} and CHART_TYPE = \'{chart_type}\''
 		result = database.get_list(query)
 
 		return result[0]['weeks']

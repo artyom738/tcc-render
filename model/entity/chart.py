@@ -54,13 +54,13 @@ class Chart:
 		lcs_positions = []
 		for position in self.positions:
 			song = song_repo.get_song_by_id(position.song_id)
-			weeks = song.get_weeks()
+			weeks = song.get_weeks(self.chart_type)
 			if weeks >= max_weeks:
 				max_weeks = weeks
 
 		for position in self.positions:
 			song = song_repo.get_song_by_id(position.song_id)
-			weeks = song.get_weeks()
+			weeks = song.get_weeks(self.chart_type)
 			if weeks == max_weeks:
 				lcs_positions.append(position.position)
 
