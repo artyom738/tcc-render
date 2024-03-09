@@ -32,6 +32,7 @@ def create_position_clip(
 	result_name='rendered_clip',
 	is_lcs=False,
 	need_render=False,
+	chart=None,
 ):
 	if need_render and os.path.isfile('video_parts/' + result_name + '.mp4'):
 		return mp.VideoFileClip(filename='video_parts/' + result_name + '.mp4')
