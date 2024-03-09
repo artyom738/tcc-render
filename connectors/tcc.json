@@ -1,0 +1,114 @@
+{
+  "data": [
+    {
+      "hit_data": {"place": 1},
+      "id": 25837
+    },
+    {
+      "hit_data": {"place": 2},
+      "id": 25836
+    },
+    {
+      "hit_data": {"place": 3},
+      "id": 25824
+    },
+    {
+      "hit_data": {"place": 4},
+      "id": 25809
+    },
+    {
+      "hit_data": {"place": 5},
+      "id": 25792
+    },
+    {
+      "hit_data": {"place": 6},
+      "id": 25823
+    },
+    {
+      "hit_data": {"place": 7},
+      "id": 25786
+    },
+    {
+      "hit_data": {"place": 8},
+      "id": 25853
+    },
+    {
+      "hit_data": {"place": 9},
+      "id": 25808
+    },
+    {
+      "hit_data": {"place": 10},
+      "id": 25764
+    },
+    {
+      "hit_data": {"place": 11},
+      "id": 25839
+    },
+    {
+      "hit_data": {"place": 12},
+      "id": 25763
+    },
+    {
+      "hit_data": {"place": 13},
+      "id": 0,
+      "artists": [{"artist": "Joel Corry & Sidney Samson"}],
+      "name": "Riverside MF"
+    },
+    {
+      "hit_data": {"place": 14},
+      "id": 25745
+    },
+    {
+      "hit_data": {"place": 15},
+      "id": 25822
+    },
+    {
+      "hit_data": {"place": 16},
+      "id": 25733
+    },
+    {
+      "hit_data": {"place": 17},
+      "id": 25788
+    },
+    {
+      "hit_data": {"place": 18},
+      "id": 0,
+      "artists": [{"artist": "Sebastian Ingrosso & Steve Angello"}],
+      "name": "Skip"
+    },
+    {
+      "hit_data": {"place": 19},
+      "id": 25748
+    },
+    {
+      "hit_data": {"place": 20},
+      "id": 0,
+      "artists": [{"artist": "BYOR & ARIA"}],
+      "name": "Keep It Real"
+    },
+    {
+      "hit_data": {"place": 21},
+      "id": 25743
+    },
+    {
+      "hit_data": {"place": 22},
+      "id": 25787
+    },
+    {
+      "hit_data": {"place": 23},
+      "id": 0,
+      "artists": [{"artist": "Swanky Tunes, Shapov"}],
+      "name": "Wannabe"
+    },
+    {
+      "hit_data": {"place": 24},
+      "id": 25765
+    },
+    {
+      "hit_data": {"place": 25},
+      "id": 0,
+      "artists": [{"artist": "Mr. Belt & Wezol"}],
+      "name": "It's Not Right (But It's Ok)"
+    }
+  ]
+}
