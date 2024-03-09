@@ -5,6 +5,8 @@ import random
 import os
 import moviepy.video.fx.all as vfx
 import moviepy.audio.fx.all as afx
+from moviepy.Clip import Clip
+
 from clips.position import create_position_clip, create_last_out_clip
 from model.repository.song_repository import SongRepository
 from model.entity.chart import Chart
@@ -17,6 +19,9 @@ class BaseChart:
 
 	def get_chart_type(self) -> str:
 		raise NotImplementedError
+
+	def get_last_out_composition(self) -> list[Clip]:
+		return []
 
 	def get_intro(self):
 		return mp.VideoFileClip(
@@ -61,6 +66,7 @@ class BaseChart:
 				'show_stats': True,
 				'result_name': f'{chart.chart_number} out {str(index)}',
 				'need_render': True,
+				'chart': self,
 			}
 			if index == len(outs) - 1:
 				clip_params['chart_date'] = chart.chart_date.strftime("%d.%m.%Y")

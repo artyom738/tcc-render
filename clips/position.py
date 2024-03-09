@@ -181,7 +181,8 @@ def create_last_out_clip(
 	result_name='rendered_clip',
 	chart_date='',
 	chart_number=111,
-	need_render=False
+	need_render=False,
+	chart=None,
 ):
 	if need_render and os.path.isfile('video_parts/' + result_name + '.mp4'):
 		return mp.VideoFileClip(filename='video_parts/' + result_name + '.mp4')
@@ -213,56 +214,9 @@ def create_last_out_clip(
 	elif clip_height != 1080 and clip_width != 1920:
 		music_clip.resize((1080, 1920))
 
-	clip_chart_number = mp.TextClip(
-		txt='#' + str(chart_number), font=chart_number_font,
-		color='#781fdb', fontsize=350, stroke_color='white',
-		stroke_width=5, align='center',
-	) \
-		.set_duration(3) \
-		.set_position((200, 400)) \
-		.crossfadein(0.4) \
-		.crossfadeout(0.4)
-
-	clip_chart_date = mp.TextClip(
-		txt=str(chart_date), font=chart_number_font,
-		color='black', fontsize=80, stroke_color='white',
-		stroke_width=3, align='center',
-	) \
-		.set_duration(3) \
-		.set_position((1220, 790)) \
-		.crossfadein(0.4) \
-		.crossfadeout(0.4)
-
-	clip_logo = mp.ImageClip('package/logo_large.jpg') \
-		.set_duration(3) \
-		.set_position((1200, 200)) \
-		.crossfadein(0.4) \
-		.crossfadeout(0.4)
-
-	clip_site = mp.TextClip(
-		txt='20:00-22:00 Sat.\neuropaplus.ru', font=text_font,
-		color='white', fontsize=80, stroke_color='black',
-		stroke_width=1, align='center',
-	) \
-		.set_duration(3) \
-		.set_position((570, 100)) \
-		.crossfadein(0.4) \
-		.crossfadeout(0.4)
-
-	clip_ep_logo = mp.ImageClip('package/ep_logo.png') \
-		.set_duration(3) \
-		.set_position((60, 70)) \
-		.crossfadein(0.4) \
-		.crossfadeout(0.4)
-
 	clip_list = [
 		music_clip,
-		clip_chart_number,
-		clip_chart_date,
-		clip_logo,
-		clip_site,
-		clip_ep_logo,
-	]
+	] + chart.get_last_out_composition()
 	if background_video:
 		clip_list.insert(0, background_video)
 	blurred_clip = mp.CompositeVideoClip(clip_list)

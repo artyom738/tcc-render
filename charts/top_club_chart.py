@@ -1,7 +1,9 @@
 import moviepy.editor as mp
 import moviepy.video.fx.all as vfx
+from moviepy.Clip import Clip
+
 from charts.base_chart import BaseChart
-from clips.position import create_position_clip
+from clips.position import create_position_clip, chart_number_font, text_font
 
 
 class TopClubChart(BaseChart):
@@ -11,6 +13,57 @@ class TopClubChart(BaseChart):
 
 	def get_chart_type(self):
 		return 'tcc'
+
+	def get_last_out_composition(self) -> list[Clip]:
+		clip_chart_number = mp.TextClip(
+			txt='#' + str(self.chart.chart_number), font=chart_number_font,
+			color='#781fdb', fontsize=350, stroke_color='white',
+			stroke_width=5, align='center',
+		) \
+			.set_duration(3) \
+			.set_position((200, 400)) \
+			.crossfadein(0.4) \
+			.crossfadeout(0.4)
+
+		clip_chart_date = mp.TextClip(
+			txt=str(self.chart.chart_date), font=chart_number_font,
+			color='black', fontsize=80, stroke_color='white',
+			stroke_width=3, align='center',
+		) \
+			.set_duration(3) \
+			.set_position((1220, 790)) \
+			.crossfadein(0.4) \
+			.crossfadeout(0.4)
+
+		clip_logo = mp.ImageClip('package/logo_large.jpg') \
+			.set_duration(3) \
+			.set_position((1200, 200)) \
+			.crossfadein(0.4) \
+			.crossfadeout(0.4)
+
+		clip_site = mp.TextClip(
+			txt='20:00-22:00 Sat.\neuropaplus.ru', font=text_font,
+			color='white', fontsize=80, stroke_color='black',
+			stroke_width=1, align='center',
+		) \
+			.set_duration(3) \
+			.set_position((570, 100)) \
+			.crossfadein(0.4) \
+			.crossfadeout(0.4)
+
+		clip_ep_logo = mp.ImageClip('package/ep_logo.png') \
+			.set_duration(3) \
+			.set_position((60, 70)) \
+			.crossfadein(0.4) \
+			.crossfadeout(0.4)
+
+		return [
+			clip_chart_number,
+			clip_chart_date,
+			clip_logo,
+			clip_site,
+			clip_ep_logo,
+		]
 
 	def get_all_time(self, song_id: int):
 		song = self.song_repo.get_song_by_id(song_id)
