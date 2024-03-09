@@ -26,7 +26,7 @@ class TopClubChart(BaseChart):
 			.crossfadeout(0.4)
 
 		clip_chart_date = mp.TextClip(
-			txt=str(self.chart.chart_date), font=chart_number_font,
+			txt=str(self.chart.chart_date.strftime("%d.%m.%Y")), font=chart_number_font,
 			color='black', fontsize=80, stroke_color='white',
 			stroke_width=3, align='center',
 		) \
