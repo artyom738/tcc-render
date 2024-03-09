@@ -1,3 +1,5 @@
+import json.encoder
+
 import requests
 
 from datetime import datetime, timedelta
@@ -31,7 +33,7 @@ def fill_db_chart(date: datetime):
 				song_object = Song({
 					'name': name,
 					'authors': db_authors,
-					'ep_id': ep_id,
+					'ep_id': ep_id or 0,
 				})
 				song_object = song_object.save()
 			position_object = PositionRepository(chart_type).get_position_by_song_and_date(song_object.id, date)
@@ -59,6 +61,7 @@ def fill_rubrics(chart_number: int, rubric_songs: dict):
 			'chart_id': chart_number,
 			'song_id': alltime_song.id,
 			'rubric_type': ChartRubricsRepository.RUBRIC_ALL_TIME,
+			'chart_type': 'tcc',
 		}).save()
 
 	if rubric_songs['residance_name'] and rubric_songs['residance_author']:
@@ -71,6 +74,7 @@ def fill_rubrics(chart_number: int, rubric_songs: dict):
 			'chart_id': chart_number,
 			'song_id': alltime_song.id,
 			'rubric_type': ChartRubricsRepository.RUBRIC_RESIDANCE,
+			'chart_type': 'tcc',
 		}).save()
 
 	if rubric_songs['perspective_name'] and rubric_songs['perspective_author']:
@@ -83,22 +87,23 @@ def fill_rubrics(chart_number: int, rubric_songs: dict):
 			'chart_id': chart_number,
 			'song_id': alltime_song.id,
 			'rubric_type': ChartRubricsRepository.RUBRIC_PERSPECTIVE,
+			'chart_type': 'tcc',
 		}).save()
 
 
 if __name__ == '__main__':
-	date_to_start = datetime(2024, 3, 2)
+	date_to_start = datetime(2024, 3, 9)
 	while date_to_start < datetime.now():
 		fill_db_chart(date_to_start)
 		date_to_start += timedelta(days=7)
 		need_fill_rubrics = True
 		if need_fill_rubrics:
-			chart_number = 455
+			chart_number = 456
 			fill_rubrics(chart_number, {
-				'alltime_author': 'Alex Adair',
-				'alltime_name': 'Make Me Feel Better',
-				'residance_author': 'Rezone',
-				'residance_name': 'Alone',
-				'perspective_author': 'Martin Garrix & Mesto',
-				'perspective_name': 'Breakaway',
+				'alltime_author': 'Sunfreakz',
+				'alltime_name': 'Counting Down The Days',
+				'residance_author': 'Matvey Emerson',
+				'residance_name': 'Strangers',
+				'perspective_author': 'Fred Again',
+				'perspective_name': 'stayinit',
 			})
