@@ -5,7 +5,7 @@ from model.repository.song_repository import SongRepository
 
 
 def __main__():
-	chart_date = datetime(2024, 3, 2)
+	chart_date = datetime(2024, 3, 9)
 	chart_type = 'tcc'
 	position_repo = PositionRepository(chart_type)
 	song_repo = SongRepository()
