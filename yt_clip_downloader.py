@@ -72,5 +72,13 @@ def fill_songs_with_no_clip():
 		fill_file(song.id, yt_clip_url)
 
 
+def fill_concrete_song(song_id: int, yt_id: str):
+	print(f'{Colors.OKBLUE}Downloading clip for {song_id}{Colors.ENDC}')
+	yt_clip_url = f'https://www.youtube.com/watch?v={yt_id}'
+	fill_file(song_id, yt_clip_url)
+
+
 if __name__ == '__main__':
-	fill_songs_with_no_clip()
+	# fill_songs_with_no_clip()
+
+	fill_concrete_song(254, '1JPNFp0f53I')
