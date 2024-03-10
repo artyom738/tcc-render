@@ -46,6 +46,7 @@ class BaseChart:
 			.set_start(total_duration - 25 / 30)
 
 	def get_outs(self, total_duration: float, chart: Chart):
+		# TODO Create folder
 		out_clip_list = []
 		outs = chart.outs
 		processes = []
@@ -64,7 +65,7 @@ class BaseChart:
 				'weeks': song.get_weeks(self.get_chart_type()),
 				'moving': None,
 				'show_stats': True,
-				'result_name': f'{chart.chart_number} out {str(index)}',
+				'result_name': f'{chart.chart_type}/{chart.chart_number}/out {str(index)}',
 				'need_render': True,
 				'chart': self,
 			}
@@ -81,7 +82,7 @@ class BaseChart:
 
 		for index, out in enumerate(outs):
 			song_clip = mp.VideoFileClip(
-				filename=f'video_parts/{chart.chart_number} out {str(index)}.mp4'
+				filename=f'video_parts/{chart.chart_type}/{chart.chart_number}/out {str(index)}.mp4'
 			)
 			out_clip_list.append(song_clip)
 			print('Added out ' + str(index))
@@ -124,7 +125,7 @@ class BaseChart:
 				'weeks': song.get_weeks(self.get_chart_type()),
 				'moving': position.get_moving(),
 				'show_stats': True,
-				'result_name': f'{chart.chart_number} ({str(position.position)})',
+				'result_name': f'{chart.chart_type}/{chart.chart_number}/{str(position.position)}',
 				'need_render': True,
 				'is_lcs': position.is_lcs,
 			}
@@ -136,7 +137,7 @@ class BaseChart:
 
 		for index, position in enumerate(positions):
 			song_clip = mp.VideoFileClip(
-				filename=f'video_parts/{chart.chart_number} ({str(position.position)}).mp4'
+				filename=f'video_parts/{chart.chart_type}/{chart.chart_number}/{str(position.position)}.mp4'
 			)
 			song_clip_list.append(song_clip)
 			print('Added position ' + str(position.position))
