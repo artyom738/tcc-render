@@ -198,6 +198,7 @@ def create_last_out_clip(params: dict):
 	music_clip = mp.VideoFileClip(clip_path) \
 		.subclip(clip_end_time - 1.2, clip_end_time + 2) \
 		.fl_image(blur)
+	music_clip = music_clip.resize(height=1080)
 	duration = music_clip.duration
 	clip_width, clip_height = music_clip.size
 
@@ -213,8 +214,10 @@ def create_last_out_clip(params: dict):
 			.set_position(('center', 'center')) \
 			.resize(start_size) \
 			.resize(lambda t: 1 + (end_size - start_size) / (start_size * duration) * t)
-	elif clip_height != 1080 and clip_width != 1920:
-		music_clip.resize((1080, 1920))
+	elif clip_width != 1920:
+		print('Render standart Full HD video')
+		background_video = mp.ColorClip(size=(1920, 1080), color=[0, 0, 0], duration=duration)
+		music_clip = music_clip.set_position(('center', 'center'))
 
 	clip_list = [
 		music_clip,
