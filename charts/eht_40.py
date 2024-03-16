@@ -11,8 +11,8 @@ class Eht40(BaseChart):
 		return 'eht'
 
 	def get_position_text_color(self, position: int = 0):
-		if position >= 5:
-			return '#36c2f8'  # Orange
+		if position <= 5:
+			return '#ed9b2b'  # Orange
 		return '#1566af'  # Blue
 
 	def get_last_out_composition(self) -> list[Clip]:
