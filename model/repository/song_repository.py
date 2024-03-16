@@ -27,7 +27,7 @@ class SongRepository:
 		else:
 			return None
 
-	def get_songs_with_no_clips(self, min_id_filter=300) -> list[Song]:
+	def get_songs_with_no_clips(self, min_id_filter=471) -> list[Song]:
 		query = f'select * from songs where ID > {str(int(min_id_filter))} and (CLIP_PATH is null or CLIP_PATH = \'\')'
 		song_list = database.get_list(query)
 
