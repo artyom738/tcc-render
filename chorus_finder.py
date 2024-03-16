@@ -29,13 +29,15 @@ def analyze_track(audio_path: str, draw_chart=False):
 	# time when amplitude > threshold
 	time_chorus = librosa.times_like(amplitude_envelope)[increasing_energy_indices]
 
-	tempo, beat_frames = librosa.beat.beat_track(y=y, sr=sr)
-	if tempo < 100:
-		tempo = tempo * 2
-	result['bpm'] = round(tempo, 2)
+	bpm, beat_frames = librosa.beat.beat_track(y=y, sr=sr)
+	result['bpm'] = round(bpm, 2)
 
+	tacts = 14
+	while tacts >= bpm / 10:
+		tacts -= 2
+
+	piece_duration = 60 / bpm * tacts
 	full_duration = librosa.get_duration(y=y)
-	piece_duration = 600 / tempo
 
 	start_times = []
 	for index in range(len(time_chorus) - 1):
@@ -68,7 +70,7 @@ def analyze_track(audio_path: str, draw_chart=False):
 
 
 if __name__ == '__main__':
-	path = 'D:\\Artyom\\Проекты\\Top Club Chart\\клипы чарта\\regulars\\Mau P_Mau P - BEATS FOR THE UNDERGROUND.f140.m4a'
+	path = 'D:\\Artyom\\Проекты\\Python\\tcc-render\\test_results\\Aaron Smith - Dancin (Krono Remix).mp3'
 	print(analyze_track(
 		audio_path=path,
 		draw_chart=False,
