@@ -28,7 +28,13 @@ class SongRepository:
 			return None
 
 	def get_songs_with_no_clips(self, min_id_filter=471) -> list[Song]:
-		query = f'select * from songs where ID > {str(int(min_id_filter))} and (CLIP_PATH is null or CLIP_PATH = \'\')'
+		query = f'select * from songs where ID >= {str(int(min_id_filter))} and (CLIP_PATH is null or CLIP_PATH = \'\')'
+		song_list = database.get_list(query)
+
+		return [self.fetch_object(item) for item in song_list]
+
+	def get_by_greater_id(self, min_id: int = 300):
+		query = f'select * from songs where ID >= {str(min_id)}'
 		song_list = database.get_list(query)
 
 		return [self.fetch_object(item) for item in song_list]
@@ -45,6 +51,7 @@ class SongRepository:
 			'authors': data['AUTHORS'],
 			'ep_id': data['EP_ID'],
 			'original_id': data['ORIGINAL_ID'],
+			'clip_name': data['CLIP_PATH'],
 			'clip_path': clip_path,
 			'clip_start_sec': data['CLIP_START_SEC'],
 			'clip_end_sec': data['CLIP_END_SEC'],

@@ -18,6 +18,7 @@ class Song:
 		self.ep_id: int = data.get('ep_id')
 		self.original_id: int = data.get('original_id')
 		self.clip_path: str = data.get('clip_path')
+		self.clip_name: str = data.get('clip_name')
 		self.clip_start_sec: list[float] = clip_start_sec
 		self.clip_end_sec: list[float] = clip_end_sec
 
@@ -97,7 +98,7 @@ class Song:
 				self.ep_id or 0,
 				self.authors or '',
 				self.name or '',
-				self.clip_path or '',
+				self.clip_name or '',
 				','.join(str(v) for v in clip_start_sec),
 				','.join(str(v) for v in clip_end_sec),
 			))
@@ -110,7 +111,7 @@ class Song:
 				self.ep_id or 0,
 				self.authors or '',
 				self.name or '',
-				self.clip_path or '',
+				self.clip_name or '',
 				','.join(str(v) for v in clip_start_sec),
 				','.join(str(v) for v in clip_end_sec),
 				self.id

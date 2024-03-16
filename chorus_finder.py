@@ -4,6 +4,9 @@ import matplotlib
 import matplotlib.pyplot as plt
 import numpy as np
 
+from model.entity.song import Song
+from model.repository.song_repository import SongRepository
+
 matplotlib.use('TkAgg')
 
 
@@ -39,12 +42,10 @@ def analyze_track(audio_path: str, draw_chart=False):
 						and time_chorus[index + 1] + 20 < full_duration \
 						and time_chorus[index + 1] > 30:
 					start_times.append(round(time_chorus[index + 1], 2))
+
 		if len(start_times) > 2:
 			break
-		if energy_multiplicator > 2:
-			energy_multiplicator -= 0.2
-		else:
-			energy_multiplicator -= 0.1
+		energy_multiplicator -= 0.05
 
 	result['start_times'] = start_times
 
@@ -77,9 +78,35 @@ def analyze_track(audio_path: str, draw_chart=False):
 	return result
 
 
+# Analyses song and fills row in db.
+def fill_song_info(song: Song):
+	if song.clip_path:
+		result = analyze_track(song.clip_path)
+		song \
+			.set_clip_start_sec(result['start_times']) \
+			.set_clip_end_sec(result['end_times']) \
+			.save()
+		print(f'Analysing song {song.id} was finished')
+
+
+def reanalyze_songs(min_id: int = 300):
+	songs = SongRepository().get_by_greater_id(min_id)
+	for song in songs:
+		fill_song_info(song)
+
+
+def reanalyze_song(song_id: int):
+	song = SongRepository().get_song_by_id(song_id)
+	fill_song_info(song)
+
+
 if __name__ == '__main__':
-	path = 'D:\\Artyom\\Проекты\\Python\\tcc-render\\test_results\\Aaron Smith - Dancin (Krono Remix).mp3'
-	print(analyze_track(
-		audio_path=path,
-		draw_chart=False,
-	))
+	# path = 'D:\\Artyom\\Проекты\\Python\\tcc-render\\test_results\\Aaron Smith - Dancin (Krono Remix).mp3'
+	# path = 'D:\\Artyom\\Проекты\\Top Club Chart\\клипы чарта\\regulars\\AVAION, BUNT. - Other Side (Official Video).mp4'
+
+	# print(analyze_track(
+	# 	audio_path=path,
+	# 	draw_chart=False,
+	# ))
+
+	reanalyze_songs(316)
