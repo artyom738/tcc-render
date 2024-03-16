@@ -17,23 +17,26 @@ chart_number_font = 'GraphikLCG-BlackItalic'
 city_video_path = 'package/city_blur1.mp4'
 
 
-def create_position_clip(
-	clip_path,
-	clip_start_time=0,
-	clip_end_time=4,
-	author="Noname",
-	name="Untitled",
-	position="0",
-	lw="4",
-	peak="2",
-	weeks="10",
-	moving="up",
-	show_stats=True,
-	result_name='rendered_clip',
-	is_lcs=False,
-	need_render=False,
-	chart=None,
-):
+def create_position_clip(params: dict):
+	clip_path = params.get('clip_path', None)
+	if not params.get('clip_path'):
+		raise Exception('Clip path for render is None')
+
+	clip_start_time = params.get('clip_start_time', 0)
+	clip_end_time = params.get('clip_end_time', 4)
+	author = params.get('author', 'Noname')
+	name = params.get('name', 'Untitled')
+	position = params.get('position', '44')
+	lw = params.get('lw', '44')
+	peak = params.get('peak', '44')
+	weeks = params.get('weeks', '44')
+	moving = params.get('moving', 'up')
+	show_stats = params.get('show_stats', True)
+	result_name = params.get('result_name', 'rendered_clip')
+	is_lcs = params.get('is_lcs', False)
+	need_render = params.get('need_render', False)
+	position_text_color = params.get('position_text_color', '#781fdb')
+
 	if need_render and os.path.isfile('video_parts/' + result_name + '.mp4'):
 		return mp.VideoFileClip(filename='video_parts/' + result_name + '.mp4')
 
@@ -80,7 +83,7 @@ def create_position_clip(
 		clip_position = mp.TextClip(
 			txt=str(position),
 			font=number_font,
-			color='#781fdb',
+			color=position_text_color,
 			fontsize=220,
 			stroke_color='white',
 			stroke_width=2,
@@ -167,32 +170,30 @@ def blur(image):
 	return gaussian(image.astype(float), sigma=10, channel_axis=-1)
 
 
-def create_last_out_clip(
-	clip_path,
-	clip_start_time=0,
-	clip_end_time=4,
-	author="Noname",
-	name="Untitled",
-	position="0",
-	lw="4",
-	peak="2",
-	weeks="10",
-	moving="up",
-	show_stats=True,
-	result_name='rendered_clip',
-	chart_date='',
-	chart_number=111,
-	need_render=False,
-	chart=None,
-):
+def create_last_out_clip(params: dict):
+	clip_path = params.get('clip_path', None)
+	if not params.get('clip_path'):
+		raise Exception('Clip path for render is None')
+
+	clip_start_time = params.get('clip_start_time', 0)
+	clip_end_time = params.get('clip_end_time', 4)
+	author = params.get('author', 'Noname')
+	name = params.get('name', 'Untitled')
+	position = params.get('position', '44')
+	lw = params.get('lw', '44')
+	peak = params.get('peak', '44')
+	weeks = params.get('weeks', '44')
+	moving = params.get('moving', 'up')
+	show_stats = params.get('show_stats', True)
+	result_name = params.get('result_name', 'rendered_clip')
+	chart = params.get('chart', None)
+	need_render = params.get('need_render', False)
+
 	if need_render and os.path.isfile('video_parts/' + result_name + '.mp4'):
 		return mp.VideoFileClip(filename='video_parts/' + result_name + '.mp4')
-	clip = create_position_clip(
-		clip_path, clip_start_time, clip_end_time - 1,
-		author, name, position,
-		lw, peak, weeks,
-		moving, show_stats, result_name,
-	)
+
+	position_params = {**params, 'clip_end_time': clip_end_time - 1}
+	clip = create_position_clip(position_params)
 
 	music_clip = mp.VideoFileClip(clip_path) \
 		.subclip(clip_end_time - 1.2, clip_end_time + 2) \

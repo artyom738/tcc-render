@@ -14,10 +14,13 @@ class TopClubChart(BaseChart):
 	def get_chart_type(self):
 		return 'tcc'
 
+	def get_position_text_color(self, position: int = 0):
+		return '#781fdb'
+
 	def get_last_out_composition(self) -> list[Clip]:
 		clip_chart_number = mp.TextClip(
 			txt='#' + str(self.chart.chart_number), font=chart_number_font,
-			color='#781fdb', fontsize=350, stroke_color='white',
+			color=self.get_position_text_color(), fontsize=350, stroke_color='white',
 			stroke_width=5, align='center',
 		) \
 			.set_duration(3) \
@@ -84,7 +87,7 @@ class TopClubChart(BaseChart):
 			'need_render': True,
 			'is_lcs': False,
 		}
-		clip = create_position_clip(**clip_params)
+		clip = create_position_clip(clip_params)
 
 		label = mp.VideoFileClip(
 			'package/tcc/alltime.avi',
@@ -128,7 +131,7 @@ class TopClubChart(BaseChart):
 			'need_render': True,
 			'is_lcs': False,
 		}
-		clip = create_position_clip(**clip_params)
+		clip = create_position_clip(clip_params)
 
 		label = mp.VideoFileClip(
 			'package/tcc/residance.avi',
@@ -171,7 +174,7 @@ class TopClubChart(BaseChart):
 			'need_render': True,
 			'is_lcs': False,
 		}
-		clip = create_position_clip(**clip_params)
+		clip = create_position_clip(clip_params)
 
 		label = mp.VideoFileClip(
 			'package/tcc/perspective.avi',

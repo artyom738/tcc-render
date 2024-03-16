@@ -23,6 +23,9 @@ class BaseChart:
 	def get_last_out_composition(self) -> list[Clip]:
 		return []
 
+	def get_position_text_color(self, position: int = 0) -> str:
+		return '#36c2f8'
+
 	def get_intro(self):
 		return mp.VideoFileClip(
 			'package/' + self.get_chart_type() + '/intro.mp4',
@@ -68,13 +71,14 @@ class BaseChart:
 				'result_name': f'{chart.chart_type}/{chart.chart_number}/out {str(index)}',
 				'need_render': True,
 				'chart': self,
+				'position_text_color': self.get_position_text_color(),
 			}
 			if index == len(outs) - 1:
 				clip_params['chart_date'] = chart.chart_date.strftime("%d.%m.%Y")
 				clip_params['chart_number'] = chart.chart_number
-				process = multiprocessing.Process(target=create_last_out_clip, kwargs=clip_params)
+				process = multiprocessing.Process(target=create_last_out_clip, kwargs={'params': clip_params})
 			else:
-				process = multiprocessing.Process(target=create_position_clip, kwargs=clip_params)
+				process = multiprocessing.Process(target=create_position_clip, kwargs={'params': clip_params})
 			processes.append(process)
 			process.start()
 
@@ -128,8 +132,9 @@ class BaseChart:
 				'result_name': f'{chart.chart_type}/{chart.chart_number}/{str(position.position)}',
 				'need_render': True,
 				'is_lcs': position.is_lcs,
+				'position_text_color': self.get_position_text_color(position.position),
 			}
-			process = multiprocessing.Process(target=create_position_clip, kwargs=clip_params)
+			process = multiprocessing.Process(target=create_position_clip, kwargs={'params': clip_params})
 			processes.append(process)
 			process.start()
 

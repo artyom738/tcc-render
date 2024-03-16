@@ -10,10 +10,15 @@ class Eht40(BaseChart):
 	def get_chart_type(self) -> str:
 		return 'eht'
 
+	def get_position_text_color(self, position: int = 0):
+		if position >= 5:
+			return '#36c2f8'  # Orange
+		return '#1566af'  # Blue
+
 	def get_last_out_composition(self) -> list[Clip]:
 		clip_chart_number = mp.TextClip(
 			txt='Еврохит Топ 40', font=chart_number_font,
-			color='#781fdb', fontsize=180, stroke_color='white',
+			color='#36c2f8', fontsize=180, stroke_color='white',
 			stroke_width=5, align='center',
 		) \
 			.set_duration(3) \
