@@ -13,7 +13,7 @@ def __main__(chart: Chart):
 if __name__ == '__main__':
 	# Chart date format YYYY-MM-DD
 	chart = Chart(data={
-		'chart_number': 2,
+		'chart_number': 3,
 		'chart_date': datetime(2024, 3, 15),
 		# 'chart_type': 'tcc',
 		'chart_type': 'eht',
