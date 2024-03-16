@@ -65,7 +65,7 @@ def fill_songs_with_no_clip():
 	print(f'{Colors.OKCYAN}Found {len(songs)} songs without clips{Colors.ENDC}')
 	for song in songs:
 		print(f'{Colors.OKBLUE}Downloading clip for {song.id} {song.authors} - {song.name}{Colors.ENDC}')
-		search_query = f'{song.authors} - {song.name} -selected'  # For not to use boring clips from Selected channel
+		search_query = f'{song.authors} - {song.name} official music video -selected'  # For not to use boring clips from Selected channel
 		yt_clip_id = find_clip(search_query)
 		# yt_clip_id = 'ig9TBmz03Dg'
 		yt_clip_url = f'https://www.youtube.com/watch?v={yt_clip_id}'
@@ -79,6 +79,6 @@ def fill_concrete_song(song_id: int, yt_id: str):
 
 
 if __name__ == '__main__':
-	# fill_songs_with_no_clip()
-
-	fill_concrete_song(254, '1JPNFp0f53I')
+	fill_songs_with_no_clip()
+	# fill_concrete_song(473, 'RlsJr2V8afo')
+	# fill_concrete_song(474, 'DEi_z08bcro')
