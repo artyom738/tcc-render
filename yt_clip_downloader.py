@@ -54,7 +54,7 @@ def fill_file(songId: int, ytUrl: str):
 
 	song = SongRepository().get_song_by_id(songId)
 	song \
-		.set_clip_path(result['filename']) \
+		.set_clip_name(result['filename']) \
 		.set_clip_start_sec(analyze_result['start_times']) \
 		.set_clip_end_sec(analyze_result['end_times']) \
 		.save()
@@ -79,6 +79,7 @@ def fill_concrete_song(song_id: int, yt_id: str):
 
 
 if __name__ == '__main__':
+	# fill_concrete_song(475, 'ZrO4PtchWUs')
+	# fill_concrete_song(476, '6reB55Y0BQg')
 	fill_songs_with_no_clip()
-	# fill_concrete_song(473, 'RlsJr2V8afo')
-	# fill_concrete_song(474, 'DEi_z08bcro')
+
