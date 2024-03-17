@@ -83,7 +83,7 @@ class TopClubChart(BaseChart):
 			'weeks': None,
 			'moving': None,
 			'show_stats': False,
-			'result_name': f'{self.chart.chart_number} (all time dance anthem)',
+			'result_name': f'{self.chart.chart_type}/{self.chart.chart_number}/all time dance anthem',
 			'need_render': True,
 			'is_lcs': False,
 		}
@@ -127,7 +127,7 @@ class TopClubChart(BaseChart):
 			'weeks': None,
 			'moving': None,
 			'show_stats': False,
-			'result_name': f'{self.chart.chart_number} (residance)',
+			'result_name': f'{self.chart.chart_type}/{self.chart.chart_number}/residance',
 			'need_render': True,
 			'is_lcs': False,
 		}
@@ -170,7 +170,7 @@ class TopClubChart(BaseChart):
 			'weeks': None,
 			'moving': None,
 			'show_stats': False,
-			'result_name': f'{self.chart.chart_number} (perspective)',
+			'result_name': f'{self.chart.chart_type}/{self.chart.chart_number}/perspective',
 			'need_render': True,
 			'is_lcs': False,
 		}
