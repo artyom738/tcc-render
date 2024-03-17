@@ -48,6 +48,11 @@ class Song:
 
 		return self
 
+	def set_clip_name(self, clip_name):
+		self.clip_name = clip_name
+
+		return self
+
 	def set_clip_start_sec(self, clip_start_sec: list[float]):
 		self.clip_start_sec = clip_start_sec
 
