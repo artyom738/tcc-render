@@ -209,6 +209,9 @@ class BaseChart:
 			# .subclip(47, 47.2)
 
 	def render(self):
+		tmp_clip_path = f'video_parts/{self.chart.chart_type}/{self.chart.chart_number}'
+		if not os.path.exists(tmp_clip_path):
+			os.makedirs(tmp_clip_path)
 		current_time = datetime.now()
 		print('Started at', current_time.strftime('%Y-%m-%d %H:%M:%S'))
 		final = self.generate_clip()
