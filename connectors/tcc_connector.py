@@ -92,18 +92,18 @@ def fill_rubrics(chart_number: int, rubric_songs: dict):
 
 
 if __name__ == '__main__':
-	date_to_start = datetime(2024, 3, 9)
+	date_to_start = datetime(2024, 3, 16)
 	while date_to_start < datetime.now():
 		fill_db_chart(date_to_start)
 		date_to_start += timedelta(days=7)
 		need_fill_rubrics = True
 		if need_fill_rubrics:
-			chart_number = 456
+			chart_number = 457
 			fill_rubrics(chart_number, {
-				'alltime_author': 'Sunfreakz',
-				'alltime_name': 'Counting Down The Days',
-				'residance_author': 'Matvey Emerson',
-				'residance_name': 'Strangers',
-				'perspective_author': 'Fred Again',
-				'perspective_name': 'stayinit',
+				'alltime_author': 'Mauro Picotto',
+				'alltime_name': 'Komodo',
+				'residance_author': 'Alexander Popov, TRITICUM',
+				'residance_name': 'Give It To Me',
+				'perspective_author': 'Don Diablo, Major Lazer, Baby Lawd',
+				'perspective_name': 'Jiggy Woogie',
 			})
