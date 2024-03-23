@@ -1,6 +1,8 @@
 from datetime import datetime
+import librosa
 import moviepy.editor as mp
 import multiprocessing
+import numpy as np
 import random
 import os
 import moviepy.video.fx.all as vfx
@@ -141,9 +143,19 @@ class BaseChart:
 		[process.join() for process in processes]
 
 		for index, position in enumerate(positions):
+			filename = f'video_parts/{chart.chart_type}/{chart.chart_number}/{str(position.position)}.mp4'
 			song_clip = mp.VideoFileClip(
-				filename=f'video_parts/{chart.chart_type}/{chart.chart_number}/{str(position.position)}.mp4'
+				filename=filename
 			)
+
+			# Applying volume changing to get average amplitude 0.3
+			etalon_amplidude = 0.3
+			y, sr = librosa.load(filename)
+			amplitude_envelope = librosa.feature.rms(y=y)[0]
+			average_amplitude = round(np.mean(amplitude_envelope), 2)
+			song_clip = song_clip.fx(afx.volumex, etalon_amplidude / average_amplitude)
+			print(f'Multiplied by {etalon_amplidude / average_amplitude}')
+
 			song_clip_list.append(song_clip)
 			print('Added position ' + str(position.position))
 
