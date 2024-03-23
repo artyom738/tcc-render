@@ -44,7 +44,7 @@ def fill_db_chart(date: datetime):
 
 
 if __name__ == '__main__':
-	date_to_start = datetime(2024, 3, 1)
+	date_to_start = datetime(2024, 3, 22)
 	while date_to_start < datetime.now():
 		print(f'Getting chart {date_to_start}')
 		fill_db_chart(date_to_start)

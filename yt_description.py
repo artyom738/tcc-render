@@ -24,7 +24,8 @@ def print_tcc_description(chart_date: datetime):
 
 
 def print_eht_description(chart_date: datetime):
-	print(f'''Еврохит Топ 40 - главный музыкальный чарт Европы Плюс!
+	print(f'''Еврохит Топ 40 ({chart_date.strftime("%d.%m.%Y")}) - 40 Главных Хитов Недели
+Еврохит Топ 40 - главный музыкальный чарт Европы Плюс!
 Лучшие 40 песен недели, а также обзор западных чартов и интервью с артистами. 
 Слушай каждую пятницу с 14:00 до 16:00 и каждую субботу с 16:00 до 18:00.
 
@@ -36,13 +37,13 @@ def print_eht_description(chart_date: datetime):
 		song = song_repo.get_song_by_id(position.song_id)
 		print(str(position.position) + '. ' + song.authors + ' - ' + song.name)
 
-	print(f'\nПосмотреть чарт - https://europaplus.ru/top-club-chart?section=top25&date={chart_date.strftime("%Y-%m-%d")}\n')
+	print(f'\nПосмотреть чарт - https://europaplus.ru/top40?section=top40&date={chart_date.strftime("%Y-%m-%d")}\n')
 
 
 def __main__():
-	chart_date = datetime(2024, 3, 16)
-	# chart_type = 'eht'
-	chart_type = 'tcc'
+	chart_date = datetime(2024, 3, 22)
+	chart_type = 'eht'
+	# chart_type = 'tcc'
 
 	if chart_type == 'tcc':
 		print_tcc_description(chart_date)
