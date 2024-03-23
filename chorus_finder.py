@@ -10,7 +10,7 @@ from model.repository.song_repository import SongRepository
 matplotlib.use('TkAgg')
 
 
-def analyze_track(audio_path: str, draw_chart=False):
+def analyze_track(audio_path: str, draw_chart=False, find_times=True):
 	# Load audio file
 	# audio_path = 'test_results/!York - On The Beach (Kryder Remix).mp3'
 	result = dict()
@@ -24,44 +24,47 @@ def analyze_track(audio_path: str, draw_chart=False):
 	max_amplitude = round(np.max(amplitude_envelope), 2)
 	result['average_amplitude'] = average_amplitude
 	result['max_amplitude'] = max_amplitude
+	print(average_amplitude)
 
 	energy_multiplicator = max_amplitude / average_amplitude
-	while True:
-		# Set a threshold for detecting increasing energy
-		threshold = round(average_amplitude * energy_multiplicator, 2)  # Adjust this value based on your analysis
-		result['threshold'] = threshold
-		# Find indices where the amplitude exceeds the threshold
-		increasing_energy_indices = np.where(amplitude_envelope > threshold)[0]
-		# time when amplitude > threshold
-		time_chorus = librosa.times_like(amplitude_envelope)[increasing_energy_indices]
+	start_times = []
+	if find_times:
+		while True:
+			# Set a threshold for detecting increasing energy
+			threshold = round(average_amplitude * energy_multiplicator, 2)  # Adjust this value based on your analysis
+			result['threshold'] = threshold
+			# Find indices where the amplitude exceeds the threshold
+			increasing_energy_indices = np.where(amplitude_envelope > threshold)[0]
+			# time when amplitude > threshold
+			time_chorus = librosa.times_like(amplitude_envelope)[increasing_energy_indices]
 
-		start_times = []
-		for index in range(len(time_chorus) - 1):
-			if time_chorus[index] + 1 < time_chorus[index + 1]:
-				if (len(start_times) == 0 or time_chorus[index + 1] > start_times[-1] + 10) \
-						and time_chorus[index + 1] + 20 < full_duration \
-						and time_chorus[index + 1] > 30:
-					start_times.append(round(time_chorus[index + 1], 2))
+			start_times = []
+			for index in range(len(time_chorus) - 1):
+				if time_chorus[index] + 1 < time_chorus[index + 1]:
+					if (len(start_times) == 0 or time_chorus[index + 1] > start_times[-1] + 10) \
+							and time_chorus[index + 1] + 20 < full_duration \
+							and time_chorus[index + 1] > 30:
+						start_times.append(round(time_chorus[index + 1], 2))
 
-		if len(start_times) > 2:
-			break
-		energy_multiplicator -= 0.05
+			if len(start_times) > 2:
+				break
+			energy_multiplicator -= 0.05
 
-	result['start_times'] = start_times
+		result['start_times'] = start_times
 
-	bpm, beat_frames = librosa.beat.beat_track(y=y, sr=sr)
-	result['bpm'] = round(bpm, 2)
+		bpm, beat_frames = librosa.beat.beat_track(y=y, sr=sr)
+		result['bpm'] = round(bpm, 2)
 
-	tacts = 14
-	while tacts >= bpm / 10:
-		tacts -= 2
+		tacts = 14
+		while tacts >= bpm / 10:
+			tacts -= 2
 
-	piece_duration = 60 / bpm * tacts
+		piece_duration = 60 / bpm * tacts
 
-	end_times = []
-	for start_time in start_times:
-		end_times.append(round(start_time + piece_duration, 2))
-	result['end_times'] = end_times
+		end_times = []
+		for start_time in start_times:
+			end_times.append(round(start_time + piece_duration, 2))
+		result['end_times'] = end_times
 
 	if draw_chart:
 		# Plot the amplitude envelope and highlight areas of increasing energy
@@ -101,12 +104,13 @@ def reanalyze_song(song_id: int):
 
 
 if __name__ == '__main__':
-	# path = 'D:\\Artyom\\Проекты\\Python\\tcc-render\\test_results\\Aaron Smith - Dancin (Krono Remix).mp3'
+	# path = 'D:\\Artyom\\Проекты\\Python\\tcc-render\\production\\tcc 2024-03-16.mp4'
+	path = 'D:\\Artyom\\Проекты\\Python\\tcc-render\\video_parts\\tcc\\457\\3.1.mp4'
 	# path = 'D:\\Artyom\\Проекты\\Top Club Chart\\клипы чарта\\regulars\\AVAION, BUNT. - Other Side (Official Video).mp4'
 
 	# print(analyze_track(
 	# 	audio_path=path,
 	# 	draw_chart=False,
+	# 	find_times=False,
 	# ))
-
-	reanalyze_songs(316)
+	# reanalyze_songs(316)
