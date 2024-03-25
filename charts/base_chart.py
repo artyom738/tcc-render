@@ -51,7 +51,6 @@ class BaseChart:
 			.set_start(total_duration - 25 / 30)
 
 	def get_outs(self, total_duration: float, chart: Chart):
-		# TODO Create folder
 		out_clip_list = []
 		outs = chart.outs
 		processes = []
@@ -66,8 +65,8 @@ class BaseChart:
 				'name': song.name,
 				'position': 'OUT',
 				'lw': out.get_lw(),
-				'peak': song.get_peak(self.get_chart_type()),
-				'weeks': song.get_weeks(self.get_chart_type()),
+				'peak': song.get_peak(self.get_chart_type(), self.chart.chart_date),
+				'weeks': song.get_weeks(self.get_chart_type(), self.chart.chart_date),
 				'moving': None,
 				'show_stats': True,
 				'result_name': f'{chart.chart_type}/{chart.chart_number}/out {str(index)}',
@@ -97,7 +96,6 @@ class BaseChart:
 			return mp.concatenate_videoclips(out_clip_list).set_start(total_duration)
 		else:
 			print('Out list is empty')
-			exit()
 
 	def get_after_outs_animation(self, total_duration: float):
 		animation = mp.VideoFileClip(
@@ -108,6 +106,9 @@ class BaseChart:
 			.set_start(total_duration - 25 / 30)
 
 		return animation
+
+	def need_show_lcs(self):
+		return True
 
 	def get_positions(self, total_duration: float, chart: Chart):
 		song_clip_list = []
@@ -127,13 +128,13 @@ class BaseChart:
 				'name': song.name,
 				'position': position.position,
 				'lw': position.get_lw(),
-				'peak': song.get_peak(self.get_chart_type()),
-				'weeks': song.get_weeks(self.get_chart_type()),
+				'peak': song.get_peak(self.get_chart_type(), self.chart.chart_date),
+				'weeks': song.get_weeks(self.get_chart_type(), self.chart.chart_date),
 				'moving': position.get_moving(),
 				'show_stats': True,
 				'result_name': f'{chart.chart_type}/{chart.chart_number}/{str(position.position)}',
 				'need_render': True,
-				'is_lcs': position.is_lcs,
+				'is_lcs': self.need_show_lcs() & position.is_lcs,
 				'position_text_color': self.get_position_text_color(position.position),
 			}
 			process = multiprocessing.Process(target=create_position_clip, kwargs={'params': clip_params})

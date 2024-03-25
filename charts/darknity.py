@@ -21,6 +21,9 @@ class Darknity(BaseChart):
 			return '#ed9b2b'  # Orange
 		return '#1566af'  # Blue
 
+	def need_show_lcs(self):
+		return False
+
 	def get_last_out_composition(self) -> list[Clip]:
 		clip_chart_number = mp.TextClip(
 			txt='Darknity Top 50', font=chart_number_font,
