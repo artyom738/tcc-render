@@ -17,10 +17,10 @@ class SongRepository:
 		else:
 			return None
 
-	def get_song_by_ep_id(self, ep_id) -> Song | None:
+	def get_song_by_ep_id(self, ep_id: str) -> Song | None:
 		if ep_id == 0:
 			return None
-		query = f'select * from songs where EP_ID = {str(int(ep_id))}'
+		query = f'select * from songs where EP_ID = \'{ep_id}\''
 		result = database.get_list(query)
 		if len(result) > 0:
 			return self.fetch_object(result[0])
