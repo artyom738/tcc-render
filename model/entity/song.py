@@ -1,4 +1,6 @@
 import random
+from datetime import datetime
+
 import database
 
 
@@ -15,7 +17,7 @@ class Song:
 		self.id: int = data.get('id')
 		self.name: str = data.get('name')
 		self.authors: str = data.get('authors')
-		self.ep_id: int = data.get('ep_id')
+		self.ep_id: str = data.get('ep_id')
 		self.original_id: int = data.get('original_id')
 		self.clip_path: str = data.get('clip_path')
 		self.clip_name: str = data.get('clip_name')
@@ -73,12 +75,16 @@ class Song:
 		}
 	# endregion
 
-	def get_peak(self, chart_type: str):
+	def get_peak(self, chart_type: str, chart_date: datetime = None):
 		query = f'select MIN(POSITION) as peak from charts where SONG_ID = {str(self.id)} and CHART_TYPE = \'{chart_type}\''
+		if chart_date:
+			query += f' and CHART_DATE <= \'{chart_date.strftime("%Y-%m-%d")}\''
 		result = database.get_list(query)
 		min_position = result[0]['peak']
 
 		query = f'select COUNT(*) as peak_times from charts where SONG_ID = {self.id} AND POSITION = {min_position} and CHART_TYPE = \'{chart_type}\''
+		if chart_date:
+			query += f' and CHART_DATE <= \'{chart_date.strftime("%Y-%m-%d")}\''
 		result = database.get_list(query)
 		peak_times = result[0]['peak_times']
 
@@ -87,8 +93,10 @@ class Song:
 		else:
 			return str(min_position)
 
-	def get_weeks(self, chart_type: str):
+	def get_weeks(self, chart_type: str, chart_date: datetime = None):
 		query = f'select count(*) as weeks from charts where SONG_ID = {str(self.id)} and CHART_TYPE = \'{chart_type}\''
+		if chart_date:
+			query += f' and CHART_DATE <= \'{chart_date.strftime("%Y-%m-%d")}\''
 		result = database.get_list(query)
 
 		return result[0]['weeks']
