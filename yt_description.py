@@ -41,9 +41,9 @@ def print_eht_description(chart_date: datetime):
 
 
 def __main__():
-	chart_date = datetime(2024, 3, 22)
-	chart_type = 'eht'
-	# chart_type = 'tcc'
+	chart_date = datetime(2024, 3, 23)
+	# chart_type = 'eht'
+	chart_type = 'tcc'
 
 	if chart_type == 'tcc':
 		print_tcc_description(chart_date)
