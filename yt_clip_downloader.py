@@ -8,9 +8,14 @@ import chorus_finder
 from model.repository.song_repository import SongRepository
 
 
-def find_clip(query, max_results=1):
+def find_clip(query, max_results=10):
 	videos_search = VideosSearch(query, limit=max_results)
 	results = videos_search.result()
+	for song in results['result']:
+		if song['channel']['name'] == 'Selected':
+			continue
+		else:
+			return song['id']
 
 	return results['result'][0]['id']
 
@@ -65,7 +70,7 @@ def fill_songs_with_no_clip():
 	print(f'{Colors.OKCYAN}Found {len(songs)} songs without clips{Colors.ENDC}')
 	for song in songs:
 		print(f'{Colors.OKBLUE}Downloading clip for {song.id} {song.authors} - {song.name}{Colors.ENDC}')
-		search_query = f'{song.authors} - {song.name} official music video -selected'  # For not to use boring clips from Selected channel
+		search_query = f'{song.authors} - {song.name}'
 		yt_clip_id = find_clip(search_query)
 		# yt_clip_id = 'ig9TBmz03Dg'
 		yt_clip_url = f'https://www.youtube.com/watch?v={yt_clip_id}'
