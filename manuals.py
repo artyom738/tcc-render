@@ -1,14 +1,16 @@
 from datetime import datetime
 
+from moviepy.video.VideoClip import TextClip
+
 from model.entity.chart import Chart
 from model.entity.song import Song
 from model.repository.song_repository import SongRepository
 
-chart = Chart(data={
-	'chart_number': 451,
-	'chart_date': datetime(2024, 2, 3),
-	'chart_type': 'tcc',
-})
+# chart = Chart(data={
+# 	'chart_number': 451,
+# 	'chart_date': datetime(2024, 2, 3),
+# 	'chart_type': 'tcc',
+# })
 
 # song = SongRepository('tcc').get_song_by_id(291)
 # clip_params = {
@@ -40,3 +42,5 @@ def blur(image):
 
 # bg_video = mp.VideoFileClip(city_video_path, target_resolution=(1080, 1920)).subclip(10, 20*60).fl_image(blur)
 # bg_video.write_videofile('video_parts/city_blur1.mp4', fps=24, codec='mpeg4', bitrate='3000k', threads=16)
+
+print(TextClip.list('font'))

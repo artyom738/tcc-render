@@ -92,18 +92,18 @@ def fill_rubrics(chart_number: int, rubric_songs: dict):
 
 
 if __name__ == '__main__':
-	date_to_start = datetime(2024, 3, 23)
+	date_to_start = datetime(2024, 3, 30)
 	while date_to_start < datetime.now():
 		fill_db_chart(date_to_start)
 		date_to_start += timedelta(days=7)
 		need_fill_rubrics = True
 		if need_fill_rubrics:
-			chart_number = 458
+			chart_number = 459
 			fill_rubrics(chart_number, {
-				'alltime_author': 'Strike',
-				'alltime_name': 'U Sure Do',
-				'residance_author': 'RITN',
-				'residance_name': 'Daddy',
-				'perspective_author': 'Fedde Le Grand',
-				'perspective_name': 'Here Comes That Sound',
+				'alltime_author': 'The Ones',  # 1:12:00 in podcast
+				'alltime_name': 'Flawless',
+				'residance_author': 'Anyma & Cassian',  # 0:25:30 in podcast
+				'residance_name': 'Save Me (Goom Gum & Stylo Remix)',
+				'perspective_author': 'Skrillex x Ahadadream x Priya Ragu',  # 1:30:00 in podcast
+				'perspective_name': 'TAKA',
 			})

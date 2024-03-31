@@ -54,6 +54,7 @@ class PositionRepository:
 					'POSITION': 99,
 					'CHART_TYPE': self.chart_type,
 				}))
+		# outs.reverse()
 
 		return outs
 
