@@ -9,7 +9,9 @@ import os.path
 # Fira-Sans-Extra-Condensed-SemiBold
 # Roboto-Condensed-Bold
 text_font = 'Fira-Sans-Extra-Condensed-SemiBold'
+
 number_font = 'Microsoft-PhagsPa-Bold'
+# Andes-Cnd-W04-SemiBold
 # Microsoft-PhagsPa-Bold
 # Bakbak-One-Regular
 
@@ -36,6 +38,7 @@ def create_position_clip(params: dict):
 	is_lcs = params.get('is_lcs', False)
 	need_render = params.get('need_render', False)
 	position_text_color = params.get('position_text_color', '#781fdb')
+	position_font_family = params.get('position_font_family', 'Microsoft-PhagsPa-Bold')
 
 	if need_render and os.path.isfile('video_parts/' + result_name + '.mp4'):
 		return mp.VideoFileClip(filename='video_parts/' + result_name + '.mp4')
@@ -82,7 +85,7 @@ def create_position_clip(params: dict):
 	if position:
 		clip_position = mp.TextClip(
 			txt=str(position),
-			font=number_font,
+			font=position_font_family,
 			color=position_text_color,
 			fontsize=220,
 			stroke_color='white',

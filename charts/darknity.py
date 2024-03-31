@@ -7,19 +7,26 @@ from clips.position import chart_number_font, text_font
 
 
 class Darknity(BaseChart):
-	def get_intro(self):
-		return mp.VideoFileClip(
-			'package/tcc/intro.mp4',
-			target_resolution=(1080, 1920)
-		)
-
 	def get_chart_type(self) -> str:
 		return 'dark'
 
 	def get_position_text_color(self, position: int = 0):
 		if position <= 5:
-			return '#ed9b2b'  # Orange
+			return '#620572'  # Purple
+		if position <= 10:
+			return '#2fa83f'  # Light green
+		if position <= 20:
+			return '#126316'  # Dark green
+		if position <= 30:
+			return '#d8cd1b'  # Yellow
+		if position <= 40:
+			return '#c07126'  # Orange
+		if position <= 50:
+			return '#970b0a'  # Red
 		return '#1566af'  # Blue
+
+	def get_position_font_family(self) -> str:
+		return 'Andes-Cnd-W04-SemiBold'
 
 	def need_show_lcs(self):
 		return False
@@ -55,15 +62,15 @@ class Darknity(BaseChart):
 			.crossfadein(0.4) \
 			.crossfadeout(0.4)
 
-		clip_ep_logo = mp.ImageClip('package/ep_logo.png') \
-			.set_duration(3) \
-			.set_position((60, 70)) \
-			.crossfadein(0.4) \
-			.crossfadeout(0.4)
+		# clip_ep_logo = mp.ImageClip('package/ep_logo.png') \
+		# 	.set_duration(3) \
+		# 	.set_position((60, 70)) \
+		# 	.crossfadein(0.4) \
+		# 	.crossfadeout(0.4)
 
 		return [
 			clip_chart_number,
 			clip_chart_date,
 			clip_site,
-			clip_ep_logo,
+			# clip_ep_logo,
 		]

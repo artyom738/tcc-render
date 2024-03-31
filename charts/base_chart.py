@@ -28,6 +28,9 @@ class BaseChart:
 	def get_position_text_color(self, position: int = 0) -> str:
 		return '#36c2f8'
 
+	def get_position_font_family(self) -> str:
+		return 'Microsoft-PhagsPa-Bold'
+
 	def get_intro(self):
 		return mp.VideoFileClip(
 			'package/' + self.get_chart_type() + '/intro.mp4',
@@ -73,6 +76,7 @@ class BaseChart:
 				'need_render': True,
 				'chart': self,
 				'position_text_color': self.get_position_text_color(),
+				'position_font_family': self.get_position_font_family(),
 			}
 			if index == len(outs) - 1:
 				clip_params['chart_date'] = chart.chart_date.strftime("%d.%m.%Y")
@@ -136,6 +140,7 @@ class BaseChart:
 				'need_render': True,
 				'is_lcs': self.need_show_lcs() & position.is_lcs,
 				'position_text_color': self.get_position_text_color(position.position),
+				'position_font_family': self.get_position_font_family(),
 			}
 			process = multiprocessing.Process(target=create_position_clip, kwargs={'params': clip_params})
 			processes.append(process)
