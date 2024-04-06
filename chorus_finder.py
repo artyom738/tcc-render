@@ -31,7 +31,7 @@ def analyze_track(audio_path: str, draw_chart=False, find_times=True):
 	if find_times:
 		while True:
 			# Set a threshold for detecting increasing energy
-			threshold = round(average_amplitude * energy_multiplicator, 2)  # Adjust this value based on your analysis
+			threshold = round(average_amplitude * energy_multiplicator * 0.8, 2)  # Adjust this value based on your analysis
 			result['threshold'] = threshold
 			# Find indices where the amplitude exceeds the threshold
 			increasing_energy_indices = np.where(amplitude_envelope > threshold)[0]
@@ -46,9 +46,12 @@ def analyze_track(audio_path: str, draw_chart=False, find_times=True):
 							and time_chorus[index + 1] > 30:
 						start_times.append(round(time_chorus[index + 1], 2))
 
-			if len(start_times) > 2:
+			if len(start_times) >= 1:
 				break
-			energy_multiplicator -= 0.05
+			energy_multiplicator *= 0.8
+			if energy_multiplicator < 1:
+				print(f'Song {audio_path} has no start times {start_times}')
+				break
 
 		result['start_times'] = start_times
 
@@ -83,7 +86,7 @@ def analyze_track(audio_path: str, draw_chart=False, find_times=True):
 
 # Analyses song and fills row in db.
 def fill_song_info(song: Song):
-	if song.clip_path:
+	if song.clip_path and not song.clip_start_sec and not song.clip_end_sec:
 		result = analyze_track(song.clip_path)
 		song \
 			.set_clip_start_sec(result['start_times']) \
@@ -105,12 +108,12 @@ def reanalyze_song(song_id: int):
 
 if __name__ == '__main__':
 	# path = 'D:\\Artyom\\Проекты\\Python\\tcc-render\\production\\tcc 2024-03-16.mp4'
-	path = 'D:\\Artyom\\Проекты\\Python\\tcc-render\\video_parts\\tcc\\457\\3.1.mp4'
-	# path = 'D:\\Artyom\\Проекты\\Top Club Chart\\клипы чарта\\regulars\\AVAION, BUNT. - Other Side (Official Video).mp4'
+	# path = 'D:\\Artyom\\Проекты\\Python\\tcc-render\\video_parts\\tcc\\457\\3.1.mp4'
+	path = 'D:\\Artyom\\Проекты\\Top Club Chart\\клипы чарта\\regulars\\Ofenbach - Overdrive feat. Norma Jean Martine (Official Music Video)-dark.mp4'
 
 	# print(analyze_track(
 	# 	audio_path=path,
-	# 	draw_chart=False,
-	# 	find_times=False,
+	# 	draw_chart=True,
+	# 	find_times=True,
 	# ))
-	# reanalyze_songs(316)
+	reanalyze_songs(308)
