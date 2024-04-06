@@ -67,6 +67,12 @@ class Song:
 
 	def get_clip_times(self):
 		start_times = self.clip_start_sec
+		if len(start_times) == 1:
+			return {
+				'start_time': float(start_times[0]),
+				'end_time': float(self.clip_end_sec[0]),
+			}
+
 		random_index = random.randint(0, len(start_times) - 1)
 
 		return {
