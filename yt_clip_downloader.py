@@ -23,7 +23,7 @@ def find_clip(query, max_results=10):
 def download_clip(url: str):
 	ydl_opts = {
 		'format': '137+140',
-		'keepvideo': True,
+		'keepvideo': False,
 		'outtmpl': 'D:/Artyom/Проекты/Top Club Chart/клипы чарта/regulars/%(title)s.%(ext)s',
 	}
 
@@ -37,13 +37,11 @@ def download_clip(url: str):
 		ydl = YoutubeDL(ydl_opts)
 		info = ydl.extract_info(url)
 
-	video_path = info['requested_downloads'][0]['__files_to_merge'][0]
-	audio_path = info['requested_downloads'][0]['__files_to_merge'][1]
+	video_path = info['requested_downloads'][0]['filepath']
 	ydl.download([url])
 
 	return {
 		'video_path': video_path,
-		'audio_path': audio_path,
 		'filename': info['requested_downloads'][0]['filename'].replace(
 			'D:\\Artyom\\Проекты\\Top Club Chart\\клипы чарта\\regulars\\', ''),
 	}
@@ -51,11 +49,9 @@ def download_clip(url: str):
 
 def fill_file(songId: int, ytUrl: str):
 	result = download_clip(ytUrl)
-	audio_file = result['audio_path']
-	analyze_result = chorus_finder.analyze_track(audio_file)
+	video_path = result['video_path']
+	analyze_result = chorus_finder.analyze_track(video_path)
 	print(analyze_result)
-	os.remove(result['video_path'])
-	os.remove(result['audio_path'])
 
 	song = SongRepository().get_song_by_id(songId)
 	song \
