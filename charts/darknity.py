@@ -33,8 +33,8 @@ class Darknity(BaseChart):
 
 	def get_last_out_composition(self) -> list[Clip]:
 		clip_chart_number = mp.TextClip(
-			txt='Darknity Top 50', font=chart_number_font,
-			color='#36c2f8', fontsize=180, stroke_color='white',
+			txt=f'Darknity Top 50 #{self.chart.chart_number}', font=chart_number_font,
+			color='#ed5126', fontsize=180, stroke_color='white',
 			stroke_width=5, align='center',
 		) \
 			.set_duration(3) \
@@ -44,7 +44,7 @@ class Darknity(BaseChart):
 
 		clip_chart_date = mp.TextClip(
 			txt=str(self.chart.chart_date.strftime("%d.%m.%Y")), font=chart_number_font,
-			color='black', fontsize=80, stroke_color='white',
+			color='#ffec8c', fontsize=100, stroke_color='black',
 			stroke_width=3, align='center',
 		) \
 			.set_duration(3) \
@@ -53,12 +53,12 @@ class Darknity(BaseChart):
 			.crossfadeout(0.4)
 
 		clip_site = mp.TextClip(
-			txt='18:00-20:00 Sat.\nD1R Radio', font=text_font,
+			txt='18:00-20:00 Sat. on D1R Radio', font=text_font,
 			color='white', fontsize=80, stroke_color='black',
 			stroke_width=1, align='center',
 		) \
 			.set_duration(3) \
-			.set_position((570, 100)) \
+			.set_position(('center', 100)) \
 			.crossfadein(0.4) \
 			.crossfadeout(0.4)
 
