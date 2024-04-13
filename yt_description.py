@@ -40,8 +40,8 @@ def print_eht_description(chart_date: datetime):
 	print(f'\nПосмотреть чарт - https://europaplus.ru/top40?section=top40&date={chart_date.strftime("%Y-%m-%d")}\n')
 
 
-def print_dark_description(chart_date: datetime):
-	print(f'''Darknity Top 50 ({chart_date.strftime("%d.%m.%Y")}) - Чарт радио D1R
+def print_dark_description(chart_date: datetime, chart_number: int):
+	print(f'''Darknity Top 50 #{chart_number} ({chart_date.strftime("%d.%m.%Y")}) - Чарт радио D1R
 Darknity Top 50 - актуальные хиты и новинки сезона от авторов Dark Sky Chart! Создан на основе ротаций радио D1R.
 Слушай каждую субботу с 18:00 до 20:00 (мск) на радио D1R!
 
@@ -58,7 +58,8 @@ Darknity Top 50 - актуальные хиты и новинки сезона �
 
 
 def __main__():
-	chart_date = datetime(2024, 3, 15)
+	chart_date = datetime(2024, 3, 22)
+	chart_number = 4
 	# chart_type = 'eht'
 	# chart_type = 'tcc'
 	chart_type = 'dark'
@@ -68,7 +69,7 @@ def __main__():
 	if chart_type == 'eht':
 		print_eht_description(chart_date)
 	if chart_type == 'dark':
-		print_dark_description(chart_date)
+		print_dark_description(chart_date, chart_number)
 
 
 if __name__ == '__main__':
