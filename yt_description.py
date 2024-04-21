@@ -21,6 +21,7 @@ def print_tcc_description(chart_date: datetime):
 		print(str(position.position) + '. ' + song.authors + ' - ' + song.name)
 
 	print(f'\nПосмотреть чарт - https://europaplus.ru/top-club-chart?section=top25&date={chart_date.strftime("%Y-%m-%d")}\n')
+	print('#topclubchart #europaplus\n')
 
 
 def print_eht_description(chart_date: datetime):
@@ -38,6 +39,7 @@ def print_eht_description(chart_date: datetime):
 		print(str(position.position) + '. ' + song.authors + ' - ' + song.name)
 
 	print(f'\nПосмотреть чарт - https://europaplus.ru/top40?section=top40&date={chart_date.strftime("%Y-%m-%d")}\n')
+	print('#eurohittop40 #europaplus\n')
 
 
 def print_dark_description(chart_date: datetime, chart_number: int):
@@ -58,11 +60,11 @@ Darknity Top 50 - актуальные хиты и новинки сезона �
 
 
 def __main__():
-	chart_date = datetime(2024, 3, 22)
-	chart_number = 4
+	chart_date = datetime(2024, 4, 20)
+	chart_number = 462
 	# chart_type = 'eht'
-	# chart_type = 'tcc'
-	chart_type = 'dark'
+	chart_type = 'tcc'
+	# chart_type = 'dark'
 
 	if chart_type == 'tcc':
 		print_tcc_description(chart_date)
