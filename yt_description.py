@@ -58,8 +58,7 @@ Darknity Top 50 - актуальные хиты и новинки сезона �
 		print(str(position.position) + '. ' + song.authors + ' - ' + song.name)
 
 
-
-def __main__():
+if __name__ == '__main__':
 	chart_date = datetime(2024, 4, 20)
 	chart_number = 462
 	# chart_type = 'eht'
@@ -72,7 +71,3 @@ def __main__():
 		print_eht_description(chart_date)
 	if chart_type == 'dark':
 		print_dark_description(chart_date, chart_number)
-
-
-if __name__ == '__main__':
-	__main__()
