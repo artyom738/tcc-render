@@ -92,18 +92,18 @@ def fill_rubrics(chart_number: int, rubric_songs: dict):
 
 
 if __name__ == '__main__':
-	date_to_start = datetime(2024, 5, 4)
+	date_to_start = datetime(2024, 5, 11)
 	while date_to_start < datetime.now():
 		fill_db_chart(date_to_start)
 		date_to_start += timedelta(days=7)
 		need_fill_rubrics = True
 		if need_fill_rubrics:
-			chart_number = 464
+			chart_number = 465
 			fill_rubrics(chart_number, {
-				'residance_author': 'Rezone',  # 0:25:30 in podcast and 0:30:30 in radio
-				'residance_name': 'Quiero Mas',
-				'alltime_author': 'U2',  # 1:12:00 in podcast and 1:28:30 in radio
-				'alltime_name': 'New Year`s Day',
-				'perspective_author': 'salute feat. Rina Sawayama',  # 1:30:00 in podcast and 1:52:30 in radio
-				'perspective_name': 'saving flowers',
+				'residance_author': 'Vion Konger & Blasterjaxx',  # 0:25:30 in podcast and 0:30:30 in radio
+				'residance_name': 'Feel The Bass',
+				'alltime_author': 'Modo',  # 1:12:00 in podcast and 1:28:30 in radio
+				'alltime_name': 'Ein Zwei Polizei',
+				'perspective_author': 'Majestic, The Jammin Kid, Celine Dion',  # 1:30:00 in podcast and 1:52:30 in radio
+				'perspective_name': 'Set My Heart On Fire',
 			})
