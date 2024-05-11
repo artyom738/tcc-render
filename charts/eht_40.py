@@ -1,6 +1,9 @@
+import librosa
 import moviepy.editor as mp
 import moviepy.video.fx.all as vfx
+import moviepy.audio.fx.all as afx
 from moviepy.Clip import Clip
+import numpy as np
 
 from charts.base_chart import BaseChart
 from clips.position import chart_number_font, text_font, create_position_clip
@@ -80,6 +83,14 @@ class Eht40(BaseChart):
 		}
 		clip = create_position_clip(clip_params)
 
+		# Applying volume changing to get average amplitude 0.3
+		etalon_amplidude = 0.3
+		y, sr = librosa.load(f'video_parts/{self.chart.chart_type}/{self.chart.chart_number}/old.mp4')
+		amplitude_envelope = librosa.feature.rms(y=y)[0]
+		average_amplitude = round(np.mean(amplitude_envelope), 2)
+		clip = clip.fx(afx.volumex, etalon_amplidude / average_amplitude)
+		print(f'Multiplied by {etalon_amplidude / average_amplitude}')
+
 		label = mp.VideoFileClip(
 			'package/eht/eht_old.avi',
 			target_resolution=(1080, 1920),
@@ -122,6 +133,14 @@ class Eht40(BaseChart):
 			'is_lcs': False,
 		}
 		clip = create_position_clip(clip_params)
+
+		# Applying volume changing to get average amplitude 0.3
+		etalon_amplidude = 0.3
+		y, sr = librosa.load(f'video_parts/{self.chart.chart_type}/{self.chart.chart_number}/perspective.mp4')
+		amplitude_envelope = librosa.feature.rms(y=y)[0]
+		average_amplitude = round(np.mean(amplitude_envelope), 2)
+		clip = clip.fx(afx.volumex, etalon_amplidude / average_amplitude)
+		print(f'Multiplied by {etalon_amplidude / average_amplitude}')
 
 		label = mp.VideoFileClip(
 			'package/eht/eht_perspective.avi',
