@@ -80,7 +80,8 @@ def fill_concrete_song(song_id: int, yt_id: str):
 
 
 if __name__ == '__main__':
-	# fill_concrete_song(475, 'ZrO4PtchWUs')
-	# fill_concrete_song(583, 'EZkqppoux1I')
+	# fill_concrete_song(601, 'HxL19VWL9TM')
+	# fill_concrete_song(605, 'HxL19VWL9TM')
+	# fill_concrete_song(606, 'tbKVNZoDmD0')
 	fill_songs_with_no_clip()
 
