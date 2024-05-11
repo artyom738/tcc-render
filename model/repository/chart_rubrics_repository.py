@@ -7,6 +7,9 @@ class ChartRubricsRepository:
 	RUBRIC_RESIDANCE = 'R'
 	RUBRIC_PERSPECTIVE = 'P'
 
+	RUBRIC_EHT_OLD = 'O'
+	RUBRIC_EHT_PERSPECTIVE = 'E'
+
 	def __init__(self, chart_type: str):
 		self.chart_type: str = chart_type
 

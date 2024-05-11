@@ -2,7 +2,9 @@ import requests
 
 from datetime import datetime, timedelta
 from model.entity.position import Position
+from model.entity.rubric import Rubric
 from model.entity.song import Song
+from model.repository.chart_rubrics_repository import ChartRubricsRepository
 from model.repository.position_repository import PositionRepository
 from model.repository.song_repository import SongRepository
 
@@ -43,9 +45,48 @@ def fill_db_chart(date: datetime):
 				position = position.save()
 
 
+def fill_rubrics(chart_number: int, rubric_songs: dict):
+	if not chart_number:
+		return
+
+	if rubric_songs['vzglyad_name'] and rubric_songs['vzglyad_author']:
+		alltime_song = Song({
+			'name': rubric_songs['vzglyad_name'],
+			'authors': rubric_songs['vzglyad_author'],
+			'ep_id': None,
+		}).save()
+		Rubric({
+			'chart_id': chart_number,
+			'song_id': alltime_song.id,
+			'rubric_type': ChartRubricsRepository.RUBRIC_EHT_PERSPECTIVE,
+			'chart_type': 'eht',
+		}).save()
+
+	if rubric_songs['tomorrow_name'] and rubric_songs['tomorrow_author']:
+		alltime_song = Song({
+			'name': rubric_songs['tomorrow_name'],
+			'authors': rubric_songs['tomorrow_author'],
+			'ep_id': None,
+		}).save()
+		Rubric({
+			'chart_id': chart_number,
+			'song_id': alltime_song.id,
+			'rubric_type': ChartRubricsRepository.RUBRIC_EHT_OLD,
+			'chart_type': 'eht',
+		}).save()
+
 if __name__ == '__main__':
-	date_to_start = datetime(2024, 4, 19)
+	date_to_start = datetime(2024, 5, 10)
 	while date_to_start < datetime.now():
 		print(f'Getting chart {date_to_start}')
 		fill_db_chart(date_to_start)
 		date_to_start += timedelta(days=7)
+		need_fill_rubrics = True
+		if need_fill_rubrics:
+			chart_number = 11
+			fill_rubrics(chart_number, {
+				'vzglyad_author': 'Zico feat. Jennie',  # Взгляд в будущее
+				'vzglyad_name': 'Spot!',
+				'tomorrow_author': 'Daddy Yankee & Snow feat. Katy Perry',  # Сегодня завтра вчера
+				'tomorrow_name': 'Con Calma (Remix)',
+			})

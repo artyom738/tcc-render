@@ -13,6 +13,7 @@ class Chart:
 		self.chart_type: str = data.get('chart_type')
 		self.positions: list = []
 		self.outs: list = []
+		self.rubric: dict = {}
 		self.all_time_song_id: int | None = None
 		self.residance_song_id: int | None = None
 		self.perspective_song_id: int | None = None
@@ -77,8 +78,12 @@ class Chart:
 		rubrics = ChartRubricsRepository(self.chart_type).get_rubrics_by_chart_id(self.chart_number)
 		for rubric in rubrics:
 			if rubric.rubric_type == ChartRubricsRepository.RUBRIC_ALL_TIME:
-				self.all_time_song_id = rubric.song_id
+				self.rubric['all_time_song_id'] = rubric.song_id
 			elif rubric.rubric_type == ChartRubricsRepository.RUBRIC_RESIDANCE:
-				self.residance_song_id = rubric.song_id
+				self.rubric['residance_song_id'] = rubric.song_id
 			elif rubric.rubric_type == ChartRubricsRepository.RUBRIC_PERSPECTIVE:
-				self.perspective_song_id = rubric.song_id
+				self.rubric['perspective_song_id'] = rubric.song_id
+			elif rubric.rubric_type == ChartRubricsRepository.RUBRIC_EHT_PERSPECTIVE:
+				self.rubric['eht_perspective_song_id'] = rubric.song_id
+			elif rubric.rubric_type == ChartRubricsRepository.RUBRIC_EHT_OLD:
+				self.rubric['eht_old_song_id'] = rubric.song_id

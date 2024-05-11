@@ -205,7 +205,7 @@ class TopClubChart(BaseChart):
 		after_intro_animation = self.get_after_intro_animation(total_duration)
 
 		# All time dance anthem
-		all_time_clip = self.get_all_time(self.chart.all_time_song_id)
+		all_time_clip = self.get_all_time(self.chart.rubric['all_time_song_id'])
 		all_time_clip = all_time_clip.set_start(total_duration)
 		total_duration += all_time_clip.duration
 		after_all_time_animation = self.get_after_all_time_animation(total_duration)
@@ -216,7 +216,7 @@ class TopClubChart(BaseChart):
 		after_outs_animation = self.get_after_outs_animation(total_duration)
 
 		# Residance
-		residance_clip = self.get_residance(self.chart.residance_song_id)
+		residance_clip = self.get_residance(self.chart.rubric['residance_song_id'])
 		residance_clip = residance_clip.set_start(total_duration)
 		total_duration += residance_clip.duration
 		after_residance_animation = self.get_after_residance_animation(total_duration)
@@ -227,7 +227,7 @@ class TopClubChart(BaseChart):
 		after_positions_animation = self.get_after_positions_animation(total_duration)
 
 		# Perspective
-		perspective_clip = self.get_perspective(self.chart.perspective_song_id)
+		perspective_clip = self.get_perspective(self.chart.rubric['perspective_song_id'])
 		perspective_clip = perspective_clip.set_start(total_duration)
 		total_duration += perspective_clip.duration
 		after_perspective_animation = self.get_after_perspective_animation(total_duration)
