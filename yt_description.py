@@ -59,8 +59,8 @@ Darknity Top 50 - актуальные хиты и новинки сезона �
 
 
 if __name__ == '__main__':
-	chart_date = datetime(2024, 5, 11)
-	chart_number = 465
+	chart_date = datetime(2024, 5, 18)
+	chart_number = 466
 	# chart_type = 'eht'
 	chart_type = 'tcc'
 	# chart_type = 'dark'
