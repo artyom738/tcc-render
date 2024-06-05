@@ -10,11 +10,11 @@ class ChartRubricsRepository:
 	RUBRIC_EHT_OLD = 'O'
 	RUBRIC_EHT_PERSPECTIVE = 'E'
 
-	def __init__(self, chart_type: str):
-		self.chart_type: str = chart_type
+	def __init__(self):
+		pass
 
 	def get_rubrics_by_chart_id(self, chart_id: int) -> list[Rubric]:
-		query = f'select * from chart_rubrics where CHART_ID = {str(chart_id)} and CHART_TYPE = \'{self.chart_type}\''
+		query = f'select * from chart_rubrics where CHART_ID = {str(chart_id)}'
 		db_result = database.get_list(query)
 		result = []
 		if len(db_result) > 0:
@@ -31,3 +31,6 @@ class ChartRubricsRepository:
 			'rubric_type': data['RUBRIC_TYPE'],
 			'chart_type': data['CHART_TYPE'],
 		})
+
+
+chart_rubric_repository = ChartRubricsRepository()

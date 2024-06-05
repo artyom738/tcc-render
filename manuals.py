@@ -4,7 +4,7 @@ from moviepy.video.VideoClip import TextClip
 
 from model.entity.chart import Chart
 from model.entity.song import Song
-from model.repository.song_repository import SongRepository
+from model.repository.song_repository import song_repository
 
 # chart = Chart(data={
 # 	'chart_number': 451,

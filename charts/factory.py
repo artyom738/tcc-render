@@ -16,5 +16,5 @@ class ChartFactory:
 		elif chart.chart_type == 'dark':
 			return Darknity(chart)
 		else:
-			print('Chart factory doesn`t know about chart')
+			print('Chart factory doesn`t know about this type of chart')
 			return None

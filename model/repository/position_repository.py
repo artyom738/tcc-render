@@ -1,6 +1,7 @@
 import database
 from datetime import datetime, timedelta
 from model.entity.position import Position
+from model.repository.chart_repository import chart_repository
 
 
 class PositionRepository:
@@ -8,7 +9,7 @@ class PositionRepository:
 		self.chart_type: str = chart_type
 
 	def get_position_by_song_and_date(self, song_id: int, date: datetime):
-		query = f'select * from charts c where SONG_ID = {str(song_id)} and CHART_DATE = \'{date.strftime("%Y-%m-%d")}\' and CHART_TYPE = \'{self.chart_type}\''
+		query = f'select * from chart_positions cp left join charts c on c.ID = cp.CHART_ID where cp.SONG_ID = {str(song_id)} and c.CHART_DATE = \'{date.strftime("%Y-%m-%d")}\' and c.CHART_TYPE = \'{self.chart_type}\''
 		result = database.get_list(query)
 
 		if len(result) > 0:
@@ -16,8 +17,8 @@ class PositionRepository:
 		else:
 			return None
 
-	def get_positions_by_date(self, date: datetime):
-		query = f'select * from charts c where CHART_DATE = \'{date.strftime("%Y-%m-%d")}\' and POSITION < 300 and POSITION > 0 and CHART_TYPE = \'{self.chart_type}\' order by POSITION desc'
+	def get_chart_positions(self, chart_id: int):
+		query = f'select * from chart_positions cp where cp.CHART_ID = {chart_id} and cp.POSITION < 300 and cp.POSITION > 0 order by cp.POSITION desc'
 		db_result = database.get_list(query)
 		result = []
 		if len(db_result) > 0:
@@ -27,11 +28,9 @@ class PositionRepository:
 		else:
 			return []
 
-	def get_outs_by_date(self, date: datetime):
-		prev_date = date - timedelta(days=7)
-		prev_date = prev_date.strftime('%Y-%m-%d')
-		# prev_date = '2023-12-23'
-		query = f'select SONG_ID from charts c where CHART_DATE = \'{prev_date}\' and CHART_TYPE = \'{self.chart_type}\' order by POSITION desc'
+	def get_chart_outs(self, chart_id: int):
+		previous_chart = chart_repository.get_previous_chart(chart_id)
+		query = f'select SONG_ID from chart_positions cp where cp.CHART_ID = {previous_chart.id} order by cp.POSITION desc'
 		prev_songs = []
 		db_result = database.get_list(query)
 		if len(db_result) > 0:
@@ -39,7 +38,7 @@ class PositionRepository:
 				prev_songs.append(position['SONG_ID'])
 
 		current_songs = []
-		query = f'select SONG_ID from charts c where CHART_DATE = \'{date.strftime("%Y-%m-%d")}\' and CHART_TYPE = \'{self.chart_type}\' order by POSITION desc'
+		query = f'select SONG_ID from chart_positions cp where cp.CHART_ID = {chart_id} order by cp.POSITION desc'
 		db_result = database.get_list(query)
 		if len(db_result) > 0:
 			for position in db_result:
@@ -49,10 +48,9 @@ class PositionRepository:
 		for position in prev_songs:
 			if position not in current_songs:
 				outs.append(self.fetch_object({
-					'CHART_DATE': date,
 					'SONG_ID': position,
 					'POSITION': 99,
-					'CHART_TYPE': self.chart_type,
+					'CHART_ID': chart_id,
 				}))
 		# outs.reverse()
 
@@ -60,8 +58,10 @@ class PositionRepository:
 
 	def fetch_object(self, data: dict) -> Position:
 		return Position({
-			'chart_date': data['CHART_DATE'],
+			'chart_id': data['CHART_ID'],
 			'song_id': data['SONG_ID'],
 			'position': data['POSITION'],
-			'chart_type': data['CHART_TYPE'],
 		})
+
+
+position_repository = PositionRepository()

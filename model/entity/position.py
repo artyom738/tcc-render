@@ -1,33 +1,30 @@
 from datetime import datetime, timedelta
 
 import database
+from model.repository.chart_repository import chart_repository
 
 
 class Position:
 	def __init__(self, data):
 		self.position = data.get('position')
 		self.song_id = data.get('song_id')
-		self.chart_date = data.get('chart_date')
-		self.chart_type = data.get('chart_type')
+		self.chart_id = data.get('chart_id')
 		self.moving = None
 		self.is_lcs = False
 
 	def save(self):
-		query = "insert into charts (CHART_DATE, SONG_ID, POSITION, CHART_TYPE) values (%s, %s, %s, %s)"
+		query = "insert into chart_positions (CHART_ID, SONG_ID, POSITION) values (%s, %s, %s)"
 		result = database.add(query, (
-			self.chart_date or '',
+			self.chart_id or 0,
 			self.song_id or '',
-			self.position or 0,
-			self.chart_type or '',
+			self.position or 0
 		))
 
 		return self
 
 	def get_lw(self):
-		prev_date = self.chart_date - timedelta(days=7)
-		str_prev_date = datetime.strftime(prev_date, '%Y-%m-%d')
-		# str_prev_date = '2023-12-23'
-		query = f'select POSITION from charts where SONG_ID = {self.song_id} AND CHART_DATE = \'{str_prev_date}\' AND CHART_TYPE = \'{self.chart_type}\''
+		previous_chart = chart_repository.get_previous_chart(self.chart_id)
+		query = f'select cp.POSITION from chart_positions cp where cp.SONG_ID = {self.song_id} AND cp.CHART_ID = {previous_chart.id}'
 		result = database.get_list(query)
 		if len(result) < 1:
 			return '--'

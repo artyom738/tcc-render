@@ -56,3 +56,6 @@ class SongRepository:
 			'clip_start_sec': data['CLIP_START_SEC'],
 			'clip_end_sec': data['CLIP_END_SEC'],
 		})
+
+
+song_repository = SongRepository()

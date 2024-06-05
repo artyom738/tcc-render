@@ -1,13 +1,14 @@
 from __future__ import annotations
 from datetime import datetime
 
-from model.repository.chart_rubrics_repository import ChartRubricsRepository
-from model.repository.position_repository import PositionRepository
-from model.repository.song_repository import SongRepository
+import database
+from model.repository.chart_rubrics_repository import chart_rubric_repository
+from model.repository.song_repository import song_repository
 
 
 class Chart:
 	def __init__(self, data):
+		self.id: int = data.get('id')
 		self.chart_number: int = data.get('chart_number')
 		self.chart_date: datetime = data.get('chart_date')
 		self.chart_type: str = data.get('chart_type')
@@ -17,12 +18,11 @@ class Chart:
 		self.all_time_song_id: int | None = None
 		self.residance_song_id: int | None = None
 		self.perspective_song_id: int | None = None
-		self.fill()
 
 	def fill(self):
-		repo = PositionRepository(self.chart_type)
-		self.positions = repo.get_positions_by_date(self.chart_date)
-		self.outs = repo.get_outs_by_date(self.chart_date)
+		from model.repository.position_repository import position_repository
+		self.positions = position_repository.get_chart_positions(self.id)
+		self.outs = position_repository.get_chart_outs(self.id)
 		self.fill_max_up_down()
 		self.fill_lcs()
 		self.fill_rubrics()
@@ -51,16 +51,15 @@ class Chart:
 	# Longest Chart Sitter
 	def fill_lcs(self):
 		max_weeks = 0
-		song_repo = SongRepository()
 		lcs_positions = []
 		for position in self.positions:
-			song = song_repo.get_song_by_id(position.song_id)
+			song = song_repository.get_song_by_id(position.song_id)
 			weeks = song.get_weeks(self.chart_type)
 			if weeks >= max_weeks:
 				max_weeks = weeks
 
 		for position in self.positions:
-			song = song_repo.get_song_by_id(position.song_id)
+			song = song_repository.get_song_by_id(position.song_id)
 			weeks = song.get_weeks(self.chart_type)
 			if weeks == max_weeks:
 				lcs_positions.append(position.position)
@@ -75,15 +74,35 @@ class Chart:
 				return position
 
 	def fill_rubrics(self):
-		rubrics = ChartRubricsRepository(self.chart_type).get_rubrics_by_chart_id(self.chart_number)
+		rubrics = chart_rubric_repository.get_rubrics_by_chart_id(self.chart_number)
 		for rubric in rubrics:
-			if rubric.rubric_type == ChartRubricsRepository.RUBRIC_ALL_TIME:
+			if rubric.rubric_type == chart_rubric_repository.RUBRIC_ALL_TIME:
 				self.rubric['all_time_song_id'] = rubric.song_id
-			elif rubric.rubric_type == ChartRubricsRepository.RUBRIC_RESIDANCE:
+			elif rubric.rubric_type == chart_rubric_repository.RUBRIC_RESIDANCE:
 				self.rubric['residance_song_id'] = rubric.song_id
-			elif rubric.rubric_type == ChartRubricsRepository.RUBRIC_PERSPECTIVE:
+			elif rubric.rubric_type == chart_rubric_repository.RUBRIC_PERSPECTIVE:
 				self.rubric['perspective_song_id'] = rubric.song_id
-			elif rubric.rubric_type == ChartRubricsRepository.RUBRIC_EHT_PERSPECTIVE:
+			elif rubric.rubric_type == chart_rubric_repository.RUBRIC_EHT_PERSPECTIVE:
 				self.rubric['eht_perspective_song_id'] = rubric.song_id
-			elif rubric.rubric_type == ChartRubricsRepository.RUBRIC_EHT_OLD:
+			elif rubric.rubric_type == chart_rubric_repository.RUBRIC_EHT_OLD:
 				self.rubric['eht_old_song_id'] = rubric.song_id
+
+	def save(self):
+		if self.id:
+			query = "insert into charts (CHART_TYPE, CHART_NUMBER, CHART_DATE) values (%s, %s, %s)"
+			result = database.add(query, (
+				self.chart_type or '',
+				self.chart_number or 0,
+				self.chart_date or ''
+			))
+			self.id = result
+		else:
+			query = "update charts set CHART_TYPE = %s, CHART_NUMBER = %s, CHART_DATE = %s WHERE ID = %s"
+			result = database.add(query, (
+				self.chart_type or '',
+				self.chart_number or 0,
+				self.chart_date or '',
+				self.id
+			))
+
+		return self

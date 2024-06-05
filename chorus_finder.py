@@ -5,7 +5,7 @@ import matplotlib.pyplot as plt
 import numpy as np
 
 from model.entity.song import Song
-from model.repository.song_repository import SongRepository
+from model.repository.song_repository import song_repository
 
 matplotlib.use('TkAgg')
 
@@ -96,13 +96,13 @@ def fill_song_info(song: Song):
 
 
 def reanalyze_songs(min_id: int = 300):
-	songs = SongRepository().get_by_greater_id(min_id)
+	songs = song_repository.get_by_greater_id(min_id)
 	for song in songs:
 		fill_song_info(song)
 
 
 def reanalyze_song(song_id: int):
-	song = SongRepository().get_song_by_id(song_id)
+	song = song_repository.get_song_by_id(song_id)
 	fill_song_info(song)
 
 

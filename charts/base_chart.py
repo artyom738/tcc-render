@@ -10,14 +10,13 @@ import moviepy.audio.fx.all as afx
 from moviepy.Clip import Clip
 
 from clips.position import create_position_clip, create_last_out_clip
-from model.repository.song_repository import SongRepository
-from model.entity.chart import Chart
+from model.repository.song_repository import song_repository
 
 
 class BaseChart:
-	def __init__(self, chart: Chart):
-		self.chart = chart
-		self.song_repo: SongRepository = SongRepository()
+	def __init__(self, chart: 'Chart'):
+		self.chart: 'Chart' = chart
+		self.song_repo: 'SongRepository' = song_repository
 
 	def get_chart_type(self) -> str:
 		raise NotImplementedError
@@ -56,7 +55,7 @@ class BaseChart:
 			.fx(vfx.mask_color, color=[0, 255, 0], s=5, thr=130) \
 			.set_start(total_duration - 25 / 30)
 
-	def get_outs(self, total_duration: float, chart: Chart):
+	def get_outs(self, total_duration: float, chart: 'Chart'):
 		out_clip_list = []
 		outs = chart.outs
 		processes = []
@@ -126,7 +125,7 @@ class BaseChart:
 	def need_show_lcs(self):
 		return True
 
-	def get_positions(self, total_duration: float, chart: Chart):
+	def get_positions(self, total_duration: float, chart: 'Chart'):
 		song_clip_list = []
 		positions = chart.positions
 		print('Chart date: ', chart.chart_date.strftime("%Y-%m-%d"))

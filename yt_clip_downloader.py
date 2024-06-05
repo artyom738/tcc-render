@@ -5,7 +5,7 @@ from youtubesearchpython import VideosSearch
 from terminal_colors import Colors
 
 import chorus_finder
-from model.repository.song_repository import SongRepository
+from model.repository.song_repository import song_repository
 
 
 def find_clip(query, max_results=10):
@@ -53,7 +53,7 @@ def fill_file(songId: int, ytUrl: str):
 	analyze_result = chorus_finder.analyze_track(video_path)
 	print(analyze_result)
 
-	song = SongRepository().get_song_by_id(songId)
+	song = song_repository.get_song_by_id(songId)
 	song \
 		.set_clip_name(result['filename']) \
 		.set_clip_start_sec(analyze_result['start_times']) \
@@ -62,7 +62,7 @@ def fill_file(songId: int, ytUrl: str):
 
 
 def fill_songs_with_no_clip():
-	songs = SongRepository().get_songs_with_no_clips()
+	songs = song_repository.get_songs_with_no_clips()
 	print(f'{Colors.OKCYAN}Found {len(songs)} songs without clips{Colors.ENDC}')
 	for song in songs:
 		print(f'{Colors.OKBLUE}Downloading clip for {song.id} {song.authors} - {song.name}{Colors.ENDC}')

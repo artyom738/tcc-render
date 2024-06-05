@@ -3,8 +3,8 @@ import json
 from datetime import datetime, timedelta
 from model.entity.position import Position
 from model.entity.song import Song
-from model.repository.position_repository import PositionRepository
-from model.repository.song_repository import SongRepository
+from model.repository.position_repository import position_repository
+from model.repository.song_repository import song_repository
 
 
 def fill_db_chart(date: datetime):
@@ -18,7 +18,7 @@ def fill_db_chart(date: datetime):
 		for song in data:
 			external_id = song['external_id']
 			position = song['position']
-			song_object = SongRepository().get_song_by_ep_id(external_id)
+			song_object = song_repository.get_song_by_ep_id(external_id)
 			if not song_object:
 				artists = song['artists']
 				name = song['title']
@@ -28,7 +28,7 @@ def fill_db_chart(date: datetime):
 					'ep_id': external_id,
 				})
 				song_object = song_object.save()
-			position_object = PositionRepository(chart_type).get_position_by_song_and_date(song_object.id, date)
+			position_object = position_repository.get_position_by_song_and_date(song_object.id, date)
 			if position_object is None:
 				position = Position({
 					'position': position,
