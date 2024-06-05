@@ -92,18 +92,18 @@ def fill_rubrics(chart_number: int, rubric_songs: dict):
 
 
 if __name__ == '__main__':
-	date_to_start = datetime(2024, 5, 18)
+	date_to_start = datetime(2024, 6, 1)
 	while date_to_start < datetime.now():
 		fill_db_chart(date_to_start)
 		date_to_start += timedelta(days=7)
 		need_fill_rubrics = True
 		if need_fill_rubrics:
-			chart_number = 466
+			chart_number = 468
 			fill_rubrics(chart_number, {
-				'residance_author': 'Grigore',  # 0:25:30 in podcast and 0:30:30 in radio
-				'residance_name': 'Akai Ito',
-				'alltime_author': 'Kaskade & deadmau5',  # 1:12:00 in podcast and 1:28:30 in radio
-				'alltime_name': 'Move For Me',
-				'perspective_author': 'Bob Sinclar & Sofiya Nzau',  # 1:30:00 in podcast and 1:52:30 in radio
-				'perspective_name': 'Digane',
+				'residance_author': 'Going Deeper, ARIA',  # 0:25:30 in podcast and 0:30:30 in radio
+				'residance_name': 'Out Of Control',
+				'alltime_author': 'York',  # 1:12:00 in podcast and 1:28:30 in radio
+				'alltime_name': 'On The Beach',
+				'perspective_author': 'Skrillex, Hamdi, Taichu',  # 1:30:00 in podcast and 1:52:30 in radio
+				'perspective_name': 'Push',
 			})

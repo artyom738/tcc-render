@@ -76,17 +76,17 @@ def fill_rubrics(chart_number: int, rubric_songs: dict):
 		}).save()
 
 if __name__ == '__main__':
-	date_to_start = datetime(2024, 5, 17)
+	date_to_start = datetime(2024, 5, 31)
 	while date_to_start < datetime.now():
 		print(f'Getting chart {date_to_start}')
 		fill_db_chart(date_to_start)
 		date_to_start += timedelta(days=7)
 		need_fill_rubrics = True
 		if need_fill_rubrics:
-			chart_number = 12
+			chart_number = 14
 			fill_rubrics(chart_number, {
-				'vzglyad_author': 'Morgan Wallen feat. Post Malone',  # Взгляд в будущее
-				'vzglyad_name': 'I Had Some Help',
-				'tomorrow_author': 'Sam Smith',  # Сегодня завтра вчера
-				'tomorrow_name': 'I`m Not The Only One',
+				'vzglyad_author': 'Lost Frequencies feat. David Kushner',  # Взгляд в будущее
+				'vzglyad_name': 'In My Bones',
+				'tomorrow_author': 'Hurts',  # Сегодня завтра вчера
+				'tomorrow_name': 'Stay',
 			})
