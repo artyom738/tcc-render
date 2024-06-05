@@ -191,6 +191,7 @@ def create_last_out_clip(params: dict):
 	result_name = params.get('result_name', 'rendered_clip')
 	chart = params.get('chart', None)
 	need_render = params.get('need_render', False)
+	need_save_preview = params.get('need_save_preview', False)
 
 	if need_render and os.path.isfile('video_parts/' + result_name + '.mp4'):
 		return mp.VideoFileClip(filename='video_parts/' + result_name + '.mp4')
@@ -218,7 +219,6 @@ def create_last_out_clip(params: dict):
 			.resize(start_size) \
 			.resize(lambda t: 1 + (end_size - start_size) / (start_size * duration) * t)
 	elif clip_width != 1920:
-		print('Render standart Full HD video')
 		background_video = mp.ColorClip(size=(1920, 1080), color=[0, 0, 0], duration=duration)
 		music_clip = music_clip.set_position(('center', 'center'))
 
@@ -233,6 +233,12 @@ def create_last_out_clip(params: dict):
 		clip.fx(afx.audio_fadeout, 0.2),
 		blurred_clip.crossfadein(0.2).set_start(clip.duration - 0.2).fx(afx.audio_fadein, 0.2)
 	])
+
+	if need_save_preview:
+		preview_position = blurred_clip.duration / 2
+		preview_name = f'previews/preview_{chart.chart.chart_type}_{chart.chart.chart_number}.png'
+		blurred_clip.save_frame(preview_name, t=preview_position)
+		print(f'Preview saved: {preview_name}')
 
 	if need_render:
 		final.write_videofile('video_parts/' + result_name + '.mp4', fps=30, codec='mpeg4', bitrate='8000k')

@@ -18,6 +18,9 @@ class Eht40(BaseChart):
 			return '#ed9b2b'  # Orange
 		return '#1566af'  # Blue
 
+	def need_save_preview(self) -> bool:
+		return True
+
 	def get_last_out_composition(self) -> list[Clip]:
 		clip_chart_number = mp.TextClip(
 			txt='Еврохит Топ 40', font=chart_number_font,

@@ -31,6 +31,9 @@ class Darknity(BaseChart):
 	def need_show_lcs(self):
 		return False
 
+	def need_save_preview(self) -> bool:
+		return True
+
 	def get_last_out_composition(self) -> list[Clip]:
 		clip_chart_number = mp.TextClip(
 			txt=f'Darknity Top 50 #{self.chart.chart_number}', font=chart_number_font,

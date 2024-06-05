@@ -20,6 +20,9 @@ class TopClubChart(BaseChart):
 	def get_position_text_color(self, position: int = 0):
 		return '#781fdb'
 
+	def need_save_preview(self) -> bool:
+		return False
+
 	def get_last_out_composition(self) -> list[Clip]:
 		clip_chart_number = mp.TextClip(
 			txt='#' + str(self.chart.chart_number), font=chart_number_font,

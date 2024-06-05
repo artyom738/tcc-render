@@ -31,6 +31,9 @@ class BaseChart:
 	def get_position_font_family(self) -> str:
 		return 'Microsoft-PhagsPa-Bold'
 
+	def need_save_preview(self) -> bool:
+		return False
+
 	def get_intro(self):
 		return mp.VideoFileClip(
 			'package/' + self.get_chart_type() + '/intro.mp4',
@@ -81,6 +84,7 @@ class BaseChart:
 			if index == len(outs) - 1:
 				clip_params['chart_date'] = chart.chart_date.strftime("%d.%m.%Y")
 				clip_params['chart_number'] = chart.chart_number
+				clip_params['need_save_preview'] = self.need_save_preview()
 				process = multiprocessing.Process(target=create_last_out_clip, kwargs={'params': clip_params})
 			else:
 				process = multiprocessing.Process(target=create_position_clip, kwargs={'params': clip_params})
