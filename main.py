@@ -2,12 +2,13 @@ from charts.factory import ChartFactory
 from connectors.connector_factory import ConnectorFactory
 from model.repository.chart_repository import chart_repository
 from yt_clip_downloader import fill_songs_with_no_clip
+from yt_uploader import YTUploader
 
 if __name__ == '__main__':
 
-	chart_type = 'eht'
+	# chart_type = 'eht'
 	# chart_type = 'tcc'
-	# chart_type = 'dark'
+	chart_type = 'dark'
 
 	rubrics = {
 		############# ------------- EUROHIT TOP 40 ------------- #############
@@ -26,7 +27,7 @@ if __name__ == '__main__':
 	}
 
 	chart_id = None
-	# chart_id = 94
+	chart_id = 94
 	if chart_id:
 		chart = chart_repository.get_chart_by_id(chart_id)
 	else:
@@ -36,7 +37,9 @@ if __name__ == '__main__':
 		connector.save_rubrics(chart.id, rubrics)
 
 	fill_songs_with_no_clip()  # Download clips - enable VPN first
-	chart.fill()
+	chart = chart.fill()
 	renderable_chart = ChartFactory().create_chart(chart)
 	if renderable_chart:
 		renderable_chart.render()
+
+	YTUploader().upload_video(chart)

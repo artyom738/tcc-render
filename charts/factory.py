@@ -1,5 +1,3 @@
-from __future__ import annotations
-
 from charts.darknity import Darknity
 from model.entity.chart import Chart
 from charts.base_chart import BaseChart
@@ -8,7 +6,7 @@ from charts.eht_40 import Eht40
 
 
 class ChartFactory:
-	def create_chart(self, chart: Chart) -> BaseChart | None:
+	def create_chart(self, chart: Chart) -> BaseChart:
 		if chart.chart_type == 'tcc':
 			return TopClubChart(chart)
 		elif chart.chart_type == 'eht':
@@ -16,5 +14,4 @@ class ChartFactory:
 		elif chart.chart_type == 'dark':
 			return Darknity(chart)
 		else:
-			print('Chart factory doesn`t know about this type of chart')
-			return None
+			raise ValueError('Chart factory doesn`t know about this type of chart')

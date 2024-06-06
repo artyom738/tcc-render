@@ -26,6 +26,7 @@ class Chart:
 		self.fill_max_up_down()
 		self.fill_lcs()
 		self.fill_rubrics()
+		return self
 
 	def fill_max_up_down(self):
 		max_up = 0
