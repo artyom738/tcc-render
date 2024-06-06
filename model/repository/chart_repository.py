@@ -30,6 +30,14 @@ class ChartRepository:
 		else:
 			return None
 
+	def get_last_chart_by_type(self, chart_type: str):
+		query = f'select * from charts where CHART_TYPE = \'{chart_type}\' order by CHART_DATE desc'
+		result = database.get_list(query)
+		if len(result) > 0:
+			return self.fetch_object(result[0])
+		else:
+			return None
+
 	def fetch_object(self, data: dict) -> Chart:
 		return Chart({
 			'id': data['ID'],
