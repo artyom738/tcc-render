@@ -5,11 +5,11 @@ from model.repository.chart_repository import chart_repository
 
 
 class PositionRepository:
-	def __init__(self, chart_type: str):
-		self.chart_type: str = chart_type
+	def __init__(self):
+		pass
 
-	def get_position_by_song_and_date(self, song_id: int, date: datetime):
-		query = f'select * from chart_positions cp left join charts c on c.ID = cp.CHART_ID where cp.SONG_ID = {str(song_id)} and c.CHART_DATE = \'{date.strftime("%Y-%m-%d")}\' and c.CHART_TYPE = \'{self.chart_type}\''
+	def get_position_in_chart(self, song_id: int, chart_id: int):
+		query = f'select * from chart_positions cp where cp.SONG_ID = {song_id} and cp.CHART_ID = {chart_id}'
 		result = database.get_list(query)
 
 		if len(result) > 0:
