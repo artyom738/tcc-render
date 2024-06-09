@@ -75,7 +75,7 @@ class Chart:
 				return position
 
 	def fill_rubrics(self):
-		rubrics = chart_rubric_repository.get_rubrics_by_chart_id(self.chart_number)
+		rubrics = chart_rubric_repository.get_rubrics_by_chart_id(self.id)
 		for rubric in rubrics:
 			if rubric.rubric_type == chart_rubric_repository.RUBRIC_ALL_TIME:
 				self.rubric['all_time_song_id'] = rubric.song_id
@@ -90,14 +90,6 @@ class Chart:
 
 	def save(self):
 		if self.id:
-			query = "insert into charts (CHART_TYPE, CHART_NUMBER, CHART_DATE) values (%s, %s, %s)"
-			result = database.add(query, (
-				self.chart_type or '',
-				self.chart_number or 0,
-				self.chart_date or ''
-			))
-			self.id = result
-		else:
 			query = "update charts set CHART_TYPE = %s, CHART_NUMBER = %s, CHART_DATE = %s WHERE ID = %s"
 			result = database.add(query, (
 				self.chart_type or '',
@@ -105,5 +97,13 @@ class Chart:
 				self.chart_date or '',
 				self.id
 			))
+		else:
+			query = "insert into charts (CHART_TYPE, CHART_NUMBER, CHART_DATE) values (%s, %s, %s)"
+			result = database.add(query, (
+				self.chart_type or '',
+				self.chart_number or 0,
+				self.chart_date or ''
+			))
+			self.id = result
 
 		return self
