@@ -19,11 +19,11 @@ def get_tcc_description(chart: Chart):
 
 Топ Клаб Чарт выходит на радиостанции "Европа Плюс" каждую субботу в 20:00 (мск)
 
-ТРЕКЛИСТ:'''
+ТРЕКЛИСТ:\n'''
 	positions = position_repository.get_chart_positions(chart.id)
 	for position in positions:
 		song = song_repository.get_song_by_id(position.song_id)
-		result += (str(position.position) + '. ' + song.authors + ' - ' + song.name)
+		result += (str(position.position) + '. ' + song.authors + ' - ' + song.name + '\n')
 
 	result += f'\nПосмотреть чарт - https://europaplus.ru/top-club-chart?section=top25&date={chart.chart_date.strftime("%Y-%m-%d")}\n'
 	result += '#topclubchart #europaplus\n'
@@ -41,11 +41,11 @@ def get_eht_description(chart: Chart):
 Лучшие 40 песен недели, а также обзор западных чартов и интервью с артистами. 
 Слушай каждую пятницу с 14:00 до 16:00 и каждую субботу с 16:00 до 18:00.
 
-ТРЕКЛИСТ:'''
+ТРЕКЛИСТ:\n'''
 	positions = position_repository.get_chart_positions(chart.id)
 	for position in positions:
 		song = song_repository.get_song_by_id(position.song_id)
-		result += (str(position.position) + '. ' + song.authors + ' - ' + song.name)
+		result += (str(position.position) + '. ' + song.authors + ' - ' + song.name + '\n')
 
 	result += f'\nПосмотреть чарт - https://europaplus.ru/top40?section=top40&date={chart.chart_date.strftime("%Y-%m-%d")}\n'
 	result += '#eurohittop40 #europaplus\n'
@@ -64,11 +64,11 @@ def get_dark_description(chart: Chart):
 
 Запускай радио D1R по прямой ссылке или добавляй в любимый плеер - https://listen7.myradio24.com/darknity
 
-ТРЕКЛИСТ:'''
+ТРЕКЛИСТ:\n'''
 	positions = position_repository.get_chart_positions(chart.id)
 	for position in positions:
 		song = song_repository.get_song_by_id(position.song_id)
-		result += str(position.position) + '. ' + song.authors + ' - ' + song.name
+		result += str(position.position) + '. ' + song.authors + ' - ' + song.name + '\n'
 	return result
 
 
@@ -101,7 +101,7 @@ def get_tags(chart: Chart):
 
 
 if __name__ == '__main__':
-	chart_id = 94
+	chart_id = 95
 
 	result = ''
 	chart = chart_repository.get_chart_by_id(chart_id)
