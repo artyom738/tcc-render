@@ -7,8 +7,8 @@ from yt_uploader import YTUploader
 if __name__ == '__main__':
 
 	# chart_type = 'eht'
-	# chart_type = 'tcc'
-	chart_type = 'dark'
+	chart_type = 'tcc'
+	# chart_type = 'dark'
 
 	rubrics = {
 		############# ------------- EUROHIT TOP 40 ------------- #############
@@ -18,16 +18,16 @@ if __name__ == '__main__':
 		'past_name': 'Stay',
 
 		############# ------------- TOP CLUB CHART ------------- #############
-		'residance_author': 'Going Deeper, ARIA',  # 0:25:30 in podcast and 0:30:30 in radio
-		'residance_name': 'Out Of Control',
-		'alltime_author': 'York',  # 1:12:00 in podcast and 1:28:30 in radio
-		'alltime_name': 'On The Beach',
-		'perspective_author': 'Skrillex, Hamdi, Taichu',  # 1:30:00 in podcast and 1:52:30 in radio
-		'perspective_name': 'Push',
+		'residance_author': 'Swanky Tunes',  # 0:25:30 in podcast and 0:30:30 in radio
+		'residance_name': 'Maneye',
+		'alltime_author': 'Ministers De La Funk & Jocelyn Brown',  # 1:12:00 in podcast and 1:28:30 in radio
+		'alltime_name': 'Believe',
+		'perspective_author': 'Fred again.. & Anderson Paak',  # 1:30:00 in podcast and 1:52:30 in radio
+		'perspective_name': 'places to be',
 	}
 
-	chart_id = None
-	chart_id = 94
+	# chart_id = None
+	chart_id = 95
 	if chart_id:
 		chart = chart_repository.get_chart_by_id(chart_id)
 	else:
