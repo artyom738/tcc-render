@@ -106,9 +106,14 @@ if __name__ == '__main__':
 	result = ''
 	chart = chart_repository.get_chart_by_id(chart_id)
 	if chart.chart_type == 'tcc':
-		result = get_tcc_description(chart)
+		print(get_tcc_title(chart))
+		print(get_tcc_description(chart))
+		print(get_tags(chart))
 	if chart.chart_type == 'eht':
-		result = get_eht_description(chart)
+		print(get_eht_title(chart))
+		print(get_eht_description(chart))
+		print(get_tags(chart))
 	if chart.chart_type == 'dark':
-		result = get_dark_description(chart)
-	print(result)
+		print(get_dark_title(chart))
+		print(get_dark_description(chart))
+		print(get_tags(chart))
