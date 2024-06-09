@@ -43,7 +43,6 @@ def create_position_clip(params: dict):
 	if need_render and os.path.isfile('video_parts/' + result_name + '.mp4'):
 		return mp.VideoFileClip(filename='video_parts/' + result_name + '.mp4')
 
-	print('Start creating position ' + str(position) + ', name: ' + result_name)
 	clip1 = mp.VideoFileClip(clip_path)
 	music_clip = clip1.subclip(clip_start_time, clip_end_time).resize(height=1080)
 	duration = music_clip.duration
@@ -51,7 +50,6 @@ def create_position_clip(params: dict):
 
 	background_video = None
 	if clip_width == clip_height:
-		print('Render 1:1 video with bg')
 		bg_video = mp.VideoFileClip(city_video_path, target_resolution=(1080, 1920))
 		bg_start_time = random.random() * bg_video.duration * 0.9
 		bg_end_time = bg_start_time + duration
@@ -63,11 +61,8 @@ def create_position_clip(params: dict):
 			.resize(start_size) \
 			.resize(lambda t: 1 + (end_size - start_size) / (start_size * duration) * t)
 	elif clip_width != 1920:
-		print('Render standart Full HD video')
 		background_video = mp.ColorClip(size=(1920, 1080), color=[0, 0, 0], duration=duration)
 		music_clip = music_clip.set_position(('center', 'center'))
-	else:
-		print('Source clip is FHD already')
 
 	w, h = 1920, 1080
 
@@ -163,8 +158,6 @@ def create_position_clip(params: dict):
 
 	if need_render:
 		final.write_videofile('video_parts/' + result_name + '.mp4', fps=30, codec='mpeg4', bitrate='8000k')
-
-	print('End creating position ' + str(position))
 
 	return final
 

@@ -103,10 +103,9 @@ class BaseChart:
 			amplitude_envelope = librosa.feature.rms(y=y)[0]
 			average_amplitude = round(np.mean(amplitude_envelope), 2)
 			song_clip = song_clip.fx(afx.volumex, etalon_amplidude / average_amplitude)
-			print(f'Multiplied by {etalon_amplidude / average_amplitude}')
 			out_clip_list.append(song_clip)
-			print('Added out ' + str(index))
 
+		print('Added outs')
 		if len(out_clip_list) > 0:
 			return mp.concatenate_videoclips(out_clip_list).set_start(total_duration)
 		else:
@@ -171,11 +170,8 @@ class BaseChart:
 			amplitude_envelope = librosa.feature.rms(y=y)[0]
 			average_amplitude = round(np.mean(amplitude_envelope), 2)
 			song_clip = song_clip.fx(afx.volumex, etalon_amplidude / average_amplitude)
-			print(f'Multiplied by {etalon_amplidude / average_amplitude}')
-
 			song_clip_list.append(song_clip)
-			print('Added position ' + str(position.position))
-
+		print('Added positions')
 		songs_clip = mp.concatenate_videoclips(song_clip_list).set_start(total_duration)
 
 		return songs_clip
