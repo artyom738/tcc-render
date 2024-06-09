@@ -6,16 +6,16 @@ from yt_uploader import YTUploader
 
 if __name__ == '__main__':
 
-	# chart_type = 'eht'
-	chart_type = 'tcc'
+	chart_type = 'eht'
+	# chart_type = 'tcc'
 	# chart_type = 'dark'
 
 	rubrics = {
 		############# ------------- EUROHIT TOP 40 ------------- #############
-		'new_author': 'Lost Frequencies feat. David Kushner',  # Взгляд в будущее
-		'new_name': 'In My Bones',
-		'past_author': 'Hurts',  # Сегодня завтра вчера
-		'past_name': 'Stay',
+		'new_author': 'Eminem',  # Взгляд в будущее
+		'new_name': 'Houdini',
+		'past_author': 'Calvin Harris, Disciples',  # Сегодня завтра вчера
+		'past_name': 'How Deep Is Your Love',
 
 		############# ------------- TOP CLUB CHART ------------- #############
 		'residance_author': 'Swanky Tunes',  # 0:25:30 in podcast and 0:30:30 in radio
@@ -27,7 +27,7 @@ if __name__ == '__main__':
 	}
 
 	# chart_id = None
-	chart_id = 95
+	chart_id = 99
 	if chart_id:
 		chart = chart_repository.get_chart_by_id(chart_id)
 	else:
@@ -42,4 +42,4 @@ if __name__ == '__main__':
 	if renderable_chart:
 		renderable_chart.render()
 
-	YTUploader().upload_video(chart)
+	# YTUploader().upload_video(chart)
