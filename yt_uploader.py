@@ -13,6 +13,7 @@ from oauth2client.file import Storage
 from oauth2client.tools import run_flow
 
 import yt_description
+from charts.factory import ChartFactory
 
 from model.entity.chart import Chart
 from model.repository.chart_repository import chart_repository
@@ -127,7 +128,9 @@ class YTUploader:
 		youtube = self.get_authenticated_service(args)
 		try:
 			video_id = self.initialize_upload(youtube, args)
-			self.upload_thumbnail(youtube, video_id, chart)
+			renderable_chart = ChartFactory().create_chart(chart)
+			if renderable_chart.need_save_preview():
+				self.upload_thumbnail(youtube, video_id, chart)
 		except HttpError as e:
 			print("An HTTP error %d occurred:\n%s" % (e.resp.status, e.content))
 
