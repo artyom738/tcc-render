@@ -22,7 +22,7 @@ def find_clip(query, max_results=10):
 
 def download_clip(url: str):
 	ydl_opts = {
-		'format': '137+140',
+		'format': 'bv*[height<=1080][ext=mp4]+ba[ext=m4a]/b[height<=1080][ext=mp4]',
 		'keepvideo': False,
 		'outtmpl': 'D:/Artyom/Проекты/Top Club Chart/клипы чарта/regulars/%(title)s.%(ext)s',
 	}
