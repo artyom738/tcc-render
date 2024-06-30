@@ -47,4 +47,4 @@ class ChorusFinder:
 
 
 if __name__ == '__main__':
-	ChorusFinder().debug_analyzing(720)
+	ChorusFinder().debug_analyzing(601)
