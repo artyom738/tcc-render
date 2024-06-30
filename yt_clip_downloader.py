@@ -2,6 +2,8 @@ import os
 
 from yt_dlp import YoutubeDL
 from youtubesearchpython import VideosSearch
+
+from chorus_finder.finder import ChorusFinder
 from terminal_colors import Colors
 
 import chorus_finder
@@ -50,7 +52,7 @@ def download_clip(url: str):
 def fill_file(songId: int, ytUrl: str):
 	result = download_clip(ytUrl)
 	video_path = result['video_path']
-	analyze_result = chorus_finder.analyze_track(video_path)
+	analyze_result = ChorusFinder().analyze_track(video_path)
 	print(analyze_result)
 
 	song = song_repository.get_song_by_id(songId)
