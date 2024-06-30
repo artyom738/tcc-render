@@ -6,28 +6,28 @@ from yt_uploader import YTUploader
 
 if __name__ == '__main__':
 
-	chart_type = 'eht'
-	# chart_type = 'tcc'
+	# chart_type = 'eht'
+	chart_type = 'tcc'
 	# chart_type = 'dark'
 
 	rubrics = {
 		############# ------------- EUROHIT TOP 40 ------------- #############
-		'new_author': 'Eminem',  # Взгляд в будущее
-		'new_name': 'Houdini',
-		'past_author': 'Calvin Harris, Disciples',  # Сегодня завтра вчера
-		'past_name': 'How Deep Is Your Love',
+		'new_author': 'Kris Kross Amsterdam, INNA',  # Взгляд в будущее
+		'new_name': 'Queen Of My Castle',
+		'past_author': 'Nessa Barrett feat. jxdn',  # Сегодня завтра вчера
+		'past_name': 'la di die',
 
 		############# ------------- TOP CLUB CHART ------------- #############
-		'residance_author': 'Swanky Tunes',  # 0:25:30 in podcast and 0:30:30 in radio
-		'residance_name': 'Maneye',
-		'alltime_author': 'Ministers De La Funk & Jocelyn Brown',  # 1:12:00 in podcast and 1:28:30 in radio
-		'alltime_name': 'Believe',
-		'perspective_author': 'Fred again.. & Anderson Paak',  # 1:30:00 in podcast and 1:52:30 in radio
-		'perspective_name': 'places to be',
+		'residance_author': 'Goom Gum',  # 0:25:30 in podcast and 0:30:30 in radio
+		'residance_name': 'Don\'t Wake Up',
+		'alltime_author': 'Route 94 feat. Jess Glynne',  # 1:12:00 in podcast and 1:28:30 in radio
+		'alltime_name': 'My Love',
+		'perspective_author': 'Jamie xx, Robyn',  # 1:30:00 in podcast and 1:52:30 in radio
+		'perspective_name': 'Life',
 	}
 
 	# chart_id = None
-	chart_id = 99
+	chart_id = 109
 	if chart_id:
 		chart = chart_repository.get_chart_by_id(chart_id)
 	else:
