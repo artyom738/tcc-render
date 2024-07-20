@@ -1,6 +1,6 @@
-from v1 import ChorusFinderV1
-from v2 import ChorusFinderV2
-from v3 import ChorusFinderV3
+from chorus_finder.v1 import ChorusFinderV1
+from chorus_finder.v2 import ChorusFinderV2
+from chorus_finder.v3 import ChorusFinderV3
 
 from model.entity.song import Song
 from model.repository.song_repository import song_repository
@@ -47,4 +47,5 @@ class ChorusFinder:
 
 
 if __name__ == '__main__':
-	ChorusFinder().debug_analyzing(601)
+	ChorusFinder().debug_analyzing(700)
+	# ChorusFinder().reanalyze_song(749)

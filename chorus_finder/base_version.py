@@ -19,7 +19,7 @@ class BaseVersion:
 
 		piece_duration = 60 / bpm * tacts
 
-		return piece_duration
+		return round(piece_duration, 2)
 
 	def show_plot(self, increasing_energy_indices):
 		# Plot the amplitude envelope and highlight areas of increasing energy
