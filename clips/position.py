@@ -189,11 +189,11 @@ def create_last_out_clip(params: dict):
 	if need_render and os.path.isfile('video_parts/' + result_name + '.mp4'):
 		return mp.VideoFileClip(filename='video_parts/' + result_name + '.mp4')
 
-	position_params = {**params, 'clip_end_time': clip_end_time - 1}
+	position_params = {**params, 'clip_end_time': clip_end_time - 2}
 	clip = create_position_clip(position_params)
 
 	music_clip = mp.VideoFileClip(clip_path) \
-		.subclip(clip_end_time - 1.2, clip_end_time + 2) \
+		.subclip(clip_end_time - 2.2, clip_end_time + 1) \
 		.fl_image(blur)
 	music_clip = music_clip.resize(height=1080)
 	duration = music_clip.duration
