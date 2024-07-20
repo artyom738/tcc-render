@@ -101,7 +101,7 @@ def get_tags(chart: Chart):
 
 
 if __name__ == '__main__':
-	chart_id = 109
+	chart_id = 97
 
 	result = ''
 	chart = chart_repository.get_chart_by_id(chart_id)
