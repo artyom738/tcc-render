@@ -2,6 +2,7 @@ from datetime import datetime
 import librosa
 import moviepy.editor as mp
 import multiprocessing
+import concurrent.futures
 import numpy as np
 import random
 import os
@@ -32,6 +33,9 @@ class BaseChart:
 
 	def need_save_preview(self) -> bool:
 		return False
+
+	def get_additional_stat_info(self, song: 'Song'):
+		return None
 
 	def get_intro(self):
 		return mp.VideoFileClip(
@@ -129,34 +133,39 @@ class BaseChart:
 		positions = chart.positions
 		print('Chart date: ', chart.chart_date.strftime("%Y-%m-%d"))
 
-		processes = []
-		for index, position in enumerate(positions):
-			song_id = position.song_id
-			song = self.song_repo.get_song_by_id(song_id)
-			clip_times = song.get_clip_times()
-			clip_params = {
-				'clip_path': song.clip_path,
-				'clip_start_time': clip_times['start_time'],
-				'clip_end_time': clip_times['end_time'],
-				'author': song.authors,
-				'name': song.name,
-				'position': position.position,
-				'lw': position.get_lw(),
-				'peak': song.get_peak(self.get_chart_type(), self.chart.chart_date),
-				'weeks': song.get_weeks(self.get_chart_type(), self.chart.chart_date),
-				'moving': position.get_moving(),
-				'show_stats': True,
-				'result_name': f'{chart.chart_type}/{chart.chart_number}/{str(position.position)}',
-				'need_render': True,
-				'is_lcs': self.need_show_lcs() & position.is_lcs,
-				'position_text_color': self.get_position_text_color(position.position),
-				'position_font_family': self.get_position_font_family(),
-			}
-			process = multiprocessing.Process(target=create_position_clip, kwargs={'params': clip_params})
-			processes.append(process)
-			process.start()
+		with concurrent.futures.ProcessPoolExecutor(max_workers=20) as executor:
+			futures = []
+			for index, position in enumerate(positions):
+				song_id = position.song_id
+				song = self.song_repo.get_song_by_id(song_id)
+				clip_times = song.get_clip_times()
+				clip_params = {
+					'clip_path': song.clip_path,
+					'clip_start_time': clip_times['start_time'],
+					'clip_end_time': clip_times['end_time'],
+					'author': song.authors,
+					'name': song.name,
+					'position': position.position,
+					'lw': position.get_lw(),
+					'peak': song.get_peak(self.get_chart_type(), self.chart.chart_date),
+					'weeks': song.get_weeks(self.get_chart_type(), self.chart.chart_date),
+					'moving': position.get_moving(),
+					'show_stats': True,
+					'result_name': f'{chart.chart_type}/{chart.chart_number}/{str(position.position)}',
+					'need_render': True,
+					'is_lcs': self.need_show_lcs() & position.is_lcs,
+					'additional_stat': self.get_additional_stat_info(song),
+					'position_text_color': self.get_position_text_color(position.position),
+					'position_font_family': self.get_position_font_family(),
+				}
+				future = executor.submit(create_position_clip, params=clip_params)
+				futures.append(future)
 
-		[process.join() for process in processes]
+		for future in concurrent.futures.as_completed(futures):
+			try:
+				result = future.result()
+			except Exception as e:
+				print(f'Error during render clip {e}')
 
 		for index, position in enumerate(positions):
 			filename = f'video_parts/{chart.chart_type}/{chart.chart_number}/{str(position.position)}.mp4'
