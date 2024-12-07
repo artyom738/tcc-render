@@ -75,6 +75,17 @@ def fill_songs_with_no_clip():
 		fill_file(song.id, yt_clip_url)
 
 
+def fill_songs_by_ids(song_ids: list):
+	songs = [song_repository.get_song_by_id(song_id) for song_id in song_ids]
+	for song in songs:
+		print(f'{Colors.OKBLUE}Downloading clip for {song.id} {song.authors} - {song.name}{Colors.ENDC}')
+		search_query = f'{song.authors} - {song.name}'
+		yt_clip_id = find_clip(search_query)
+		# yt_clip_id = 'ig9TBmz03Dg'
+		yt_clip_url = f'https://www.youtube.com/watch?v={yt_clip_id}'
+		fill_file(song.id, yt_clip_url)
+
+
 def fill_concrete_song(song_id: int, yt_id: str):
 	print(f'{Colors.OKBLUE}Downloading clip for {song_id}{Colors.ENDC}')
 	yt_clip_url = f'https://www.youtube.com/watch?v={yt_id}'
@@ -82,6 +93,7 @@ def fill_concrete_song(song_id: int, yt_id: str):
 
 
 if __name__ == '__main__':
-	# fill_concrete_song(606, 'tbKVNZoDmD0')
-	fill_songs_with_no_clip()
+	fill_concrete_song(858, 'jbF01xLv7FU')
+	# fill_songs_with_no_clip()
+	# fill_songs_by_ids([468])
 
