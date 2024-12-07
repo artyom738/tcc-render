@@ -33,7 +33,7 @@ class Chart:
 		max_down = 0
 		for position in self.positions:
 			lw = position.get_lw()
-			if lw == '--':
+			if lw == '--' or lw is None:
 				continue
 			if lw - position.position > max_up:
 				max_up = lw - position.position
@@ -42,7 +42,7 @@ class Chart:
 
 		for position in self.positions:
 			lw = position.get_lw()
-			if lw == '--':
+			if lw == '--' or lw is None:
 				continue
 			if lw - position.position > 0 and lw - position.position == max_up:
 				position.moving = 'double-up'

@@ -24,6 +24,9 @@ class Position:
 
 	def get_lw(self):
 		previous_chart = chart_repository.get_previous_chart(self.chart_id)
+		if not previous_chart:
+			return None
+
 		query = f'select cp.POSITION from chart_positions cp where cp.SONG_ID = {self.song_id} AND cp.CHART_ID = {previous_chart.id}'
 		result = database.get_list(query)
 		if len(result) < 1:
@@ -38,6 +41,8 @@ class Position:
 		lw = self.get_lw()
 		if lw == '--':
 			return 'new'
+		elif lw is None:
+			return None
 		elif int(lw) == self.position:
 			return 'same'
 		elif int(lw) > self.position:

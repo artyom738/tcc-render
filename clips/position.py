@@ -36,6 +36,7 @@ def create_position_clip(params: dict):
 	show_stats = params.get('show_stats', True)
 	result_name = params.get('result_name', 'rendered_clip')
 	is_lcs = params.get('is_lcs', False)
+	additional_stat = params.get('additional_stat', None)
 	need_render = params.get('need_render', False)
 	position_text_color = params.get('position_text_color', '#781fdb')
 	position_font_family = params.get('position_font_family', 'Microsoft-PhagsPa-Bold')
@@ -90,9 +91,15 @@ def create_position_clip(params: dict):
 
 	clip_stats = None
 	clip_lcs = None
+	additional_stat_clip = None
 	if show_stats:
+		if lw is not None:
+			stat_text = "Было: #" + str(lw) + " | Пик: #" + str(peak) + " | Недель: " + str(weeks)
+		else:
+			stat_text = "Пик: #" + str(peak) + " | Недель: " + str(weeks)
+
 		clip_stats = mp.TextClip(
-			txt="Было: #" + str(lw) + " | Пик: #" + str(peak) + " | Недель: " + str(weeks),
+			txt=stat_text,
 			font=text_font,
 			color='white',
 			fontsize=60,
@@ -115,6 +122,19 @@ def create_position_clip(params: dict):
 			).set_duration(3)
 			stats_width = clip_lcs.size[0]
 			clip_lcs = clip_lcs.set_position((w - stats_width - 60, 135))
+
+		if additional_stat:
+			additional_stat_clip = mp.TextClip(
+				txt=additional_stat,
+				font=text_font,
+				color='white',
+				fontsize=60,
+				stroke_color='black',
+				stroke_width=2,
+				align='East',
+			).set_duration(3)
+			stats_width = additional_stat_clip.size[0]
+			additional_stat_clip = additional_stat_clip.set_position((w - stats_width - 60, 135))
 
 	arrow_path = None
 	if moving == 'up':
@@ -151,6 +171,8 @@ def create_position_clip(params: dict):
 		clip_list.append(clip_stats.set_start(duration - 3).crossfadein(0.4).crossfadeout(0.4))
 	if show_stats and is_lcs and clip_lcs:
 		clip_list.append(clip_lcs.set_start(duration - 3).crossfadein(0.4).crossfadeout(0.4))
+	if show_stats and not is_lcs and additional_stat and additional_stat_clip:
+		clip_list.append(additional_stat_clip.set_start(duration - 3).crossfadein(0.4).crossfadeout(0.4))
 	if position and clip_position:
 		clip_list.append(clip_position.crossfadein(0.4).crossfadeout(0.4))
 

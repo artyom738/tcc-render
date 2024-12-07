@@ -30,6 +30,9 @@ class PositionRepository:
 
 	def get_chart_outs(self, chart_id: int):
 		previous_chart = chart_repository.get_previous_chart(chart_id)
+		if not previous_chart:
+			return []
+
 		query = f'select SONG_ID from chart_positions cp where cp.CHART_ID = {previous_chart.id} order by cp.POSITION desc'
 		prev_songs = []
 		db_result = database.get_list(query)

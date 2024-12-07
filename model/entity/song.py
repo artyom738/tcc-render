@@ -64,9 +64,13 @@ class Song:
 		self.clip_end_sec = clip_end_sec
 
 		return self
+	# endregion
 
 	def get_clip_times(self):
 		start_times = self.clip_start_sec
+		if len(start_times) == 0:
+			raise ValueError(f'Song {self.id} {self.authors} - {self.name} has no start times')
+
 		if len(start_times) == 1:
 			return {
 				'start_time': float(start_times[0]),
@@ -79,14 +83,17 @@ class Song:
 			'start_time': float(start_times[random_index]),
 			'end_time': float(self.clip_end_sec[random_index]),
 		}
-	# endregion
 
 	def get_peak(self, chart_type: str, chart_date: datetime = None):
+		# chart_type = 'eht'
+		# chart_date = None
 		query = f'select MIN(cp.POSITION) as peak from chart_positions cp left join charts c on c.ID = cp.CHART_ID where cp.SONG_ID = {str(self.id)} and c.CHART_TYPE = \'{chart_type}\''
 		if chart_date:
 			query += f' and c.CHART_DATE <= \'{chart_date.strftime("%Y-%m-%d")}\''
 		result = database.get_list(query)
 		min_position = result[0]['peak']
+		if not min_position:
+			return '--'
 
 		query = f'select COUNT(*) as peak_times from chart_positions cp left join charts c on c.ID = cp.CHART_ID where cp.SONG_ID = {self.id} AND cp.POSITION = {min_position} and c.CHART_TYPE = \'{chart_type}\''
 		if chart_date:
@@ -100,12 +107,21 @@ class Song:
 			return str(min_position)
 
 	def get_weeks(self, chart_type: str, chart_date: datetime = None):
+		# chart_type = 'eht'
+		# chart_date = None
 		query = f'select count(*) as weeks from chart_positions cp left join charts c on c.ID = cp.CHART_ID where cp.SONG_ID = {self.id} and c.CHART_TYPE = \'{chart_type}\''
 		if chart_date:
 			query += f' and c.CHART_DATE <= \'{chart_date.strftime("%Y-%m-%d")}\''
 		result = database.get_list(query)
 
 		return result[0]['weeks']
+
+	def get_charts(self, chart_type: str):
+		# chart_type = 'eht'
+		query = f'select cp.POSITION, c.CHART_DATE from chart_positions cp left join charts c on c.ID = cp.CHART_ID where cp.SONG_ID = {self.id} and c.CHART_TYPE = \'{chart_type}\' order by c.CHART_DATE'
+		result = database.get_list(query)
+
+		return result
 
 	def save(self):
 		if self.id is None:
