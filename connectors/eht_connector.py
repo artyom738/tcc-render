@@ -54,19 +54,24 @@ class EurohitConnector(EuropaPlusConnector):
 
 
 if __name__ == '__main__':
-	chart = Chart({
-		'id': None,
-		'chart_number': 12,
-		'chart_date': '2024-05-31',
-		'chart_type': 'eht',
-	}).save()
-	connector = EurohitConnector()
-	connector.save_chart_data(chart)
-	need_fill_rubrics = True
-	if need_fill_rubrics:
-		connector.save_rubrics(chart.id, {
-			'new_author': 'Lost Frequencies feat. David Kushner',  # Взгляд в будущее
-			'new_name': 'In My Bones',
-			'past_author': 'Hurts',  # Сегодня завтра вчера
-			'past_name': 'Stay',
-		})
+	date = '2023-01-27'
+	date_object = datetime.strptime(date, '%Y-%m-%d').date()
+	while date_object < datetime.strptime('2023-06-16', '%Y-%m-%d').date():
+		connector = EurohitConnector()
+		chart = Chart({
+			'id': None,
+			'chart_number': 0,
+			'chart_date': date_object,
+			'chart_type': 'eht',
+		}).save()
+		connector.save_chart_data(chart)
+		date_object += timedelta(days=7)
+
+	# need_fill_rubrics = False
+	# if need_fill_rubrics:
+	# 	connector.save_rubrics(chart.id, {
+	# 		'new_author': 'Lost Frequencies feat. David Kushner',  # Взгляд в будущее
+	# 		'new_name': 'In My Bones',
+	# 		'past_author': 'Hurts',  # Сегодня завтра вчера
+	# 		'past_name': 'Stay',
+	# 	})
