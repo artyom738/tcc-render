@@ -5,6 +5,7 @@ from model.repository.song_repository import song_repository
 
 months = ['января', 'февраля', 'марта', 'апреля', 'мая', 'июня', 'июля', 'августа', 'сентября', 'октября', 'ноября', 'декабря']
 
+
 def get_tcc_title(chart: Chart):
 	date = chart.chart_date
 	#  Top Club Chart #468 (1 июня 2024) - ТОП 25 Танцевальных Треков
@@ -25,7 +26,7 @@ def get_tcc_description(chart: Chart):
 		song = song_repository.get_song_by_id(position.song_id)
 		result += (str(position.position) + '. ' + song.authors + ' - ' + song.name + '\n')
 
-	result += f'\nПосмотреть чарт - https://europaplus.ru/top-club-chart?section=top25&date={chart.chart_date.strftime("%Y-%m-%d")}\n'
+	result += f'\nПосмотреть чарт - https://europaplus.ru/programs/top-club-chart?date={chart.chart_date.strftime("%Y-%m-%d")}\n'
 	result += '#topclubchart #europaplus\n'
 	return result
 
@@ -47,7 +48,7 @@ def get_eht_description(chart: Chart):
 		song = song_repository.get_song_by_id(position.song_id)
 		result += (str(position.position) + '. ' + song.authors + ' - ' + song.name + '\n')
 
-	result += f'\nПосмотреть чарт - https://europaplus.ru/top40?section=top40&date={chart.chart_date.strftime("%Y-%m-%d")}\n'
+	result += f'\nПосмотреть чарт - https://europaplus.ru/programs/top40?date={chart.chart_date.strftime("%Y-%m-%d")}\n'
 	result += '#eurohittop40 #europaplus\n'
 	return result
 
@@ -95,13 +96,13 @@ def get_tags(chart: Chart):
 	if chart.chart_type == 'tcc':
 		return f'top club chart,танцевальная музыка {year},топ клаб чарт,хит парад европа плюс,топ клаб чарт {chart.chart_date.strftime("%d.%m")},top club chart europa plus,top club chart {year},европа плюс топ клаб чарт,top 25 chart,танцевальный чарт,клубный чарт {year},edm музыка {year},dance songs,чарт европа плюс,топ 25 европа плюс,европа плюс,чарт суббота европа плюс,ткч {chart.chart_number},tcc {chart.chart_number},топ клаб чарт последний выпуск,топ чарт европа плюс'
 	if chart.chart_type == 'eht':
-		return f'еврохит топ 40,топ чарт,хиты {year},европа плюс {year} топ 40 новинки,хит парад европа плюс,танцевальный чарт,танцевальная музыка {year},клубный чарт {year},новая музыка {year},dance songs,чарт европа плюс,европа плюс,итоговый чарт недели,чарт пятница европа плюс,евро хит топ 40,еврохит топ 40 последний выпуск,европа плюс {year},еврохит {chart.chart_date.strftime("%d.%m")},еврохит топ 40 {year},europe plus'
+		return f'еврохит топ 40,топ чарт,хиты {year},европа плюс {year} топ 40 новинки,хит парад европа плюс,танцевальный чарт,танцевальная музыка {year},клубный чарт {year},новая музыка {year},dance songs,чарт европа плюс,европа плюс,итоговый чарт недели,чарт пятница европа плюс,евро хит топ 40,еврохит топ 40 последний выпуск,европа плюс {year},еврохит {chart.chart_date.strftime("%d.%m")},еврохит топ 40 {year},europe plus,хит топ 40'
 	if chart.chart_type == 'dark':
 		return f'dark sky chart,танцевальная музыка {year},новая музыка чарт,хит парад,darknity top 50,top 50 dance chart,radio d1r,d1r chart,радио диван,музыка в машину,музыка в машину {year} зарубежные,дип хаус музыка,прогрессив хаус музыка,хаус музыка подборка'
 
 
 if __name__ == '__main__':
-	chart_id = 97
+	chart_id = 189
 
 	result = ''
 	chart = chart_repository.get_chart_by_id(chart_id)
