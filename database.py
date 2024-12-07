@@ -34,9 +34,13 @@ def get_list(sql, params=None):
 		database="tcc_render"
 	)
 	cursor = mydb.cursor(dictionary=True)
-	cursor.execute(sql, params)
-
-	return cursor.fetchall()
+	try:
+		cursor.execute(sql, params)
+		return cursor.fetchall()
+	except Exception as e:
+		print('Error executing query: ' + sql)
+		print('Error text: ' + str(e))
+		return []
 
 
 def add(sql, params):
