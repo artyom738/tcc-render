@@ -42,10 +42,11 @@ class ChorusFinder:
 	def debug_analyzing(self, song_id: int):
 		song = song_repository.get_song_by_id(song_id)
 		finder = ChorusFinderV3()
-		result = finder.find_chorus(song.clip_path, draw_chart=False, find_times=True)
+		result = finder.find_chorus(song.clip_path, draw_chart=True, find_times=True)
 		print(result)
 
 
 if __name__ == '__main__':
-	ChorusFinder().debug_analyzing(700)
-	# ChorusFinder().reanalyze_song(749)
+	# ChorusFinder().debug_analyzing(677)
+	ChorusFinder().reanalyze_song(904)
+	# ChorusFinder().reanalyze_songs()

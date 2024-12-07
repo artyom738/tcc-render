@@ -12,22 +12,22 @@ if __name__ == '__main__':
 
 	rubrics = {
 		############# ------------- EUROHIT TOP 40 ------------- #############
-		'new_author': 'Alesso & Nate Smith',  # Взгляд в будущее
-		'new_name': 'I Like It',
-		'past_author': 'Halsey',  # Сегодня завтра вчера
-		'past_name': 'Nightmare',
+		'new_author': 'Nessa Barrett feat. Artemas',  # Взгляд в будущее
+		'new_name': 'MUSTANG BABY',
+		'past_author': 'NRD1',  # Сегодня завтра вчера
+		'past_name': 'All Good Things (Come to an End)',
 
 		############# ------------- TOP CLUB CHART ------------- #############
-		'residance_author': 'Matvey Emerson',  # 0:25:30 in podcast and 0:30:30 in radio
-		'residance_name': 'PROMISES',
-		'alltime_author': 'Orbital',  # 1:12:00 in podcast and 1:28:30 in radio
-		'alltime_name': 'Halcyon and On and On',
-		'perspective_author': 'Felix Jaehn & Sophie Ellis-Bextor',  # 1:30:00 in podcast and 1:52:30 in radio
-		'perspective_name': 'Ready For Your Love',
+		'residance_author': 'Rezone & Exodus & KXNE',  # 0:25:30 in podcast and 0:30:30 in radio
+		'residance_name': 'Mayhem',
+		'alltime_author': 'Showtek feat. We Are Loud & So',  # 1:12:00 in podcast and 1:28:30 in radio
+		'alltime_name': 'Booyah',
+		'perspective_author': 'Chris Stussy',  # 1:30:00 in podcast and 1:52:30 in radio
+		'perspective_name': 'Won\'t Stop (Don\'t)',
 	}
 
-	# chart_id = None
-	chart_id = 115
+	chart_id = None
+	# chart_id = 188
 	if chart_id:
 		chart = chart_repository.get_chart_by_id(chart_id)
 	else:
