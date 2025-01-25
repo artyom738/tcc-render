@@ -92,8 +92,15 @@ def fill_concrete_song(song_id: int, yt_id: str):
 	fill_file(song_id, yt_clip_url)
 
 
+def just_download(yt_id: str):
+	yt_clip_url = f'https://www.youtube.com/watch?v={yt_id}'
+	result = download_clip(yt_clip_url)
+	print(result)
+
+
 if __name__ == '__main__':
-	fill_concrete_song(858, 'jbF01xLv7FU')
+	# fill_concrete_song(1096, 'aeBaSrJmTMk')
+	just_download('4zb7p3GG2Ig')
 	# fill_songs_with_no_clip()
-	# fill_songs_by_ids([468])
+	# fill_songs_by_ids([260])
 

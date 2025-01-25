@@ -66,12 +66,21 @@ class TopClubChart(BaseChart):
 			.crossfadein(0.4) \
 			.crossfadeout(0.4)
 
+		# confetti = mp.VideoFileClip(
+		# 	'package/confetti.mp4',
+		# 	target_resolution=(1080, 1920)
+		# ) \
+		# 	.fx(vfx.mask_color, color=[72, 223, 0], s=5, thr=130) \
+		# 	.set_duration(3) \
+		# 	.crossfadeout(0.4)
+
 		return [
 			clip_chart_number,
 			clip_chart_date,
 			clip_logo,
 			clip_site,
 			clip_ep_logo,
+			# confetti,
 		]
 
 	def get_all_time(self, song_id: int):
@@ -234,22 +243,22 @@ class TopClubChart(BaseChart):
 		total_duration += intro_clip.duration
 		after_intro_animation = self.get_after_intro_animation(total_duration)
 
-		# All time dance anthem
-		all_time_clip = self.get_all_time(self.chart.rubric['all_time_song_id'])
-		all_time_clip = all_time_clip.set_start(total_duration)
-		total_duration += all_time_clip.duration
-		after_all_time_animation = self.get_after_all_time_animation(total_duration)
+		# Residance
+		residance_clip = self.get_residance(self.chart.rubric['residance_song_id'])
+		residance_clip = residance_clip.set_start(total_duration)
+		total_duration += residance_clip.duration
+		after_residance_animation = self.get_after_residance_animation(total_duration)
 
 		# Out clips
 		outs_clip = self.get_outs(total_duration, self.chart)
 		total_duration += outs_clip.duration
 		after_outs_animation = self.get_after_outs_animation(total_duration)
 
-		# Residance
-		residance_clip = self.get_residance(self.chart.rubric['residance_song_id'])
-		residance_clip = residance_clip.set_start(total_duration)
-		total_duration += residance_clip.duration
-		after_residance_animation = self.get_after_residance_animation(total_duration)
+		# All time dance anthem
+		all_time_clip = self.get_all_time(self.chart.rubric['all_time_song_id'])
+		all_time_clip = all_time_clip.set_start(total_duration)
+		total_duration += all_time_clip.duration
+		after_all_time_animation = self.get_after_all_time_animation(total_duration)
 
 		# Positions
 		songs_clip = self.get_positions(total_duration, self.chart)
@@ -266,16 +275,16 @@ class TopClubChart(BaseChart):
 
 		return mp.CompositeVideoClip([
 			intro_clip,
-			all_time_clip,
-			outs_clip,
 			residance_clip,
+			outs_clip,
+			all_time_clip,
 			songs_clip,
 			perspective_clip,
 			outro_clip,
 			after_intro_animation,
-			after_all_time_animation,
-			after_outs_animation,
 			after_residance_animation,
+			after_outs_animation,
+			after_all_time_animation,
 			after_positions_animation,
 			after_perspective_animation,
 		]) \

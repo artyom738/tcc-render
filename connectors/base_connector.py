@@ -21,6 +21,8 @@ class BaseConnector:
 	def get_last_chart_number(self) -> int:
 		chart_type = self.get_chart_type()
 		chart = chart_repository.get_last_chart_by_type(chart_type)
+		if not chart:
+			return 1
 		return chart.chart_number
 
 	def get_chart_type(self) -> str:

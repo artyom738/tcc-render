@@ -29,7 +29,7 @@ class List(BaseChart):
 		first = charts[0]
 		last = charts[len(charts) - 1]
 
-		if last['CHART_DATE'].strftime('%Y-%m-%d') == '2024-11-29':
+		if last['CHART_DATE'].strftime('%Y-%m-%d') == '2024-12-06':
 			date_range = first['CHART_DATE'].strftime('%d.%m.%Y') + ' - наст. вр.'
 		else:
 			date_range = first['CHART_DATE'].strftime('%d.%m.%Y') + ' - ' + last['CHART_DATE'].strftime('%d.%m.%Y')
@@ -50,5 +50,33 @@ class List(BaseChart):
 			target_resolution=(1080, 1920)
 		)
 
+	def get_after_perspective_animation(self, total_duration: float):
+		animation = mp.VideoFileClip(
+			'package/rounds1.mp4',
+			target_resolution=(1080, 1920)
+		) \
+			.fx(vfx.mask_color, color=[0, 255, 0], s=5, thr=130) \
+			.set_start(total_duration - 28 / 30)
+
+		return animation
+
 	def generate_clip(self):
-		songs_clip = self.get_positions(0, self.chart)
+		total_duration = 0
+		intro_clip = self.get_intro()
+		total_duration += intro_clip.duration
+		after_intro_animation = self.get_after_intro_animation(total_duration)
+
+		songs_clip = self.get_positions(total_duration, self.chart)
+
+		total_duration += songs_clip.duration
+		after_perspective_animation = self.get_after_perspective_animation(total_duration)
+		outro_clip = self.get_outro(total_duration)
+
+		return mp.CompositeVideoClip([
+			intro_clip,
+			songs_clip,
+			outro_clip,
+			after_intro_animation,
+			after_perspective_animation,
+		]) \
+			# .subclip(47, 47.2)
