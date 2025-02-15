@@ -6,29 +6,29 @@ from yt_uploader import YTUploader
 
 if __name__ == '__main__':
 
-	chart_type = 'eht'
-	# chart_type = 'tcc'
+	# chart_type = 'eht'
+	chart_type = 'tcc'
 	# chart_type = 'dark'
-	# chart_type = 'tcc_ny'
+	# chart_type = 'list'
 
 	rubrics = {
 		############# ------------- EUROHIT TOP 40 ------------- #############
-		'new_author': 'Klingande & Shaun Farrugia',  # Взгляд в будущее
-		'new_name': 'Feelings For You',
-		'past_author': 'Flipsyde',  # Сегодня завтра вчера
-		'past_name': 'Happy Birthday',
+		'new_author': 'Lady Gaga',  # Взгляд в будущее
+		'new_name': 'Abracadabra',
+		'past_author': 'Alex Hepburn',  # Сегодня завтра вчера
+		'past_name': 'Under',
 
 		############# ------------- TOP CLUB CHART ------------- #############
-		'residance_author': 'Aspyer',  # 0:25:30 in podcast and 0:30:30 in radio
-		'residance_name': 'Overdrive',
-		'alltime_author': 'Martin Solveig',  # 1:12:00 in podcast and 1:28:30 in radio
-		'alltime_name': 'Intoxicated',
-		'perspective_author': 'Anyma & Ellie Goulding',  # 1:30:00 in podcast and 1:52:30 in radio
-		'perspective_name': 'Hypnotized',
+		'residance_author': 'Alexander Popov x Seegy',  # 0:25:30 in podcast and 0:30:30 in radio
+		'residance_name': 'Guiding Light',
+		'alltime_author': 'Justice & Simian',  # 1:12:00 in podcast and 1:28:30 in radio
+		'alltime_name': 'We Are Your Friends',
+		'perspective_author': 'Aspyer & Zander Shine',  # 1:30:00 in podcast and 1:52:30 in radio
+		'perspective_name': 'Falling Into You',
 	}
 
 	# chart_id = None
-	chart_id = 220
+	chart_id = 232
 	if chart_id:
 		chart = chart_repository.get_chart_by_id(chart_id)
 	else:

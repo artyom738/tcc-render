@@ -133,7 +133,7 @@ class BaseChart:
 		positions = chart.positions
 		print('Chart date: ', chart.chart_date.strftime("%Y-%m-%d"))
 
-		with concurrent.futures.ProcessPoolExecutor(max_workers=20) as executor:
+		with concurrent.futures.ProcessPoolExecutor(max_workers=10) as executor:
 			futures = []
 			for index, position in enumerate(positions):
 				song_id = position.song_id

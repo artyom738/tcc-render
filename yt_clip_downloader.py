@@ -99,8 +99,8 @@ def just_download(yt_id: str):
 
 
 if __name__ == '__main__':
-	# fill_concrete_song(1096, 'aeBaSrJmTMk')
-	just_download('4zb7p3GG2Ig')
+	fill_concrete_song(1135, 'vBynw9Isr28')
+	# just_download('4zb7p3GG2Ig')
 	# fill_songs_with_no_clip()
 	# fill_songs_by_ids([260])
 
