@@ -85,11 +85,11 @@ class Song:
 		}
 
 	def get_peak(self, chart_type: str, chart_date: datetime = None):
-		# chart_type = 'eht'
+		# chart_type = 'tcc'
 		# chart_date = None
 		query = f'select MIN(cp.POSITION) as peak from chart_positions cp left join charts c on c.ID = cp.CHART_ID where cp.SONG_ID = {str(self.id)} and c.CHART_TYPE = \'{chart_type}\''
 		if chart_date:
-			query += f' and c.CHART_DATE <= \'{chart_date.strftime("%Y-%m-%d")}\''
+			query += f' and c.CHART_DATE <= \'{chart_date.strftime("%Y-%m-%d")}\' and c.CHART_DATE > "2024-01-01"'
 		result = database.get_list(query)
 		min_position = result[0]['peak']
 		if not min_position:
@@ -97,7 +97,7 @@ class Song:
 
 		query = f'select COUNT(*) as peak_times from chart_positions cp left join charts c on c.ID = cp.CHART_ID where cp.SONG_ID = {self.id} AND cp.POSITION = {min_position} and c.CHART_TYPE = \'{chart_type}\''
 		if chart_date:
-			query += f' and c.CHART_DATE <= \'{chart_date.strftime("%Y-%m-%d")}\''
+			query += f' and c.CHART_DATE <= \'{chart_date.strftime("%Y-%m-%d")}\' and c.CHART_DATE > "2024-01-01"'
 		result = database.get_list(query)
 		peak_times = result[0]['peak_times']
 
@@ -107,11 +107,11 @@ class Song:
 			return str(min_position)
 
 	def get_weeks(self, chart_type: str, chart_date: datetime = None):
-		# chart_type = 'eht'
+		# chart_type = 'tcc'
 		# chart_date = None
 		query = f'select count(*) as weeks from chart_positions cp left join charts c on c.ID = cp.CHART_ID where cp.SONG_ID = {self.id} and c.CHART_TYPE = \'{chart_type}\''
 		if chart_date:
-			query += f' and c.CHART_DATE <= \'{chart_date.strftime("%Y-%m-%d")}\''
+			query += f' and c.CHART_DATE <= \'{chart_date.strftime("%Y-%m-%d")}\' and c.CHART_DATE > "2024-01-01"'
 		result = database.get_list(query)
 
 		return result[0]['weeks']
@@ -122,6 +122,17 @@ class Song:
 		result = database.get_list(query)
 
 		return result
+
+	def get_points(self, chart_type: str, date_start: datetime, date_end: datetime):
+		max_points = 41
+		if chart_type == 'eht':
+			max_points = 41
+		if chart_type == 'tcc':
+			max_points = 26
+		query = f'select sum({max_points}-cp.POSITION) as points from chart_positions cp left join charts c on c.ID = cp.CHART_ID where cp.SONG_ID = {self.id} and c.CHART_TYPE = \'{chart_type}\' and c.CHART_DATE > \'{date_start.strftime("%Y-%m-%d")}\' and c.CHART_DATE < \'{date_end.strftime("%Y-%m-%d")}\''
+		result = database.get_list(query)
+
+		return result[0]['points']
 
 	def save(self):
 		if self.id is None:
