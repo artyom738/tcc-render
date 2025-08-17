@@ -17,6 +17,9 @@ class BaseVersion:
 		while tacts >= bpm / 10:
 			tacts -= 2
 
+		# приводим bpm к float, чтобы не было numpy.ndarray
+		bpm = float(bpm)
+
 		piece_duration = 60 / bpm * tacts
 
 		return round(piece_duration, 2)
