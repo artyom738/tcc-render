@@ -14,7 +14,7 @@ class BaseConnector:
 			'chart_number': self.get_last_chart_number() + 1,
 			'chart_date': self.get_last_chart_date(),
 			'chart_type': self.get_chart_type(),
-		}).save()
+		})
 
 		return chart
 

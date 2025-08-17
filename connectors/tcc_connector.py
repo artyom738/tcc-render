@@ -1,3 +1,4 @@
+import time
 from datetime import datetime, timedelta, date
 
 from connectors.europa_plus_connector import EuropaPlusConnector
@@ -68,21 +69,39 @@ class TopClubChartConnector(EuropaPlusConnector):
 
 
 if __name__ == '__main__':
-	chart = Chart({
-		'id': None,
-		'chart_number': 468,
-		'chart_date': '2024-06-01',
-		'chart_type': 'tcc',
-	}).save()
-	connector = TopClubChartConnector()
-	connector.save_chart_data(chart)
-	need_fill_rubrics = True
-	if need_fill_rubrics:
-		connector.save_rubrics(chart.id, {
-			'residance_author': 'Going Deeper, ARIA',  # 0:25:30 in podcast and 0:30:30 in radio
-			'residance_name': 'Out Of Control',
-			'alltime_author': 'York',  # 1:12:00 in podcast and 1:28:30 in radio
-			'alltime_name': 'On The Beach',
-			'perspective_author': 'Skrillex, Hamdi, Taichu',  # 1:30:00 in podcast and 1:52:30 in radio
-			'perspective_name': 'Push',
-		})
+	date = '2025-02-22'
+	chart_number = 505
+	date_object = datetime.strptime(date, '%Y-%m-%d').date()
+	while date_object < datetime.strptime('2025-08-16', '%Y-%m-%d').date():
+		connector = TopClubChartConnector()
+		chart = Chart({
+			'id': None,
+			'chart_number': chart_number,
+			'chart_date': date_object,
+			'chart_type': 'tcc',
+		}).save()
+		connector.save_chart_data(chart)
+		date_object += timedelta(days=7)
+		print('Saved ' + str(chart_number))
+		chart_number += 1
+		time.sleep(2)
+
+
+	# chart = Chart({
+	# 	'id': None,
+	# 	'chart_number': 468,
+	# 	'chart_date': '2024-06-01',
+	# 	'chart_type': 'tcc',
+	# }).save()
+	# connector = TopClubChartConnector()
+	# connector.save_chart_data(chart)
+	# need_fill_rubrics = True
+	# if need_fill_rubrics:
+	# 	connector.save_rubrics(chart.id, {
+	# 		'residance_author': 'Going Deeper, ARIA',  # 0:25:30 in podcast and 0:30:30 in radio
+	# 		'residance_name': 'Out Of Control',
+	# 		'alltime_author': 'York',  # 1:12:00 in podcast and 1:28:30 in radio
+	# 		'alltime_name': 'On The Beach',
+	# 		'perspective_author': 'Skrillex, Hamdi, Taichu',  # 1:30:00 in podcast and 1:52:30 in radio
+	# 		'perspective_name': 'Push',
+	# 	})
