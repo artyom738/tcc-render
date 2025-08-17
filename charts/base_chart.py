@@ -198,13 +198,13 @@ class BaseChart:
 			.audio_fadein(1) \
 			.audio_fadeout(1) \
 			.fx(afx.volumex, 0.5) \
-			.set_start(total_duration)
+			.set_start(total_duration + 1)
 
 		outro_clip = mp.VideoFileClip(
 			self.get_outro_path(),
 			target_resolution=(1080, 1920)
 		) \
-			.subclip(0, 11) \
+			.subclip(0, 12) \
 			.fadeout(1) \
 			.set_audio(outro_audio) \
 			.set_start(total_duration)
@@ -220,12 +220,12 @@ class BaseChart:
 		after_intro_animation = self.get_after_intro_animation(total_duration)
 
 		# Out clips
-		outs_clip = self.get_outs(total_duration, self.chart)
+		outs_clip = self.get_outs(total_duration, self.chart).fx(afx.audio_fadein(0.5)).fx(afx.audio_fadein(0.5))
 		total_duration += outs_clip.duration
 		after_outs_animation = self.get_after_outs_animation(total_duration)
 
 		# Positions
-		songs_clip = self.get_positions(total_duration, self.chart)
+		songs_clip = self.get_positions(total_duration, self.chart).fx(afx.audio_fadein(0.5)).fx(afx.audio_fadein(0.5))
 		total_duration += songs_clip.duration
 		after_positions_animation = self.get_after_positions_animation(total_duration)
 
@@ -240,7 +240,7 @@ class BaseChart:
 			after_outs_animation,
 			after_positions_animation,
 		]) \
-			# .subclip(47, 47.2)
+			# .subclip(190, 193)
 
 	def render(self):
 		tmp_clip_path = f'video_parts/{self.chart.chart_type}/{self.chart.chart_number}'
@@ -253,7 +253,7 @@ class BaseChart:
 			f'production/{self.get_chart_type()} {self.chart.chart_date.strftime("%Y-%m-%d")}.mp4',
 			fps=30,
 			codec='mpeg4',
-			bitrate='8000k',
+			bitrate='12000k',
 			threads=8,
 		)
 		# final.write_videofile('video_parts/tcc ' + chart.chart_date.strftime('%Y-%m-%d') + '.mp4', fps=10, codec='mpeg4', bitrate='200k', threads=8)
@@ -261,3 +261,4 @@ class BaseChart:
 		print('Finished at', current_time.strftime('%Y-%m-%d %H:%M:%S'))
 		seconds = (datetime.now() - current_time).total_seconds()
 		print('Rendered by ', str(int(seconds // 60)), ' min ', str(int(seconds % 60)), ' sec')
+		print('Chart ID ', str(self.chart.id))
