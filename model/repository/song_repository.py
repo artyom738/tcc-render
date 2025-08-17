@@ -27,13 +27,13 @@ class SongRepository:
 		else:
 			return None
 
-	def get_songs_with_no_clips(self, min_id_filter=472) -> list[Song]:
+	def get_songs_with_no_clips(self, min_id_filter=0) -> list[Song]:
 		query = f'select * from songs where ID >= {str(int(min_id_filter))} and (CLIP_PATH is null or CLIP_PATH = \'\')'
 		song_list = database.get_list(query)
 
 		return [self.fetch_object(item) for item in song_list]
 
-	def get_by_greater_id(self, min_id: int = 300):
+	def get_by_greater_id(self, min_id: int = 0):
 		query = f'select * from songs where ID >= {str(min_id)}'
 		song_list = database.get_list(query)
 

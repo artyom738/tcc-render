@@ -30,7 +30,7 @@ class ChorusFinder:
 				.save()
 			print(f'Analysing song {song.id} was finished')
 
-	def reanalyze_songs(self, min_id: int = 300):
+	def reanalyze_songs(self, min_id: int = 0):
 		songs = song_repository.get_by_greater_id(min_id)
 		for song in songs:
 			self.fill_song_info(song)
