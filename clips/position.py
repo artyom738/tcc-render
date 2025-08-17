@@ -179,7 +179,7 @@ def create_position_clip(params: dict):
 	final = mp.CompositeVideoClip(clip_list)
 
 	if need_render:
-		final.write_videofile('video_parts/' + result_name + '.mp4', fps=30, codec='mpeg4', bitrate='8000k')
+		final.write_videofile('video_parts/' + result_name + '.mp4', fps=30, codec='mpeg4', bitrate='12000k')
 
 	return final
 
@@ -256,6 +256,6 @@ def create_last_out_clip(params: dict):
 		print(f'Preview saved: {preview_name}')
 
 	if need_render:
-		final.write_videofile('video_parts/' + result_name + '.mp4', fps=30, codec='mpeg4', bitrate='8000k')
+		final.write_videofile('video_parts/' + result_name + '.mp4', fps=30, codec='mpeg4', bitrate='12000k')
 
 	return final
