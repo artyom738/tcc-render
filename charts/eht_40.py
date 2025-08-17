@@ -143,6 +143,8 @@ class Eht40(BaseChart):
 		amplitude_envelope = librosa.feature.rms(y=y)[0]
 		average_amplitude = round(np.mean(amplitude_envelope), 2)
 		clip = clip.fx(afx.volumex, etalon_amplidude / average_amplitude)
+		clip = clip.fx(afx.audio_fadein, 0.2)
+		clip = clip.fx(afx.audio_fadeout, 0.2)
 		print(f'Multiplied by {etalon_amplidude / average_amplitude}')
 
 		label = mp.VideoFileClip(
@@ -163,7 +165,8 @@ class Eht40(BaseChart):
 			target_resolution=(1080, 1920)
 		) \
 			.fx(vfx.mask_color, color=[0, 255, 0], s=5, thr=130) \
-			.set_start(total_duration - 28 / 30)
+			.set_start(total_duration - 25 / 30) \
+			.set_audio(mp.AudioFileClip('package/VLET.mp3').set_start(total_duration))
 
 		return animation
 
