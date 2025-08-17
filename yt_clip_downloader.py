@@ -24,9 +24,10 @@ def find_clip(query, max_results=10):
 
 def download_clip(url: str):
 	ydl_opts = {
-		'format': 'bv*[height<=1080][ext=mp4]+ba[ext=m4a]/b[height<=1080][ext=mp4]',
+		'format': 'bestvideo[height<=1080][ext=mp4]+bestaudio[ext=m4a]/best[height<=1080][ext=mp4]',
 		'keepvideo': False,
 		'outtmpl': 'D:/Artyom/Проекты/Top Club Chart/клипы чарта/regulars/%(title)s.%(ext)s',
+		'cookiefile': 'yt_cookies.txt'
 	}
 
 	ydl = YoutubeDL(ydl_opts)
@@ -34,8 +35,8 @@ def download_clip(url: str):
 	try:
 		info = ydl.extract_info(url)
 	except Exception:
-		print(f'{Colors.FAIL}Format 137+140 is not available{Colors.ENDC}')
-		ydl_opts.pop('format')
+		print(f'{Colors.FAIL}Format 137+140 is not available. Trying maximum resolution below 1080p with any audio.{Colors.ENDC}')
+		ydl_opts['format'] = 'bestvideo[height<=1080][ext=mp4]+bestaudio[ext=m4a]/best[height<=1080][ext=mp4]'
 		ydl = YoutubeDL(ydl_opts)
 		info = ydl.extract_info(url)
 
@@ -99,7 +100,7 @@ def just_download(yt_id: str):
 
 
 if __name__ == '__main__':
-	fill_concrete_song(1135, 'vBynw9Isr28')
+	fill_concrete_song(1404, 'tZ192uMAPRA')
 	# just_download('4zb7p3GG2Ig')
 	# fill_songs_with_no_clip()
 	# fill_songs_by_ids([260])
