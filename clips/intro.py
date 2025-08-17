@@ -13,7 +13,7 @@ def create_intro(chart_date=None, chart_number=None):
 	]
 
 	final = mp.CompositeVideoClip(clip_list)
-	final.write_videofile("video_parts/intro.mp4", fps=30, codec='mpeg4', bitrate="8000k")
+	final.write_videofile("video_parts/intro.mp4", fps=30, codec='mpeg4', bitrate="12000k")
 
 
 
