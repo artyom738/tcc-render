@@ -14,22 +14,22 @@ if __name__ == '__main__':
 
 	rubrics = {
 		############# ------------- EUROHIT TOP 40 ------------- #############
-		'new_author': 'Disclosure & Anderson. Paak',  # Взгляд в будущее
-		'new_name': 'NO CAP',
-		'past_author': 'Mattafix',  # Сегодня завтра вчера
-		'past_name': 'Big City Life',
+		'new_author': 'Miley Cyrus',  # Взгляд в будущее
+		'new_name': 'Reborn',
+		'past_author': 'DEV',  # Сегодня завтра вчера
+		'past_name': 'In The Dark',
 
 		############# ------------- TOP CLUB CHART ------------- #############
-		'residance_author': 'Vion Konger & Skytech',  # 0:25:30 in podcast and 0:30:30 in radio
-		'residance_name': 'Everybody\'s Free (To Feel Good)',
-		'alltime_author': 'Bob Marley vs. Funkstar Deluxe',  # 1:12:00 in podcast and 1:28:30 in radio
-		'alltime_name': 'Sun Is Shining',
-		'perspective_author': 'Mau P',  # 1:30:00 in podcast and 1:52:30 in radio
-		'perspective_name': 'TESLA',
+		'residance_author': 'Kitone, Rhiannon Roze',  # 0:25:30 in podcast and 0:30:30 in radio
+		'residance_name': 'Soundboy',
+		'alltime_author': 'Stardust',  # 1:12:00 in podcast and 1:28:30 in radio
+		'alltime_name': 'Music Sounds Better With You',
+		'perspective_author': 'Adam Port & Keinemusik',  # 1:30:00 in podcast and 1:52:30 in radio
+		'perspective_name': 'See You Again',
 	}
 
 	# chart_id = None
-	chart_id = 72
+	chart_id = 74
 	if chart_id:
 		chart = chart_repository.get_chart_by_id(chart_id)
 	else:

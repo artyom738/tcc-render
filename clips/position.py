@@ -259,3 +259,6 @@ def create_last_out_clip(params: dict):
 		final.write_videofile('video_parts/' + result_name + '.mp4', fps=30, codec='mpeg4', bitrate='12000k')
 
 	return final
+
+if __name__ == '__main__':
+	pass
