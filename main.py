@@ -7,29 +7,30 @@ from yt_clip_downloader import fill_songs_with_no_clip
 
 if __name__ == '__main__':
 
-	# chart_type = 'eht'
-	chart_type = 'tcc'
+	chart_type = 'eht'
+	# chart_type = 'tcc'
 	# chart_type = 'dark'
 	# chart_type = 'list'
 
 	rubrics = {
 		############# ------------- EUROHIT TOP 40 ------------- #############
-		'new_author': 'Miley Cyrus',  # Взгляд в будущее
-		'new_name': 'Reborn',
-		'past_author': 'DEV',  # Сегодня завтра вчера
-		'past_name': 'In The Dark',
+		'new_author': 'David Guetta, Teddy Swims, Tones And I',  # Взгляд в будущее
+		'new_name': 'Gone Gone Gone',
+		'past_author': 'Swanky Tunes feat. Raign',  # Сегодня завтра вчера
+		'past_name': 'Fix Me',
 
 		############# ------------- TOP CLUB CHART ------------- #############
-		'residance_author': 'Kitone, Rhiannon Roze',  # 0:25:30 in podcast and 0:30:30 in radio
-		'residance_name': 'Soundboy',
-		'alltime_author': 'Stardust',  # 1:12:00 in podcast and 1:28:30 in radio
-		'alltime_name': 'Music Sounds Better With You',
-		'perspective_author': 'Adam Port & Keinemusik',  # 1:30:00 in podcast and 1:52:30 in radio
-		'perspective_name': 'See You Again',
+		'residance_author': 'Swanky Tunes & Shapov',  # 0:25:30 in podcast and 0:30:30 in radio
+		'residance_name': 'Forte',
+		'alltime_author': 'London Grammar',  # 1:12:00 in podcast and 1:28:30 in radio
+		'alltime_name': 'Hey Now (ARTY Remix)',
+		'perspective_author': 'KETTAMA',  # 1:30:00 in podcast and 1:52:30 in radio
+		'perspective_name': 'Man With a Second Face',
 	}
 
 	# chart_id = None
-	chart_id = 74
+	chart_id = 89
+
 	if chart_id:
 		chart = chart_repository.get_chart_by_id(chart_id)
 	else:

@@ -139,12 +139,17 @@ class BaseChart:
 				song_id = position.song_id
 				song = self.song_repo.get_song_by_id(song_id)
 				clip_times = song.get_clip_times()
+				song_name = song.name
+				song_clip_path = song.clip_path
+				clip_start_time = clip_times['start_time']
+				clip_end_time = clip_times['end_time']
+
 				clip_params = {
-					'clip_path': song.clip_path,
-					'clip_start_time': clip_times['start_time'],
-					'clip_end_time': clip_times['end_time'],
+					'clip_path': song_clip_path,
+					'clip_start_time': clip_start_time,
+					'clip_end_time': clip_end_time,
 					'author': song.authors,
-					'name': song.name,
+					'name': song_name,
 					'position': position.position,
 					'lw': position.get_lw(),
 					'peak': song.get_peak(self.get_chart_type(), self.chart.chart_date),
