@@ -11,15 +11,34 @@ from model.repository.song_repository import song_repository
 
 
 def find_clip(query, max_results=10):
-	videos_search = VideosSearch(query, limit=max_results)
-	results = videos_search.result()
-	for song in results['result']:
-		if song['channel']['name'] == 'Selected':
-			continue
-		else:
-			return song['id']
+	try:
+		videos_search = VideosSearch(query, limit=max_results)
+		results = videos_search.result()
+	except Exception as e:
+		print(f'{Colors.FAIL}Search error: {e}. Trying with limit=5{Colors.ENDC}')
+		try:
+			videos_search = VideosSearch(query, limit=5)
+			results = videos_search.result()
+		except Exception as e2:
+			print(f'{Colors.FAIL}Search failed: {e2}{Colors.ENDC}')
+			return None
 
-	return results['result'][0]['id']
+	if not results or 'result' not in results or not results['result']:
+		print(f'{Colors.FAIL}No results found for query: {query}{Colors.ENDC}')
+		return None
+
+	for song in results['result']:
+		# Проверяем наличие необходимых полей
+		if not song or 'id' not in song:
+			continue
+		# Пропускаем канал "Selected" если он есть
+		if 'channel' in song and song['channel'] and 'name' in song['channel']:
+			if song['channel']['name'] == 'Selected':
+				continue
+		return song['id']
+
+	# Если все видео отфильтрованы, возвращаем первое
+	return results['result'][0]['id'] if results['result'] else None
 
 
 def download_clip(url: str):
@@ -71,6 +90,9 @@ def fill_songs_with_no_clip():
 		print(f'{Colors.OKBLUE}Downloading clip for {song.id} {song.authors} - {song.name}{Colors.ENDC}')
 		search_query = f'{song.authors} - {song.name}'
 		yt_clip_id = find_clip(search_query)
+		if not yt_clip_id:
+			print(f'{Colors.WARNING}Skipping song {song.id} - no clip found{Colors.ENDC}')
+			continue
 		# yt_clip_id = 'ig9TBmz03Dg'
 		yt_clip_url = f'https://www.youtube.com/watch?v={yt_clip_id}'
 		fill_file(song.id, yt_clip_url)
@@ -82,6 +104,9 @@ def fill_songs_by_ids(song_ids: list):
 		print(f'{Colors.OKBLUE}Downloading clip for {song.id} {song.authors} - {song.name}{Colors.ENDC}')
 		search_query = f'{song.authors} - {song.name}'
 		yt_clip_id = find_clip(search_query)
+		if not yt_clip_id:
+			print(f'{Colors.WARNING}Skipping song {song.id} - no clip found{Colors.ENDC}')
+			continue
 		# yt_clip_id = 'ig9TBmz03Dg'
 		yt_clip_url = f'https://www.youtube.com/watch?v={yt_clip_id}'
 		fill_file(song.id, yt_clip_url)
@@ -100,8 +125,7 @@ def just_download(yt_id: str):
 
 
 if __name__ == '__main__':
-	fill_concrete_song(105, 'jH60oDOVyn8')
+	fill_concrete_song(234, 'Y1HUL-TALoE')
 	# just_download('ovznTayG7FQ')
 	# fill_songs_with_no_clip()
 	# fill_songs_by_ids([260])
-
