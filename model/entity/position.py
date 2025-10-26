@@ -1,6 +1,6 @@
 from datetime import datetime, timedelta
 
-import database
+from db import database
 from model.repository.chart_repository import chart_repository
 
 

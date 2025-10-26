@@ -63,3 +63,4 @@ def add(sql, params):
         print("Error executing insert:", sql)
         print("Error text:", str(e))
         return None
+

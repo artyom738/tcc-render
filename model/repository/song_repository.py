@@ -1,6 +1,6 @@
 from __future__ import annotations
 
-import database
+from db import database
 from model.entity.song import Song
 
 

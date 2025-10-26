@@ -1,7 +1,7 @@
 import random
 from datetime import datetime
 
-import database
+from db import database
 
 
 class Song:

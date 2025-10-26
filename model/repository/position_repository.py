@@ -1,4 +1,4 @@
-import database
+from db import database
 from datetime import datetime, timedelta
 from model.entity.position import Position
 from model.repository.chart_repository import chart_repository

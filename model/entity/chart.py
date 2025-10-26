@@ -1,7 +1,7 @@
 from __future__ import annotations
 from datetime import datetime
 
-import database
+from db import database
 from model.repository.chart_rubrics_repository import chart_rubric_repository
 from model.repository.song_repository import song_repository
 

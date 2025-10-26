@@ -28,8 +28,8 @@ if __name__ == '__main__':
 		'perspective_name': 'Think About Us',
 	}
 
-	chart_id = None
-	# chart_id = 91
+	# chart_id = None
+	chart_id = 92
 
 	if chart_id:
 		chart = chart_repository.get_chart_by_id(chart_id)
