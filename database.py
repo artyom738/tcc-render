@@ -1,10 +1,9 @@
 import pymysql.cursors
 
-# Параметры подключения
 DB_CONFIG = {
     'host': '127.0.0.1',
     'user': 'root',
-    'password': '',  # если захочешь, можно добавить пароль
+    'password': '',
     'database': 'tcc_render',
     'cursorclass': pymysql.cursors.DictCursor,
     'autocommit': True
