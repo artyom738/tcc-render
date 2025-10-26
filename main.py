@@ -7,29 +7,29 @@ from yt_clip_downloader import fill_songs_with_no_clip
 
 if __name__ == '__main__':
 
-	chart_type = 'eht'
-	# chart_type = 'tcc'
+	# chart_type = 'eht'
+	chart_type = 'tcc'
 	# chart_type = 'dark'
 	# chart_type = 'list'
 
 	rubrics = {
 		############# ------------- EUROHIT TOP 40 ------------- #############
-		'new_author': 'David Guetta, Teddy Swims, Tones And I',  # Взгляд в будущее
-		'new_name': 'Gone Gone Gone',
-		'past_author': 'Swanky Tunes feat. Raign',  # Сегодня завтра вчера
-		'past_name': 'Fix Me',
+		'new_author': 'Zayn & JISOO',  # Взгляд в будущее
+		'new_name': 'Eyes Closed',
+		'past_author': 'K-Maro',  # Сегодня завтра вчера
+		'past_name': 'Let’s Go',
 
 		############# ------------- TOP CLUB CHART ------------- #############
-		'residance_author': 'Swanky Tunes & Shapov',  # 0:25:30 in podcast and 0:30:30 in radio
-		'residance_name': 'Forte',
-		'alltime_author': 'London Grammar',  # 1:12:00 in podcast and 1:28:30 in radio
-		'alltime_name': 'Hey Now (ARTY Remix)',
-		'perspective_author': 'KETTAMA',  # 1:30:00 in podcast and 1:52:30 in radio
-		'perspective_name': 'Man With a Second Face',
+		'residance_author': 'Swanky Tunes',  # 0:25:30 in podcast and 0:30:30 in radio
+		'residance_name': 'Uma',
+		'alltime_author': 'Superfunk ft. Ron Carroll',  # 1:12:00 in podcast and 1:28:30 in radio
+		'alltime_name': 'Lucky Star',
+		'perspective_author': 'Sonny Fodera, D.O.D & Poppy Baskcomb',  # 1:30:00 in podcast and 1:52:30 in radio
+		'perspective_name': 'Think About Us',
 	}
 
-	# chart_id = None
-	chart_id = 89
+	chart_id = None
+	# chart_id = 91
 
 	if chart_id:
 		chart = chart_repository.get_chart_by_id(chart_id)
