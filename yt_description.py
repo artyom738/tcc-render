@@ -102,10 +102,20 @@ def get_tags(chart: Chart):
 
 
 if __name__ == '__main__':
-	chart_id = 101
+	chart_id = None
+	# chart_id = 101
 
-	result = ''
-	chart = chart_repository.get_chart_by_id(chart_id)
+	if chart_id is None:
+		chart = chart_repository.get_last_chart()
+		if chart is None:
+			print("Чарты не найдены в базе данных")
+			exit(1)
+	else:
+		chart = chart_repository.get_chart_by_id(chart_id)
+		if chart is None:
+			print(f"Чарт с ID {chart_id} не найден в базе данных")
+			exit(1)
+
 	if chart.chart_type == 'tcc':
 		print(get_tcc_title(chart))
 		print(get_tcc_description(chart))

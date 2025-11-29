@@ -38,6 +38,14 @@ class ChartRepository:
 		else:
 			return None
 
+	def get_last_chart(self) -> Chart | None:
+		query = f'select * from charts order by ID desc'
+		result = database.get_list(query)
+		if len(result) > 0:
+			return self.fetch_object(result[0])
+		else:
+			return None
+
 	def fetch_object(self, data: dict) -> Chart:
 		return Chart({
 			'id': data['ID'],
