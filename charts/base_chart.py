@@ -12,6 +12,7 @@ from moviepy.Clip import Clip
 
 from clips.position import create_position_clip, create_last_out_clip
 from model.repository.song_repository import song_repository
+from config import MAX_WORKERS
 
 
 class BaseChart:
@@ -133,7 +134,7 @@ class BaseChart:
 		positions = chart.positions
 		print('Chart date: ', chart.chart_date.strftime("%Y-%m-%d"))
 
-		with concurrent.futures.ProcessPoolExecutor(max_workers=10) as executor:
+		with concurrent.futures.ProcessPoolExecutor(max_workers=MAX_WORKERS) as executor:
 			futures = []
 			for index, position in enumerate(positions):
 				song_id = position.song_id
