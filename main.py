@@ -14,22 +14,22 @@ if __name__ == '__main__':
 
 	rubrics = {
 		############# ------------- EUROHIT TOP 40 ------------- #############
-		'new_author': 'Stray Kids',  # Взгляд в будущее
-		'new_name': 'Do It',
-		'past_author': 'Timo Maas',  # Сегодня завтра вчера
-		'past_name': 'First Day',
+		'new_author': 'Sonny Fodera, D.O.D, & Poppy Baskcomb',  # Взгляд в будущее
+		'new_name': 'Think About Us',
+		'past_author': 'Justin Timberlake',  # Сегодня завтра вчера
+		'past_name': 'Cry Me a River',
 
 		############# ------------- TOP CLUB CHART ------------- #############
-		'residance_author': 'R3HAB & Vion Konger',  # 0:25:30 in podcast and 0:30:30 in radio
-		'residance_name': 'Lazers (I Can\'t Stop Dancing)',
-		'alltime_author': 'Bob Sinclar',  # 1:12:00 in podcast and 1:28:30 in radio
-		'alltime_name': 'I Feel For You',
-		'perspective_author': 'David Guetta & RAYE',  # 1:30:00 in podcast and 1:52:30 in radio
-		'perspective_name': 'WHERE IS MY HUSBAND!',
+		'residance_author': 'Tommy Veanud & Space Food',  # 0:25:30 in podcast and 0:30:30 in radio
+		'residance_name': 'Russian Chopper',
+		'alltime_author': 'Robyn Kleerup',  # 1:12:00 in podcast and 1:28:30 in radio
+		'alltime_name': 'With Every Heartbeat',
+		'perspective_author': 'Tiesto & FORS',  # 1:30:00 in podcast and 1:52:30 in radio
+		'perspective_name': 'Bring Me To Life',
 	}
 
-	# chart_id = None
-	chart_id = 101
+	chart_id = None
+	# chart_id = 149
 
 	if chart_id:
 		chart = chart_repository.get_chart_by_id(chart_id)

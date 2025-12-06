@@ -85,11 +85,11 @@ class Song:
 		}
 
 	def get_peak(self, chart_type: str, chart_date: datetime = None):
-		# chart_type = 'tcc'
-		# chart_date = None
+		# chart_type = 'eht'  # For list charts
+		# chart_date = None  # For list charts
 		query = f'select MIN(cp.POSITION) as peak from chart_positions cp left join charts c on c.ID = cp.CHART_ID where cp.SONG_ID = {str(self.id)} and c.CHART_TYPE = \'{chart_type}\''
 		if chart_date:
-			query += f' and c.CHART_DATE <= \'{chart_date.strftime("%Y-%m-%d")}\' and c.CHART_DATE > "2024-01-01"'
+			query += f' and c.CHART_DATE <= \'{chart_date.strftime("%Y-%m-%d")}\' and c.CHART_DATE > "2025-01-01"'
 		result = database.get_list(query)
 		min_position = result[0]['peak']
 		if not min_position:
@@ -97,7 +97,7 @@ class Song:
 
 		query = f'select COUNT(*) as peak_times from chart_positions cp left join charts c on c.ID = cp.CHART_ID where cp.SONG_ID = {self.id} AND cp.POSITION = {min_position} and c.CHART_TYPE = \'{chart_type}\''
 		if chart_date:
-			query += f' and c.CHART_DATE <= \'{chart_date.strftime("%Y-%m-%d")}\' and c.CHART_DATE > "2024-01-01"'
+			query += f' and c.CHART_DATE <= \'{chart_date.strftime("%Y-%m-%d")}\' and c.CHART_DATE > "2025-01-01"'
 		result = database.get_list(query)
 		peak_times = result[0]['peak_times']
 
@@ -107,11 +107,11 @@ class Song:
 			return str(min_position)
 
 	def get_weeks(self, chart_type: str, chart_date: datetime = None):
-		# chart_type = 'tcc'
-		# chart_date = None
+		# chart_type = 'eht'  # For list charts
+		# chart_date = None  # For list charts
 		query = f'select count(*) as weeks from chart_positions cp left join charts c on c.ID = cp.CHART_ID where cp.SONG_ID = {self.id} and c.CHART_TYPE = \'{chart_type}\''
 		if chart_date:
-			query += f' and c.CHART_DATE <= \'{chart_date.strftime("%Y-%m-%d")}\' and c.CHART_DATE > "2024-01-01"'
+			query += f' and c.CHART_DATE <= \'{chart_date.strftime("%Y-%m-%d")}\' and c.CHART_DATE > "2025-01-01"'
 		result = database.get_list(query)
 
 		return result[0]['weeks']

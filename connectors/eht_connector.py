@@ -54,10 +54,10 @@ class EurohitConnector(EuropaPlusConnector):
 
 
 if __name__ == '__main__':
-	date = '2025-01-10'
-	chart_number = 9
+	date = '2024-01-12'
+	chart_number = 103
 	date_object = datetime.strptime(date, '%Y-%m-%d').date()
-	while date_object < datetime.strptime('2025-08-16', '%Y-%m-%d').date():
+	while date_object < datetime.strptime('2024-11-14', '%Y-%m-%d').date():
 		connector = EurohitConnector()
 		chart = Chart({
 			'id': None,
