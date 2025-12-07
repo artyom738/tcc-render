@@ -7,8 +7,8 @@ from yt_clip_downloader import fill_songs_with_no_clip
 
 if __name__ == '__main__':
 
-	chart_type = 'eht'
-	# chart_type = 'tcc'
+	# chart_type = 'eht'
+	chart_type = 'tcc'
 	# chart_type = 'dark'
 	# chart_type = 'list'
 
@@ -20,16 +20,16 @@ if __name__ == '__main__':
 		'past_name': 'Cry Me a River',
 
 		############# ------------- TOP CLUB CHART ------------- #############
-		'residance_author': 'Tommy Veanud & Space Food',  # 0:25:30 in podcast and 0:30:30 in radio
-		'residance_name': 'Russian Chopper',
-		'alltime_author': 'Robyn Kleerup',  # 1:12:00 in podcast and 1:28:30 in radio
-		'alltime_name': 'With Every Heartbeat',
-		'perspective_author': 'Tiesto & FORS',  # 1:30:00 in podcast and 1:52:30 in radio
-		'perspective_name': 'Bring Me To Life',
+		'residance_author': 'Rezone',  # 0:25:30 in podcast and 0:30:30 in radio
+		'residance_name': 'Vibrations',
+		'alltime_author': 'C-Mos',  # 1:12:00 in podcast and 1:28:30 in radio
+		'alltime_name': '2 Million Ways',
+		'perspective_author': 'James Hype, A.D.O.R.',  # 1:30:00 in podcast and 1:52:30 in radio
+		'perspective_name': 'Behavior',
 	}
 
-	chart_id = None
-	# chart_id = 149
+	# chart_id = None
+	chart_id = 151
 
 	if chart_id:
 		chart = chart_repository.get_chart_by_id(chart_id)

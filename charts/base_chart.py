@@ -39,10 +39,11 @@ class BaseChart:
 		return None
 
 	def get_intro(self):
-		return mp.VideoFileClip(
+		intro = mp.VideoFileClip(
 			'package/' + self.get_chart_type() + '/intro.mp4',
 			target_resolution=(1080, 1920)
 		)
+		return intro
 
 	def get_outro_audio(self):
 		name = random.choice(os.listdir('package/outro'))
@@ -53,12 +54,13 @@ class BaseChart:
 		return 'package/Outro TCC ' + str(number) + '.mp4'
 
 	def get_after_intro_animation(self, total_duration: float):
-		return mp.VideoFileClip(
+		animation = mp.VideoFileClip(
 			'package/tricolor3.mp4',
 			target_resolution=(1080, 1920)
 		) \
 			.fx(vfx.mask_color, color=[0, 255, 0], s=5, thr=130) \
 			.set_start(total_duration - 25 / 30)
+		return animation
 
 	def get_outs(self, total_duration: float, chart: 'Chart'):
 		out_clip_list = []
@@ -99,16 +101,20 @@ class BaseChart:
 
 		for index, out in enumerate(outs):
 			filename = f'video_parts/{chart.chart_type}/{chart.chart_number}/out {str(index)}.mp4'
-			song_clip = mp.VideoFileClip(
-				filename=filename
-			)
-			# Applying volume changing to get average amplitude 0.3
-			etalon_amplidude = 0.3
-			y, sr = librosa.load(filename)
-			amplitude_envelope = librosa.feature.rms(y=y)[0]
-			average_amplitude = round(np.mean(amplitude_envelope), 2)
-			song_clip = song_clip.fx(afx.volumex, etalon_amplidude / average_amplitude)
-			out_clip_list.append(song_clip)
+			song_clip = mp.VideoFileClip(filename=filename)
+			try:
+				# Applying volume changing to get average amplitude 0.3
+				etalon_amplidude = 0.3
+				y, sr = librosa.load(filename)
+				amplitude_envelope = librosa.feature.rms(y=y)[0]
+				average_amplitude = round(np.mean(amplitude_envelope), 2)
+				song_clip = song_clip.fx(afx.volumex, etalon_amplidude / average_amplitude)
+				out_clip_list.append(song_clip)
+			except Exception as e:
+				print(f'Error processing out clip {index}: {e}')
+				if song_clip:
+					song_clip.close()
+				raise
 
 		print('Added outs')
 		if len(out_clip_list) > 0:
@@ -255,16 +261,20 @@ class BaseChart:
 		current_time = datetime.now()
 		print('Started at', current_time.strftime('%Y-%m-%d %H:%M:%S'))
 		final = self.generate_clip()
-		final.write_videofile(
-			f'production/{self.get_chart_type()} {self.chart.chart_date.strftime("%Y-%m-%d")}.mp4',
-			fps=30,
-			codec='mpeg4',
-			bitrate='12000k',
-			threads=8,
-		)
-		# final.write_videofile('video_parts/tcc ' + chart.chart_date.strftime('%Y-%m-%d') + '.mp4', fps=10, codec='mpeg4', bitrate='200k', threads=8)
+		try:
+			final.write_videofile(
+				f'production/{self.get_chart_type()} {self.chart.chart_date.strftime("%Y-%m-%d")}.mp4',
+				fps=30,
+				codec='mpeg4',
+				bitrate='12000k',
+				threads=8,
+			)
+			# final.write_videofile('video_parts/tcc ' + chart.chart_date.strftime('%Y-%m-%d') + '.mp4', fps=10, codec='mpeg4', bitrate='200k', threads=8)
 
-		print('Finished at', current_time.strftime('%Y-%m-%d %H:%M:%S'))
-		seconds = (datetime.now() - current_time).total_seconds()
-		print('Rendered by ', str(int(seconds // 60)), ' min ', str(int(seconds % 60)), ' sec')
-		print('Chart ID ', str(self.chart.id))
+			print('Finished at', current_time.strftime('%Y-%m-%d %H:%M:%S'))
+			seconds = (datetime.now() - current_time).total_seconds()
+			print('Rendered by ', str(int(seconds // 60)), ' min ', str(int(seconds % 60)), ' sec')
+			print('Chart ID ', str(self.chart.id))
+		finally:
+			# Явно закрываем все клипы для освобождения ресурсов FFmpeg
+			final.close()
