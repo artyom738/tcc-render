@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Clip Editor - Список песен</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: #2d2d3a;
+            border-radius: 12px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.5);
+            padding: 30px;
+        }
+        h1 {
+            color: #e0e0e0;
+            margin-bottom: 30px;
+            text-align: center;
+        }
+        .search-box {
+            margin-bottom: 20px;
+        }
+        .search-box input {
+            width: 100%;
+            padding: 12px 20px;
+            font-size: 16px;
+            border: 2px solid #4a4a5a;
+            border-radius: 8px;
+            transition: border-color 0.3s;
+            background: #1e1e2a;
+            color: #e0e0e0;
+        }
+        .search-box input::placeholder {
+            color: #808080;
+        }
+        .search-box input:focus {
+            outline: none;
+            border-color: #667eea;
+        }
+        .songs-list {
+            list-style: none;
+        }
+        .song-item {
+            padding: 15px 20px;
+            margin-bottom: 10px;
+            background: #1e1e2a;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s;
+            border-left: 4px solid transparent;
+        }
+        .song-item:hover {
+            background: #3a3a4a;
+            border-left-color: #667eea;
+            transform: translateX(5px);
+        }
+        .song-item a {
+            text-decoration: none;
+            color: inherit;
+            display: block;
+        }
+        .song-id {
+            display: inline-block;
+            background: #667eea;
+            color: white;
+            padding: 4px 10px;
+            border-radius: 4px;
+            font-size: 14px;
+            font-weight: bold;
+            margin-right: 10px;
+        }
+        .song-ep-id {
+            display: inline-block;
+            background: #17a2b8;
+            color: white;
+            padding: 4px 10px;
+            border-radius: 4px;
+            font-size: 12px;
+            font-weight: bold;
+            margin-right: 10px;
+            width: 75px;
+            text-align: center;
+        }
+        .song-authors {
+            font-weight: 600;
+            color: #e0e0e0;
+            margin-right: 5px;
+        }
+        .song-name {
+            color: #b0b0b0;
+        }
+        .no-results {
+            text-align: center;
+            padding: 40px;
+            color: #808080;
+            font-size: 18px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🎵 Редактор таймингов клипов</h1>
+
+        <div class="search-box">
+            <input type="text" id="searchInput" placeholder="Поиск по названию или исполнителю...">
+        </div>
+
+        <ul class="songs-list" id="songsList">
+            {% for song in songs %}
+            <li class="song-item" data-search="{{ song.AUTHORS|lower }} {{ song.NAME|lower }} {{ song.ID }}">
+                <a href="/editor/{{ song.ID }}">
+                    <span class="song-id">#{{ song.ID }}</span>
+                    {% if song.EP_ID %}
+                    <span class="song-ep-id">EP: {{ song.EP_ID }}</span>
+                    {% endif %}
+                    <span class="song-authors">{{ song.AUTHORS }}</span>
+                    <span class="song-name">- {{ song.NAME }}</span>
+                </a>
+            </li>
+            {% endfor %}
+        </ul>
+
+        <div class="no-results" id="noResults" style="display: none;">
+            Песни не найдены
+        </div>
+    </div>
+
+    <script>
+        const searchInput = document.getElementById('searchInput');
+        const songsList = document.getElementById('songsList');
+        const noResults = document.getElementById('noResults');
+
+        let searchTimeout;
+
+        // Функция для отрисовки списка песен
+        function renderSongs(songs) {
+            songsList.innerHTML = '';
+
+            if (songs.length === 0) {
+                noResults.style.display = 'block';
+                songsList.style.display = 'none';
+                return;
+            }
+
+            noResults.style.display = 'none';
+            songsList.style.display = 'block';
+
+            songs.forEach(song => {
+                const li = document.createElement('li');
+                li.className = 'song-item';
+                li.innerHTML = `
+                    <a href="/editor/${song.ID}">
+                        <span class="song-id">#${song.ID}</span>
+                        ${song.EP_ID ? `<span class="song-ep-id">EP: ${song.EP_ID}</span>` : ''}
+                        <span class="song-authors">${song.AUTHORS}</span>
+                        <span class="song-name">- ${song.NAME}</span>
+                    </a>
+                `;
+                songsList.appendChild(li);
+            });
+        }
+
+        // Функция для выполнения поиска
+        async function performSearch(searchTerm) {
+            try {
+                const response = await fetch(`/api/search?q=${encodeURIComponent(searchTerm)}`);
+                const data = await response.json();
+                renderSongs(data.songs);
+            } catch (error) {
+                console.error('Error searching songs:', error);
+            }
+        }
+
+        // Обработчик ввода в поле поиска с задержкой (debounce)
+        searchInput.addEventListener('input', function() {
+            const searchTerm = this.value.trim();
+
+            // Отменяем предыдущий таймаут
+            clearTimeout(searchTimeout);
+
+            // Устанавливаем новый таймаут (300ms задержка)
+            searchTimeout = setTimeout(() => {
+                performSearch(searchTerm);
+            }, 300);
+        });
+    </script>
+</body>
+</html>
