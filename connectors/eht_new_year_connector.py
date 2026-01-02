@@ -28,7 +28,7 @@ class EhtNewYearConnector(BaseConnector):
 					artists = song['singers']
 					db_authors = ''
 					if artists:
-						db_authors = ' & '.join([artist['artist'] for artist in artists])
+						db_authors = ' & '.join([artist['name'] for artist in artists])
 					name = song['name']
 					song_object = Song({
 						'name': name,
@@ -44,7 +44,7 @@ class EhtNewYearConnector(BaseConnector):
 					}).save()
 
 	def get_api_url(self, chart: Chart):
-		return 'https://admin.europaplus.ru/api/year-chart?year=2024&region=1'
+		return 'https://admin.europaplus.ru/api/year-chart?year=2025&region=1'
 
 	def save_rubrics(self, chart_id: int, rubrics: dict):
 		return None
@@ -53,7 +53,7 @@ class EhtNewYearConnector(BaseConnector):
 		return 'eht_ny'
 
 	def get_last_chart_date(self) -> date:
-		return datetime.strptime('2024-12-31', '%Y-%m-%d').date()
+		return datetime.strptime('2025-12-31', '%Y-%m-%d').date()
 
 	def save_rubrics(self, chart_id: int, rubrics: dict):
 		return None

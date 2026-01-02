@@ -63,7 +63,7 @@ class TccNy(List):
 		print(f'Multiplied by {etalon_amplidude / average_amplitude}')
 
 		label = mp.TextClip(
-			txt='Лидер в 2023 году',
+			txt='Лидер в 2024 году',
 			font=text_font,
 			color='white',
 			fontsize=70,
