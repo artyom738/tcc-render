@@ -16,7 +16,7 @@ class TccNy(List):
 	def get_intro(self):
 		#  May be changed due to variable charts
 		return mp.VideoFileClip(
-			'package/tcc/intro.mp4',
+			'package/tcc/intro-ny.mp4',
 			target_resolution=(1080, 1920)
 		)
 
