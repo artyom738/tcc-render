@@ -21,6 +21,9 @@ class EhtNyPoints(EhtNy):
 
 		return position_info + '\n' + points_info
 
+	def need_show_lw_moving(self):
+		return False
+
 	def get_intro(self):
 		intro_video = mp.VideoFileClip(
 			'package/eht/intro-ny.mp4',

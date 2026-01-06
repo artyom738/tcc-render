@@ -21,6 +21,9 @@ class TccNyPoints(TccNy):
 
 		return position_info + '\n' + points_info
 
+	def need_show_lw_moving(self):
+		return False
+
 	def get_intro(self):
 		intro_video = mp.VideoFileClip(
 			'package/tcc/intro-ny.mp4',

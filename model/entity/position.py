@@ -23,7 +23,6 @@ class Position:
 		return self
 
 	def get_lw(self):
-		# return None
 		previous_chart = chart_repository.get_previous_chart(self.chart_id)
 		if not previous_chart:
 			return None

@@ -33,6 +33,9 @@ class EhtNy(List):
 	def get_additional_stat_info(self, song: 'Song'):
 		return None
 
+	def need_show_lw_moving(self):
+		return False
+
 	def get_old_clip(self, song_id: int):
 		song = self.song_repo.get_song_by_id(song_id)
 		clip_times = song.get_clip_times()

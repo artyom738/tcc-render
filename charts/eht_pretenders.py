@@ -5,6 +5,9 @@ from model.repository.chart_repository import chart_repository
 
 
 class EhtPretenders(List):
+	def need_show_lw_moving(self):
+		return False
+
 	def get_additional_stat_info(self, song: 'Song'):
 		charts = song.get_charts('eht')
 		if len(charts) == 0:
