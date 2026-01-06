@@ -69,10 +69,10 @@ class TopClubChartConnector(EuropaPlusConnector):
 
 
 if __name__ == '__main__':
-	date = '2025-02-22'
-	chart_number = 505
+	date = '2025-02-15'
+	chart_number = 504
 	date_object = datetime.strptime(date, '%Y-%m-%d').date()
-	while date_object < datetime.strptime('2025-08-16', '%Y-%m-%d').date():
+	while date_object < datetime.strptime('2025-02-16', '%Y-%m-%d').date():
 		connector = TopClubChartConnector()
 		chart = Chart({
 			'id': None,
