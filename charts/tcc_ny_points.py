@@ -24,6 +24,9 @@ class TccNyPoints(TccNy):
 	def need_show_lw_moving(self):
 		return False
 
+	def get_chart_type_for_stats(self):
+		return 'tcc'
+
 	def get_intro(self):
 		intro_video = mp.VideoFileClip(
 			'package/tcc/intro-ny.mp4',

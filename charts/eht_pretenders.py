@@ -8,6 +8,9 @@ class EhtPretenders(List):
 	def need_show_lw_moving(self):
 		return False
 
+	def get_chart_type_for_stats(self):
+		return 'eht'
+
 	def get_additional_stat_info(self, song: 'Song'):
 		charts = song.get_charts('eht')
 		if len(charts) == 0:

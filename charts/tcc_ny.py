@@ -23,6 +23,9 @@ class TccNy(List):
 	def need_show_lw_moving(self):
 		return False
 
+	def get_chart_type_for_stats(self):
+		return 'tcc'
+
 	def get_after_old_animation(self, total_duration: float):
 		animation = mp.VideoFileClip(
 			'package/rounds1.mp4',

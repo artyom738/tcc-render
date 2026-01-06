@@ -24,6 +24,9 @@ class EhtNyPoints(EhtNy):
 	def need_show_lw_moving(self):
 		return False
 
+	def get_chart_type_for_stats(self):
+		return 'eht'
+
 	def get_intro(self):
 		intro_video = mp.VideoFileClip(
 			'package/eht/intro-ny.mp4',

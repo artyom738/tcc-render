@@ -75,8 +75,8 @@ class BaseChart:
 				'name': song.name,
 				'position': 'OUT',
 				'lw': out.get_lw() if self.need_show_lw_moving() else None,
-				'peak': song.get_peak(self.get_chart_type(), self.chart.chart_date),
-				'weeks': song.get_weeks(self.get_chart_type(), self.chart.chart_date),
+				'peak': song.get_peak(self.get_chart_type_for_stats(), self.chart.chart_date),
+				'weeks': song.get_weeks(self.get_chart_type_for_stats(), self.chart.chart_date),
 				'moving': None,
 				'show_stats': True,
 				'result_name': f'{chart.chart_type}/{chart.chart_number}/out {str(index)}',
@@ -132,6 +132,9 @@ class BaseChart:
 	def need_show_lw_moving(self):
 		return True
 
+	def get_chart_type_for_stats(self):
+		return self.get_chart_type()
+
 	def get_positions(self, total_duration: float, chart: 'Chart'):
 		song_clip_list = []
 		positions = chart.positions
@@ -156,8 +159,8 @@ class BaseChart:
 					'name': song_name,
 					'position': position.position,
 					'lw': position.get_lw() if self.need_show_lw_moving() else None,
-					'peak': song.get_peak(self.get_chart_type(), self.chart.chart_date),
-					'weeks': song.get_weeks(self.get_chart_type(), self.chart.chart_date),
+					'peak': song.get_peak(self.get_chart_type_for_stats(), self.chart.chart_date),
+					'weeks': song.get_weeks(self.get_chart_type_for_stats(), self.chart.chart_date),
 					'moving': position.get_moving() if self.need_show_lw_moving() else None,
 					'show_stats': True,
 					'result_name': f'{chart.chart_type}/{chart.chart_number}/{str(position.position)}',
