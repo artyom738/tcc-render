@@ -108,7 +108,7 @@
         }
         .timeline-playhead {
             position: absolute;
-            width: 3px;
+            width: 1px;
             height: 100%;
             background: #dc3545;
             top: 0;
@@ -214,6 +214,7 @@
             display: flex;
             gap: 6px;
             flex-wrap: wrap;
+            align-items: center;
         }
         .time-control input {
             width: 90px;
@@ -228,6 +229,43 @@
         .time-control input:focus {
             outline: none;
             border-color: #667eea;
+        }
+        .stop-checkbox {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            margin-left: 5px;
+        }
+        .stop-checkbox input[type="checkbox"] {
+            width: 16px;
+            height: 16px;
+            cursor: pointer;
+            accent-color: #667eea;
+        }
+        .stop-checkbox label {
+            font-size: 12px;
+            color: #b0b0b0;
+            cursor: pointer;
+            margin: 0;
+        }
+        .btn-rewind {
+            padding: 6px 10px;
+            background: transparent;
+            color: #e0e0e0;
+            border: 2px solid #4a4a5a;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: all 0.3s;
+            white-space: nowrap;
+            font-weight: 600;
+        }
+        .btn-rewind:hover {
+            background: #3a3a4a;
+            border-color: #667eea;
+            color: #667eea;
+            border-color: #667eea;
+            color: #667eea;
         }
         .btn-goto {
             padding: 6px 10px;
@@ -359,6 +397,7 @@
 
         let segments = [];
         let videoDuration = 0;
+        let lastCheckTime = 0;
 
         // Загрузка данных песни
         async function loadSongData() {
@@ -392,6 +431,7 @@
         videoPlayer.addEventListener('timeupdate', () => {
             currentTimeDisplay.textContent = videoPlayer.currentTime.toFixed(2);
             updatePlayhead();
+            checkAutoStop();
         });
 
         videoPlayer.addEventListener('loadedmetadata', () => {
@@ -402,6 +442,26 @@
 
         // Установка громкости по умолчанию 15%
         videoPlayer.volume = 0.15;
+
+        // Проверка автоостановки на конечном времени
+        function checkAutoStop() {
+            if (videoPlayer.paused) return;
+
+            const currentTime = videoPlayer.currentTime;
+
+            segments.forEach((segment, index) => {
+                const checkbox = document.getElementById(`stop-${index}`);
+                if (checkbox && checkbox.checked) {
+                    // Проверяем, пересекли ли мы конечное время сегмента
+                    if (lastCheckTime < segment.end && currentTime >= segment.end) {
+                        videoPlayer.pause();
+                        console.log(`Stopped at segment ${index + 1} end: ${segment.end}`);
+                    }
+                }
+            });
+
+            lastCheckTime = currentTime;
+        }
 
         // Отрисовка таймлайна
         function renderTimeline() {
@@ -486,6 +546,11 @@
                                     id="end-${index}">
                                 <button class="btn-goto" onclick="goToTime(${index}, 'end')">Перейти</button>
                                 <button class="btn-set-current" onclick="setCurrentTime(${index}, 'end')">Установить текущее</button>
+                                <div class="stop-checkbox">
+                                    <input type="checkbox" id="stop-${index}" checked>
+                                    <label for="stop-${index}">Стоп</label>
+                                </div>
+                                <button class="btn-rewind" onclick="rewindAndPlay(${index})">⏪</button>
                             </div>
                         </div>
                     </div>
@@ -542,6 +607,14 @@
             document.getElementById(`${field}-${index}`).value = segments[index][field];
             renderTimeline();
             updateSegmentDuration(index);
+        }
+
+        // Перемотка на 2 секунды назад и воспроизведение
+        function rewindAndPlay(index) {
+            const currentTime = videoPlayer.currentTime;
+            const newTime = Math.max(0, currentTime - 2); // Не даем уйти в отрицательное время
+            videoPlayer.currentTime = newTime;
+            videoPlayer.play();
         }
 
         // Сохранение сегментов
