@@ -149,6 +149,8 @@ def create_position_clip(params: dict):
 		arrow_path = 'package/arrow-double-down.png'
 	elif moving == 'double-up':
 		arrow_path = 'package/arrow-double-up.png'
+	elif moving == 'super-up':
+		arrow_path = 'package/arrow-super-up.png'
 
 	arrow = None
 	if arrow_path:

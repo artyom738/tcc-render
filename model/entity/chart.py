@@ -45,7 +45,10 @@ class Chart:
 			if lw == '--' or lw is None:
 				continue
 			if lw - position.position > 0 and lw - position.position == max_up:
-				position.moving = 'double-up'
+				if lw - position.position > 20:
+					position.moving = 'super-up'
+				else:
+					position.moving = 'double-up'
 			if lw - position.position < 0 and lw - position.position == max_down:
 				position.moving = 'double-down'
 
