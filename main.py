@@ -8,29 +8,29 @@ from yt_clip_downloader import fill_songs_with_no_clip
 if __name__ == '__main__':
 
 	# chart_type = 'eht'
-	# chart_type = 'tcc'
+	chart_type = 'tcc'
 	# chart_type = 'dark'
-	chart_type = 'list'
+	# chart_type = 'list'
 	# chart_type = 'tcc_ny'
 
 	rubrics = {
 		############# ------------- EUROHIT TOP 40 ------------- #############
-		'new_author': 'OneRepublic',  # Взгляд в будущее
-		'new_name': 'Give Me Something',
-		'past_author': 'Eminem feat. Rihanna',  # Сегодня завтра вчера
-		'past_name': 'Love The Way You Lie',
+		'new_author': 'Harry Styles',  # Взгляд в будущее
+		'new_name': 'Aperture',
+		'past_author': 'Coldplay',  # Сегодня завтра вчера
+		'past_name': 'Adventure Of A Lifetime',
 
 		############# ------------- TOP CLUB CHART ------------- #############
-		'residance_author': 'Phill Collins (RITN Bootleg)',  # 0:25:30 in podcast and 0:30:30 in radio
-		'residance_name': 'Another Day In Paradise',
-		'alltime_author': 'Ralphi Rosario',  # 1:12:00 in podcast and 1:28:30 in radio
-		'alltime_name': 'Take Me Up (Lego\'s Mix)',
-		'perspective_author': 'Fatboy Slim & The Rolling Stones',  # 1:30:00 in podcast and 1:52:30 in radio
-		'perspective_name': 'Satisfaction Skank',
+		'residance_author': 'Aspyer & BRØMANCE',  # 0:25:30 in podcast and 0:30:30 in radio
+		'residance_name': 'Higher',
+		'perspective_author': 'KH, Four Tet, Nelly Furtado',  # 1:30:00 in podcast and 1:52:30 in radio
+		'perspective_name': 'Only Human (MPH Remix)',
+		'alltime_author': 'Eric Prydz ft. Rob Swire',  # 1:12:00 in podcast and 1:28:30 in radio
+		'alltime_name': 'Breathe',
 	}
 
 	# chart_id = None
-	chart_id = 170
+	chart_id = 176
 
 	if chart_id:
 		chart = chart_repository.get_chart_by_id(chart_id)
