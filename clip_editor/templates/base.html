@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}TCC Render{% endblock %}</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+            min-height: 100vh;
+            color: #e0e0e0;
+        }
+        .nav {
+            display: flex;
+            gap: 8px;
+            padding: 12px 20px;
+            background: rgba(0, 0, 0, 0.35);
+            border-bottom: 1px solid #4a4a5a;
+            position: sticky;
+            top: 0;
+            z-index: 50;
+            backdrop-filter: blur(6px);
+        }
+        .nav a {
+            padding: 9px 16px;
+            color: #b0b0b0;
+            text-decoration: none;
+            border-radius: 6px;
+            font-weight: 600;
+            font-size: 14px;
+            transition: background 0.2s, color 0.2s;
+        }
+        .nav a:hover {
+            background: #3a3a4a;
+            color: #e0e0e0;
+        }
+        .nav a.active {
+            background: #667eea;
+            color: #fff;
+        }
+        main {
+            padding: 20px;
+        }
+        .container {
+            margin: 0 auto;
+            background: #2d2d3a;
+            border-radius: 12px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5);
+            padding: 24px;
+        }
+    </style>
+    {% block extra_styles %}{% endblock %}
+</head>
+<body>
+    <nav class="nav">
+        <a href="/" class="{% if active_page == 'editor' %}active{% endif %}">🎵 Редактор таймингов</a>
+        <a href="/chart_builder" class="{% if active_page == 'chart_builder' %}active{% endif %}">🎼 Chart Builder</a>
+    </nav>
+    <main>
+        {% block content %}{% endblock %}
+    </main>
+    {% block scripts %}{% endblock %}
+</body>
+</html>

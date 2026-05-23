@@ -24,6 +24,10 @@ class ChartRubricsRepository:
 		else:
 			return []
 
+	def delete_by_chart_id(self, chart_id: int):
+		query = 'delete from chart_rubrics where CHART_ID = %s'
+		database.execute_query(query, (int(chart_id),))
+
 	def fetch_object(self, data: dict) -> Rubric:
 		return Rubric({
 			'chart_id': data['CHART_ID'],

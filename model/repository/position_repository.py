@@ -59,6 +59,10 @@ class PositionRepository:
 
 		return outs
 
+	def delete_by_chart_id(self, chart_id: int):
+		query = 'delete from chart_positions where CHART_ID = %s'
+		database.execute_query(query, (int(chart_id),))
+
 	def fetch_object(self, data: dict) -> Position:
 		return Position({
 			'chart_id': data['CHART_ID'],

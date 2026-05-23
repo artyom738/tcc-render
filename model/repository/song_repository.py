@@ -39,6 +39,22 @@ class SongRepository:
 
 		return [self.fetch_object(item) for item in song_list]
 
+	def search(self, query: str, limit: int = 50) -> list[Song]:
+		limit = int(limit)
+		if not query:
+			sql = f'select * from songs order by ID desc limit {limit}'
+			result = database.get_list(sql)
+		else:
+			pattern = f'%{query}%'
+			sql = (
+				'select * from songs '
+				'where NAME like %s or AUTHORS like %s '
+				f'order by ID desc limit {limit}'
+			)
+			result = database.get_list(sql, (pattern, pattern))
+
+		return [self.fetch_object(item) for item in result]
+
 	def fetch_object(self, data) -> Song:
 		default_clip_path = 'D:/Artyom/Проекты/Top Club Chart/клипы чарта/regulars/'
 		clip_path = ''
