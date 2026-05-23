@@ -7,30 +7,29 @@ from yt_clip_downloader import fill_songs_with_no_clip
 
 if __name__ == '__main__':
 
-	# chart_type = 'eht'
-	chart_type = 'tcc'
+	chart_type = 'eht'
+	# chart_type = 'tcc'
 	# chart_type = 'dark'
 	# chart_type = 'list'
 	# chart_type = 'tcc_ny'
 
 	rubrics = {
 		############# ------------- EUROHIT TOP 40 ------------- #############
-		'new_author': 'Harry Styles',  # Взгляд в будущее
-		'new_name': 'Aperture',
-		'past_author': 'Coldplay',  # Сегодня завтра вчера
-		'past_name': 'Adventure Of A Lifetime',
+		'new_author': 'Shakira & Burna Boy',  # Взгляд в будущее
+		'new_name': 'Dai Dai',
+		'past_author': 'Sam Smith',  # Сегодня завтра вчера
+		'past_name': 'Diamonds',
 
 		############# ------------- TOP CLUB CHART ------------- #############
-		'residance_author': 'Aspyer & BRØMANCE',  # 0:25:30 in podcast and 0:30:30 in radio
-		'residance_name': 'Higher',
-		'perspective_author': 'KH, Four Tet, Nelly Furtado',  # 1:30:00 in podcast and 1:52:30 in radio
-		'perspective_name': 'Only Human (MPH Remix)',
-		'alltime_author': 'Eric Prydz ft. Rob Swire',  # 1:12:00 in podcast and 1:28:30 in radio
-		'alltime_name': 'Breathe',
+		'residance_author': 'BYOR',  # 0:25:30 in podcast and 0:30:30 in radio
+		'residance_name': 'Club Go Crazy',
+		'perspective_author': 'Calvin Harris & Jazzy',  # 1:30:00 in podcast and 1:52:30 in radio
+		'perspective_name': 'Satisfy',
+		'alltime_author': 'The Chemical Brothers',  # 1:12:00 in podcast and 1:28:30 in radio
+		'alltime_name': 'Go',
 	}
-
-	# chart_id = None
-	chart_id = 176
+	chart_id = None
+	# chart_id = 210
 
 	if chart_id:
 		chart = chart_repository.get_chart_by_id(chart_id)
